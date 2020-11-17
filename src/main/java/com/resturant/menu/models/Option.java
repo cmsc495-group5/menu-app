@@ -1,30 +1,28 @@
 package com.resturant.menu.models;
 
-
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection= "menus")
-public class Menu {
+@Document(collection= "options")
+public class Option {
     @Id
     String id;
-    String title;
+    String name;
     String description;
     @BsonProperty(value="internal_description")
     String internalDescription;
     Image image;
-    Section[] sections;
-
-    Boolean active;
-
+    Double price;
     String updated;
-    public Menu(String title, String description, String internalDescription, Image image, Section[] sections) {
-        this.title = title;
+
+    
+     public Option(String name, String description, String internalDescription, Double price, Image image) {
+        this.name = name;
         this.description = description;
         this.internalDescription = internalDescription;
+        this.price = price;
         this.image = image;
-        this.sections = sections;
     }
 
 
@@ -36,12 +34,12 @@ public class Menu {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -51,13 +49,21 @@ public class Menu {
     public void setDescription(String description) {
         this.description = description;
     }
-
+    
     public String getInternalDescription() {
         return internalDescription;
     }
 
     public void setInternalDescription(String internalDescription) {
         this.internalDescription = internalDescription;
+    }
+    
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Image getImage() {
@@ -68,22 +74,6 @@ public class Menu {
         this.image = image;
     }
 
-    public Section[] getSections() {
-        return sections;
-    }
-
-    public void setSections(Section[] sections) {
-        this.sections = sections;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
     public String getUpdated() {
         return updated;
     }
@@ -91,5 +81,4 @@ public class Menu {
     public void setUpdated(String updated) {
         this.updated = updated;
     }
-
 }

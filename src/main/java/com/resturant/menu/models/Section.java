@@ -1,12 +1,11 @@
 package com.resturant.menu.models;
 
-
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection= "menus")
-public class Menu {
+@Document(collection= "sections")
+public class Section {
     @Id
     String id;
     String title;
@@ -14,17 +13,13 @@ public class Menu {
     @BsonProperty(value="internal_description")
     String internalDescription;
     Image image;
-    Section[] sections;
-
-    Boolean active;
-
     String updated;
-    public Menu(String title, String description, String internalDescription, Image image, Section[] sections) {
+    
+     public Section(String title, String description, String internalDescription, Image image) {
         this.title = title;
         this.description = description;
         this.internalDescription = internalDescription;
         this.image = image;
-        this.sections = sections;
     }
 
 
@@ -51,7 +46,7 @@ public class Menu {
     public void setDescription(String description) {
         this.description = description;
     }
-
+    
     public String getInternalDescription() {
         return internalDescription;
     }
@@ -68,22 +63,6 @@ public class Menu {
         this.image = image;
     }
 
-    public Section[] getSections() {
-        return sections;
-    }
-
-    public void setSections(Section[] sections) {
-        this.sections = sections;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
     public String getUpdated() {
         return updated;
     }
@@ -91,5 +70,4 @@ public class Menu {
     public void setUpdated(String updated) {
         this.updated = updated;
     }
-
 }
