@@ -1,0 +1,13 @@
+.popup-content {
+    width: 90%;
+}
+.popup-textarea {
+    min-height: 100px;
+    width: 100%;
+}
+.actions {
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    justify-content: space-between;
+}

@@ -1,0 +1,8 @@
+@media only screen and (min-width: 700px) {
+    /* iphone 7 size*/
+    .demoHeightLimit {
+        height: 667px;
+        width: 375px;
+        overflow-y: scroll
+    }
+}
