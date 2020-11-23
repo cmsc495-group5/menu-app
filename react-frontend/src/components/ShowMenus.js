@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -30,9 +29,7 @@ class ShowMenus extends Component {
                         </h3>
                     </div>
                     <div className="panel-body">
-                        <h4><Link to="../../admin/createMenu">
-                            <span className="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Menu
-                        </Link></h4>
+                        <h4><Link to="../../admin/createMenu">Add Menu</Link></h4>
                         <table className="table table-stripe">
                             <thead>
                             <tr>
