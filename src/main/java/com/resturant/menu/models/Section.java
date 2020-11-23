@@ -3,7 +3,6 @@ package com.resturant.menu.models;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
 @Document(collection= "sections")
 public class Section {
@@ -15,14 +14,10 @@ public class Section {
     String internalDescription;
     String updated;
     
-    @DBRef
-    Image image;
-    
      public Section(String title, String description, String internalDescription, Image image) {
         this.title = title;
         this.description = description;
         this.internalDescription = internalDescription;
-        this.image = image;
     }
 
 
@@ -56,14 +51,6 @@ public class Section {
 
     public void setInternalDescription(String internalDescription) {
         this.internalDescription = internalDescription;
-    }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
     }
 
     public String getUpdated() {

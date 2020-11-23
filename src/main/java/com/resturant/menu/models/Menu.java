@@ -12,8 +12,10 @@ public class Menu {
     String id;
     String title;
     String description;
+    Boolean active;
     @BsonProperty(value="internal_description")
     String internalDescription;
+    String updated;
     
     @DBRef
     Image image;
@@ -21,13 +23,11 @@ public class Menu {
     @DBRef
     Section[] sections;
 
-    Boolean active;
-
-    String updated;
     public Menu(String title, String description, String internalDescription, Image image, Section[] sections) {
         this.title = title;
         this.description = description;
         this.internalDescription = internalDescription;
+        this.active = false;
         this.image = image;
         this.sections = sections;
     }
