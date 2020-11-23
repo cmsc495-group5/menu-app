@@ -1,7 +1,9 @@
 package com.resturant.menu.controllers;
 
 import com.resturant.menu.models.Section;
+import com.resturant.menu.models.Item;
 import com.resturant.menu.services.SectionService;
+import com.resturant.menu.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +13,12 @@ import java.util.Optional;
 @RestController
 public class SectionController {
     SectionService sectionService;
+    ItemService itemService;
 
     @Autowired
-    public SectionController(SectionService sectionService){
+    public SectionController(SectionService sectionService, ItemService itemService){
         this.sectionService = sectionService;
+        this.itemService = itemService;
     }
 
     @RequestMapping(method= RequestMethod.GET, value="/sections")
@@ -43,5 +47,10 @@ public class SectionController {
     public String delete(@PathVariable String id) {
         sectionService.deleteSection(id);
         return "";
+    }
+    
+    @RequestMapping(method=RequestMethod.GET, value="/sections/{id}/items")
+    public Optional<Item> getItems(@PathVariable String id) {
+        return itemService.getItemsBySectionId(id);
     }
 }

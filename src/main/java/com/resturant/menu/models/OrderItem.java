@@ -9,26 +9,21 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 public class OrderItem {
     @Id
     String id;
-    Integer count;
     @BsonProperty(value="prep_notes")
+    Double total;
     String prepNotes;
     String updated;
     
     @DBRef
-    Item item;
+    Item[] items;
     
     @DBRef
     Table table;
     
-    @DBRef
-    Option[] options;
-    
-     public OrderItem(Integer count, String prepNotes, Item item, Table table, Option[] options) {
-        this.count = count;
+     public OrderItem(String prepNotes, Item[] items, Table table) {
         this.prepNotes = prepNotes;
-        this.item = item;
+        this.items = items;
         this.table = table;
-        this.options = options;
     }
 
 
@@ -39,21 +34,37 @@ public class OrderItem {
     public void setId(String id) {
         this.id = id;
     }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
+    
+    public String getPrepNotes() {
+        return prepNotes;
     }
     
-    public Item getItem() {
-        return item;
+    public void setPrepNotes(String prepNotes) {
+        this.prepNotes = prepNotes;
     }
     
-    public void setItem(Item item) {
-        this.item = item;
+    public Item[] getItems() {
+        return items;
+    }
+    
+    public void setItems(Item[] items) {
+        this.items = items;
+        
+        Double price = 0.0;
+        
+        for (Item item : items) {
+            price += item.getPrice();
+        }
+        
+        setTotal(price);
+    }
+    
+    public Double getTotal() {
+        return total;
+    }
+    
+    public void setTotal(Double total) {
+        this.total = total;
     }
     
     public Table getTable() {
@@ -64,13 +75,6 @@ public class OrderItem {
         this.table = table;
     }
     
-     public Option[] getOptions() {
-        return options;
-    }
-
-    public void setOptions(Option[] options) {
-        this.options = options;
-    }
 
     public String getUpdated() {
         return updated;

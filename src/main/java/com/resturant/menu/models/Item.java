@@ -11,6 +11,10 @@ public class Item {
     String id;
     String name;
     String description;
+    
+    @BsonProperty(value="section_id")
+    String sectionId;
+    
     @BsonProperty(value="internal_description")
     String internalDescription;
     Double price;
@@ -23,10 +27,11 @@ public class Item {
     Option[] options;
 
     
-     public Item(String name, String description, String internalDescription, Double price, Image image, Option[] options) {
+     public Item(String name, String description, String internalDescription, String sectionId, Double price, Image image, Option[] options) {
         this.name = name;
         this.description = description;
         this.internalDescription = internalDescription;
+        this.sectionId = sectionId;
         this.price = price;
         this.image = image;
         this.options = options;
@@ -65,8 +70,22 @@ public class Item {
         this.internalDescription = internalDescription;
     }
     
+    public String getSectionId() {
+        return sectionId;
+    }
+    
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
+    }
+    
     public Double getPrice() {
-        return price;
+        Double total = 0.0;
+        
+        for (Option option : options) {
+            total += option.getPrice();
+        }
+        
+        return total + price;
     }
 
     public void setPrice(Double price) {

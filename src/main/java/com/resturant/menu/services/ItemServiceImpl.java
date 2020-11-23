@@ -21,6 +21,10 @@ public class ItemServiceImpl implements ItemService {
     public Iterable<Item> getItems(){
         return itemsRepository.findAll();
     }
+    
+    public Optional<Item> getItemsBySectionId(String sectionId) {
+        return itemsRepository.findAllBySectionId(sectionId);
+    }
 
     public Item saveItem(Item sec){
         sec.setUpdated(new Date().toString());
@@ -58,6 +62,10 @@ public class ItemServiceImpl implements ItemService {
         
         if (item.getOptions() != null) {
             s.setOptions(item.getOptions());
+        }
+        
+        if (item.getSectionId() != null) {
+            s.setSectionId(item.getSectionId());
         }
 
         s.setUpdated(new Date().toString());
