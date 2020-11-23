@@ -14,12 +14,11 @@ public class Section {
     String internalDescription;
     String updated;
     
-     public Section(String title, String description, String internalDescription, Image image) {
+     public Section(String title, String description, String internalDescription) {
         this.title = title;
         this.description = description;
         this.internalDescription = internalDescription;
     }
-
 
     public String getId() {
         return id;

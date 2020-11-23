@@ -8,14 +8,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Table {
     @Id
     String id;
-    String qrCode;
-    @BsonProperty(value="table_id")
-    String tableIdentifier;
+    String label;
+    String updated;
     
-     public Table(String tableIdentifier) {
-        this.tableIdentifier = tableIdentifier;
+    public Table() {}
+    
+    public Table(String label) {
+        this.label = label;
     }
-
 
     public String getId() {
         return id;
@@ -25,16 +25,24 @@ public class Table {
         this.id = id;
     }
 
-    public String getIdentifier() {
-        return tableIdentifier;
+    public String getLabel() {
+        return label;
     }
 
-    public void setIdentifier(String tableIdentifier) {
-        this.tableIdentifier = tableIdentifier;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public String getQrCode() {
         //@TODO implment qr code logic
-        return "i need to generate a base64";
+        return "aaaaa";
+    }
+    
+    public String getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(String updated) {
+        this.updated = updated;
     }
 }

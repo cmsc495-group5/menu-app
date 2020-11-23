@@ -79,13 +79,7 @@ public class Item {
     }
     
     public Double getPrice() {
-        Double total = 0.0;
-        
-        for (Option option : options) {
-            total += option.getPrice();
-        }
-        
-        return total + price;
+        return price;
     }
 
     public void setPrice(Double price) {

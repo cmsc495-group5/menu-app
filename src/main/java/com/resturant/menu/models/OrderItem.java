@@ -54,6 +54,10 @@ public class OrderItem {
         
         for (Item item : items) {
             price += item.getPrice();
+            
+            for (Option option : item.getOptions()) {
+                price += option.getPrice();
+            }
         }
         
         setTotal(price);
