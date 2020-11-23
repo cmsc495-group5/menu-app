@@ -3,6 +3,7 @@ package com.resturant.menu.models;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 @Document(collection= "options")
 public class Option {
@@ -12,9 +13,11 @@ public class Option {
     String description;
     @BsonProperty(value="internal_description")
     String internalDescription;
-    Image image;
     Double price;
     String updated;
+    
+    @DBRef
+    Image image;
 
     
      public Option(String name, String description, String internalDescription, Double price, Image image) {

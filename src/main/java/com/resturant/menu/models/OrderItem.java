@@ -3,6 +3,7 @@ package com.resturant.menu.models;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 @Document(collection= "order_items")
 public class OrderItem {
@@ -11,10 +12,16 @@ public class OrderItem {
     Integer count;
     @BsonProperty(value="prep_notes")
     String prepNotes;
-    Item item;
-    Table table;
-    Option[] options;
     String updated;
+    
+    @DBRef
+    Item item;
+    
+    @DBRef
+    Table table;
+    
+    @DBRef
+    Option[] options;
     
      public OrderItem(Integer count, String prepNotes, Item item, Table table, Option[] options) {
         this.count = count;

@@ -4,6 +4,7 @@ package com.resturant.menu.models;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 @Document(collection= "menus")
 public class Menu {
@@ -13,7 +14,11 @@ public class Menu {
     String description;
     @BsonProperty(value="internal_description")
     String internalDescription;
+    
+    @DBRef
     Image image;
+    
+    @DBRef
     Section[] sections;
 
     Boolean active;
