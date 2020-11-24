@@ -44,8 +44,8 @@ public class MenuServiceImpl implements MenuService {
         if(menu.getInternalDescription() != null){
             m.setInternalDescription(menu.getInternalDescription());
         }
-        if(menu.getImageId() != null){
-            m.setImageId(menu.getImageId());
+        if(menu.getImage() != null){
+            m.setImage(menu.getImage());
         }
         if(menu.getSections() != null){
             m.setSections(menu.getSections());

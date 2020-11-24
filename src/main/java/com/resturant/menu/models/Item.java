@@ -1,35 +1,40 @@
 package com.resturant.menu.models;
 
-
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-@Document(collection= "menus")
-public class Menu {
+@Document(collection= "items")
+public class Item {
     @Id
     String id;
-    String title;
+    String name;
     String description;
-    Boolean active;
+    
+    @BsonProperty(value="section_id")
+    String sectionId;
+    
     @BsonProperty(value="internal_description")
     String internalDescription;
+    Double price;
     String updated;
     
     @DBRef
     Image image;
     
     @DBRef
-    Section[] sections;
+    Option[] options;
 
-    public Menu(String title, String description, String internalDescription, Image image, Section[] sections) {
-        this.title = title;
+    
+     public Item(String name, String description, String internalDescription, String sectionId, Double price, Image image, Option[] options) {
+        this.name = name;
         this.description = description;
         this.internalDescription = internalDescription;
-        this.active = false;
+        this.sectionId = sectionId;
+        this.price = price;
         this.image = image;
-        this.sections = sections;
+        this.options = options;
     }
 
 
@@ -41,12 +46,12 @@ public class Menu {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -56,13 +61,29 @@ public class Menu {
     public void setDescription(String description) {
         this.description = description;
     }
-
+    
     public String getInternalDescription() {
         return internalDescription;
     }
 
     public void setInternalDescription(String internalDescription) {
         this.internalDescription = internalDescription;
+    }
+    
+    public String getSectionId() {
+        return sectionId;
+    }
+    
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
+    }
+    
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Image getImage() {
@@ -72,21 +93,13 @@ public class Menu {
     public void setImage(Image image) {
         this.image = image;
     }
-
-    public Section[] getSections() {
-        return sections;
+    
+     public Option[] getOptions() {
+        return options;
     }
 
-    public void setSections(Section[] sections) {
-        this.sections = sections;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
+    public void setOptions(Option[] options) {
+        this.options = options;
     }
 
     public String getUpdated() {
@@ -96,5 +109,4 @@ public class Menu {
     public void setUpdated(String updated) {
         this.updated = updated;
     }
-
 }
