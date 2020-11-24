@@ -50,51 +50,25 @@ public class QRgen extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        Integer tableNum = (Integer) tableNumber.getSelectedItem();
-        switch (tableNum) {
-            case 1:
-                barcodeText = "menu.com/table1";
-                break;
-            case 2:
-                barcodeText = "menu.com/table2";
-                break;
-            case 3:
-                barcodeText = "menu.com/table3";
-                break;
-            case 4:
-                barcodeText = "menu.com/table4";
-                break;
-            case 5:
-                barcodeText = "menu.com/table5";
-                break;
-            case 6:
-                barcodeText = "menu.com/table6";
-                break;
-            case 7:
-                barcodeText = "menu.com/table7";
-                break;
-            case 8:
-                barcodeText = "menu.com/table8";
-                break;
-            case 9:
-                barcodeText = "menu.com/table9";
-                break;
-            case 10:
-                barcodeText = "menu.com/table10";
-                break;
-        }
+        barcodeText = "menu.com/table" + ((Integer) tableNumber.getSelectedItem());
+
         ByteArrayOutputStream stream = QRCode
                 .from(barcodeText)
                 .withSize(250, 250)
                 .stream();
+
         ByteArrayInputStream bis = new ByteArrayInputStream(stream.toByteArray());
+
         BufferedImage qrBuff = null;
+
         try {
             qrBuff = ImageIO.read(bis);
         } catch (IOException ex) {
             Logger.getLogger(QRgen.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         Icon qrIcon = new ImageIcon(qrBuff);
+
         qrImage.setIcon(qrIcon);
     }
 
