@@ -50,7 +50,7 @@ public class QRgen extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        barcodeText = "menu.com/table" + ((Integer) tableNumber.getSelectedItem());
+        barcodeText = "menu.com/table" + tableNumber.getSelectedItem();
 
         ByteArrayOutputStream stream = QRCode
                 .from(barcodeText)
