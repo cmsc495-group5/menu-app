@@ -9,7 +9,7 @@ class PopupTextFieldComponent extends Component {
         super(props);
         this.state = {
             isOpen: false,
-            prepNotes: this.props.prepNotes,
+            prepNotes: this.props.value,
             title: this.props.title,
         }
 

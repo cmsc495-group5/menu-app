@@ -1,0 +1,23 @@
+.main-menu-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+}
+.main-menu-options  {
+    width: 100%;
+    min-height: 30px;
+    margin: 5px 0;
+    padding: 5px;
+}
+.section-title {
+    font-size: 18px;
+}
+.menu-header-menu {
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
