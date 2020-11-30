@@ -94,7 +94,7 @@ class ItemCardComponent extends Component {
         } = this.state;
         const formattedOptions = options.map(option => ({
             ...option,
-            display: `${option.name} $${option.price.toFixed(2)}`
+            display: `${option.name} $${option.price ? option.price.toFixed(2) : 0.00}`
         }));
 
         const imageElement = image
@@ -102,7 +102,7 @@ class ItemCardComponent extends Component {
             : null;
 
         return (
-            <div className='container'>
+            <div className='container item-card-container'>
                 <Card>
                     <Card.Body>
                         <Card.Title>{name}</Card.Title>
@@ -111,10 +111,10 @@ class ItemCardComponent extends Component {
                             <Col xs={image ? 7 : 12}>
                                 {description}
                             </Col>
-                            { imageElement }
+                            {imageElement}
                         </Row>
                         <Row className='card-input-row'>
-                            <div className='card-price'>Price: ${price.toFixed(2)}</div>
+                            <div className='card-price'>Price: ${price ? price.toFixed(2) : 0.00}</div>
                             <PopupTextFieldComponent
                                 title={`Preparation notes for ${name}`}
                                 updateNote={this.updateNote}

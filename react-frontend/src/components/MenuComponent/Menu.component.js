@@ -43,7 +43,6 @@ class MenuComponent extends Component {
 
         return this.menuService.getSection(id)
             .then(section => {
-                console.log(section);
                 const newState = {...this.state, loadedSection: section, menuOpen: false};
                 this.setState(newState);
                 window.scrollTo(0, 0);

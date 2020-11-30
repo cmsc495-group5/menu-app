@@ -1,21 +1,20 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
 
-class ShowMenus extends Component {
+class ShowItems extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            menus: []
+            items: []
         };
     }
 
     componentDidMount() {
-        axios.get('/menus')
+        axios.get('/items')
             .then(res => {
-                this.setState({ menus: res.data });
-                console.log('from app.js did mount', this.state.menus);
+                this.setState({items: res.data});
             });
     }
 
@@ -25,23 +24,25 @@ class ShowMenus extends Component {
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">
-                            MENUS LIST
+                            ITEMS LIST
                         </h3>
                     </div>
                     <div className="panel-body">
-                        <h4><Link to="../../admin/createMenu">Add Menu</Link></h4>
+                        <h4><Link to="../../admin/createItem">Add Item</Link></h4>
                         <table className="table table-stripe">
                             <thead>
                             <tr>
-                                <th>Title</th>
+                                <th>Name</th>
                                 <th>Description</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {this.state.menus.map(c =>
-                                <tr key={c.id}>
-                                    <td><Link to={`/admin/showMenu/${c.id}`}>{c.title}</Link></td>
-                                    <td>{c.description}</td>
+                            {this.state.items.map(item =>
+                                <tr key={item.id}>
+                                    <td><Link
+                                        to={`/admin/showItem/${item.id || 'undefined'}`}>{item.name || 'undefined'}</Link>
+                                    </td>
+                                    <td>{item.description}</td>
                                 </tr>
                             )}
                             </tbody>
@@ -53,4 +54,4 @@ class ShowMenus extends Component {
     }
 }
 
-export default ShowMenus;
+export default ShowItems;
