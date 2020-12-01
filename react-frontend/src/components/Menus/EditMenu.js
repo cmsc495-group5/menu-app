@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 class EditMenu extends Component {
 
@@ -20,17 +20,16 @@ class EditMenu extends Component {
     }
 
     componentDidMount() {
-        axios.get('/menus/'+this.props.match.params.id)
+        axios.get('/menus/' + this.props.match.params.id)
             .then(res => {
-                this.setState({ menu: res.data });
-                console.log(this.state.menu);
+                this.setState({menu: res.data});
             });
     }
 
     onChange = (e) => {
         const state = this.state.menu
         state[e.target.name] = e.target.value;
-        this.setState({menu:state});
+        this.setState({menu: state});
     }
 
     onSubmit = (e) => {
@@ -44,9 +43,10 @@ class EditMenu extends Component {
             imageId,
             sections,
             active,
-            updated } = this.state.menu;
+            updated
+        } = this.state.menu;
 
-        axios.put('/menus/'+this.props.match.params.id, {
+        axios.put('/menus/' + this.props.match.params.id, {
             id,
             title,
             description,
@@ -55,7 +55,7 @@ class EditMenu extends Component {
             sections,
         })
             .then((result) => {
-                this.props.history.push("/admin/showMenu/"+this.props.match.params.id)
+                this.props.history.push("/admin/showMenu/" + this.props.match.params.id)
             });
     }
 
@@ -69,19 +69,25 @@ class EditMenu extends Component {
                         </h3>
                     </div>
                     <div className="panel-body">
-                        <h4><Link to={`/admin/showMenu/${this.state.menu.id}`}><span className="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Menu List</Link></h4>
+                        <h4><Link to={`/admin/showMenu/${this.state.menu.id}`}><span
+                            className="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Menu List</Link></h4>
                         <form onSubmit={this.onSubmit}>
                             <div className="form-group">
                                 <label htmlFor="title">Title:</label>
-                                <input type="text" className="form-control" name="title" value={this.state.menu.title} onChange={this.onChange} placeholder="Title" />
+                                <input type="text" className="form-control" name="title" value={this.state.menu.title}
+                                       onChange={this.onChange} placeholder="Title"/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="description">Description:</label>
-                                <input type="text" className="form-control" name="description" value={this.state.menu.description} onChange={this.onChange} placeholder="Description" />
+                                <input type="text" className="form-control" name="description"
+                                       value={this.state.menu.description} onChange={this.onChange}
+                                       placeholder="Description"/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="internalDescription">Internal Description:</label>
-                                <input type="text" className="form-control" name="internalDescription" value={this.state.menu.internalDescription} onChange={this.onChange} placeholder="Internal Description" />
+                                <input type="text" className="form-control" name="internalDescription"
+                                       value={this.state.menu.internalDescription} onChange={this.onChange}
+                                       placeholder="Internal Description"/>
                             </div>
 
                             <button type="submit" className="btn btn-secondary">Update</button>
