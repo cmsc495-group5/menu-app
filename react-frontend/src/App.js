@@ -20,7 +20,16 @@ class App extends Component {
                         <h4><Link to="/admin/menus/">
                             Menus
                         </Link></h4>
-                        <h4><Link to="/demo/">
+                        <h4><Link to="/admin/items/">
+                            Items
+                        </Link></h4>
+                        <h4><Link to="/admin/options/">
+                            Options
+                        </Link></h4>
+                        <h4><Link to="/menu">
+                            Full Menu
+                        </Link></h4>
+                        <h4><Link to="/admin/demo/">
                             Demo
                         </Link></h4>
                         <ImagePickerInput/>

@@ -11,8 +11,9 @@ import {Form, Icon} from "semantic-ui-react";
 class ItemCardComponent extends Component {
     constructor(props) {
         super(props);
-        const {data, itemUpdate} = props;
-        const {id, name, description, count, options, prepNotes, price, image, selectedOptions} = data || {};
+        const {data, itemUpdate, currentValues} = props;
+        const {count, prepNotes, selectedOptions} = currentValues || {};
+        const {id, name, description, options, price, image} = data || {};
         const total = count && price && count * price;
         this.itemUpdate = itemUpdate ? itemUpdate : ((value) => console.warn('function not defined ', props, value));
         this.state = {
@@ -40,7 +41,7 @@ class ItemCardComponent extends Component {
         });
         return {
             id, prepNotes, count,
-            selectedOptions: count ? selectedOptions : [],
+            selectedOptions: selectedOptions || [],
             total: (((price + optionCost) * 100) * count) / 100
         };
     }
@@ -79,8 +80,8 @@ class ItemCardComponent extends Component {
         this.setState(newState);
         this.itemUpdate(this.state.count ? this.getPropsToSubmit(newState) : {id: newState.id, count: newState.count});
     }
-    updateNote = (prepNotes) => {
-        const newState = {...this.state, prepNotes};
+    updateNote = (note) => {
+        const newState = {...this.state, prepNotes: note.prepNotes};
         this.itemUpdate(this.getPropsToSubmit(newState));
     }
 
@@ -89,32 +90,35 @@ class ItemCardComponent extends Component {
             name,
             description,
             image, price,
-            options
+            options, prepNotes, selectedOptions
         } = this.state;
         const formattedOptions = options.map(option => ({
             ...option,
-            display: `${option.name} $${option.price.toFixed(2)}`
+            display: `${option.name} $${option.price ? option.price.toFixed(2) : 0.00}`
         }));
 
+        const imageElement = image
+            ? (<Col xs={5}><Card.Img as={Image} fluid={true} src={image} className='item-image'/></Col>)
+            : null;
+
         return (
-            <div className='container'>
+            <div className='container item-card-container'>
                 <Card>
                     <Card.Body>
                         <Card.Title>{name}</Card.Title>
 
                         <Row>
-                            <Col xs={7}>
+                            <Col xs={image ? 7 : 12}>
                                 {description}
                             </Col>
-                            <Col xs={5}>
-                                <Card.Img as={Image} fluid={true} src={image} className='item-image'/>
-                            </Col>
+                            {imageElement}
                         </Row>
                         <Row className='card-input-row'>
-                            <div className='card-price'>Price: ${price.toFixed(2)}</div>
+                            <div className='card-price'>Price: ${price ? price.toFixed(2) : 0.00}</div>
                             <PopupTextFieldComponent
                                 title={`Preparation notes for ${name}`}
                                 updateNote={this.updateNote}
+                                value={prepNotes}
                             ></PopupTextFieldComponent>
 
                             <div className='count-input-container'>
@@ -145,6 +149,7 @@ class ItemCardComponent extends Component {
                                         options={formattedOptions}
                                         displayValue={'display'}
                                         emptyRecordMessage={'select options'}
+                                        selectedValues={selectedOptions}
                                         onSelect={this.updateSelected}
                                         onRemove={this.updateSelected}
                                     >
