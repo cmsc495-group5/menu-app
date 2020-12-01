@@ -11,18 +11,18 @@ import java.util.Optional;
 @Service
 public class SectionServiceImpl implements SectionService {
 
-    private SectionsRepository sectionsRepository;
+    private final SectionsRepository sectionsRepository;
 
     @Autowired
-    public SectionServiceImpl(SectionsRepository sectionsRepository){
+    public SectionServiceImpl(SectionsRepository sectionsRepository) {
         this.sectionsRepository = sectionsRepository;
     }
 
-    public Iterable<Section> getSections(){
+    public Iterable<Section> getSections() {
         return sectionsRepository.findAll();
     }
 
-    public Section saveSection(Section sec){
+    public Section saveSection(Section sec) {
         sec.setUpdated(new Date().toString());
         sectionsRepository.save(sec);
         return sec;
@@ -35,17 +35,21 @@ public class SectionServiceImpl implements SectionService {
     public Section updateSection(String id, Section sec) {
         Optional<Section> optSec = sectionsRepository.findById(id);
         Section s = optSec.get();
-        
-        if(sec.getTitle() != null){
+
+        if (sec.getTitle() != null) {
             s.setTitle(sec.getTitle());
         }
-        
-        if(sec.getDescription() != null){
+
+        if (sec.getDescription() != null) {
             s.setDescription(sec.getDescription());
         }
-        
-        if(sec.getInternalDescription() != null){
+
+        if (sec.getInternalDescription() != null) {
             s.setInternalDescription(sec.getInternalDescription());
+        }
+
+        if (sec.getItems() != null) {
+            s.setItems(sec.getItems());
         }
 
         s.setUpdated(new Date().toString());

@@ -1,11 +1,22 @@
 .item-card-container {
     min-width: 400px;
-    max-width: 600px;
+    max-width: 400px;
+}
+
+.main-menu-options {
+    min-width: 300px;
+    max-width: 370px;
+}
+
+.section-title {
+    width: 100%;
+    text-align: center;
 }
 
 .preview-container {
     display: flex;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
     width: 100%;
 }

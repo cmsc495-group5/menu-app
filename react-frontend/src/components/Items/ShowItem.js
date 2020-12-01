@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component";
-import './items.css'
+import '../../SharedStyles/admin.css'
 import {Col, Row} from "react-bootstrap";
 
 class ShowItem extends Component {
