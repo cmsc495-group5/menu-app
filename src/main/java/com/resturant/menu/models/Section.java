@@ -2,19 +2,23 @@ package com.resturant.menu.models;
 
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection= "sections")
+@Document(collection = "sections")
 public class Section {
     @Id
     String id;
     String title;
     String description;
-    @BsonProperty(value="internal_description")
+    @BsonProperty(value = "internal_description")
     String internalDescription;
     String updated;
-    
-     public Section(String title, String description, String internalDescription) {
+
+    @DBRef
+    Item[] items;
+
+    public Section(String title, String description, String internalDescription) {
         this.title = title;
         this.description = description;
         this.internalDescription = internalDescription;
@@ -43,7 +47,7 @@ public class Section {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public String getInternalDescription() {
         return internalDescription;
     }
@@ -58,5 +62,13 @@ public class Section {
 
     public void setUpdated(String updated) {
         this.updated = updated;
+    }
+
+    public Item[] getItems() {
+        return items;
+    }
+
+    public void setItems(Item[] items) {
+        this.items = items;
     }
 }

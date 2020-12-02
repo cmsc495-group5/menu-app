@@ -1,8 +1,6 @@
 import React, {Component} from "react";
 import './LandingMenu.css'
-import Card from "react-bootstrap/Card";
-import {Col, Row} from "react-bootstrap";
-import Image from "react-bootstrap/Image";
+import SectionCardComponent from "../../ReusableComponents/SectionCard/SectionCard.component";
 
 class LandingMenu extends Component {
     constructor(props) {
@@ -16,26 +14,14 @@ class LandingMenu extends Component {
 
     render() {
         const {sections, navigateTo} = this.state;
-        const sectionsOptions = sections.length ?  sections.map(section => {
-            const { id, image, title, description } = section;
-            const imageElement = image
-                ? (<Col xs={5}><Card.Img as={Image} fluid={true} src={image} className='item-image'/></Col>)
-                : null;
+        const sectionsOptions = sections.length ? sections.map(section => {
             return (
-                <Card className={'main-menu-options'} onClick={() => navigateTo(id)} key={id} id={id}>
-                    <Card.Title className='section-title'>{title}</Card.Title>
-                    <Row>
-                        <Col xs={image ? 7 : 12}>
-                            {description}
-                        </Col>
-                        { imageElement }
-                    </Row>
-                </Card>
+                <SectionCardComponent section={section} navigateTo={this.state.navigateTo}></SectionCardComponent>
             );
         }) : null;
-        return(
+        return (
             <div>
-                <div className='menu-header-menu'> Menu </div>
+                <div className='menu-header-menu'> Menu</div>
                 <div className={'main-menu-container'}>
                     {sectionsOptions}
                 </div>
@@ -48,4 +34,5 @@ class LandingMenu extends Component {
 
     }
 }
+
 export default LandingMenu;
