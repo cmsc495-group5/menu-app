@@ -7,7 +7,7 @@ class MenuSection extends Component {
         const {items, updateItem, orderItems} = this.props;
         this.state = {
             items: items || [],
-            currentValues: orderItems,
+            currentValues: orderItems || {},
         };
         this.updateItem = updateItem;
     }
@@ -24,7 +24,8 @@ class MenuSection extends Component {
         const itemsLoaded = items
             .sort((itemA, itemB) => itemA.ordinal - itemB.ordinal)
             .map((item) =>
-                <ItemCardComponent data={item} currentValues={currentValues[item.id]} itemUpdate={this.updateItem} key={item.id}  />
+                <ItemCardComponent data={item} currentValues={currentValues[item.id]} itemUpdate={this.updateItem}
+                                   key={item.id}/>
             )
         return (
             <div>

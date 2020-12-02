@@ -20,6 +20,9 @@ class App extends Component {
                         <h4><Link to="/admin/menus/">
                             Menus
                         </Link></h4>
+                        <h4><Link to="/admin/sections/">
+                            Sections
+                        </Link></h4>
                         <h4><Link to="/admin/items/">
                             Items
                         </Link></h4>

@@ -1,4 +1,4 @@
-package com.resturant.menu.Config;
+package com.resturant.menu.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,23 +13,23 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-    
+
     @Bean
     public Docket createDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
-        .useDefaultResponseMessages(false)
-        .apiInfo(apiInfo())
-        .select()
-        .apis(RequestHandlerSelectors.basePackage("com.resturant.menu"))
-        .paths(PathSelectors.any())
-        .build();
+                .useDefaultResponseMessages(false)
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.resturant.menu"))
+                .paths(PathSelectors.any())
+                .build();
     }
-    
+
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-        .title("Spring Boot Swagger")
-        .description("Automated JSON API documentation for API's built with Spring")
-        .version("1.0.0")
-        .build();
+                .title("Spring Boot Swagger")
+                .description("Automated JSON API documentation for API's built with Spring")
+                .version("1.0.0")
+                .build();
     }
 }
