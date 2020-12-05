@@ -21,17 +21,18 @@ export default class ImagePickerInput extends Component {
     this.newState.type = f.type
     this.newState.date = f.lastModifiedDate
 
-    this.setState(this.newState)
-
-    console.log(this.newState)
+    // console.log(this.newState)
   }
 
   handleFile = e => this.newState.src = e.target.result
 
+  passStateUp = () => {
+    return this.state
+  }
+
   render() {
     return (
       <div>
-        <h3>File upload</h3>
         <input 
           type="file" 
           onChange={(e) => this.handleChangeFile(e.target.files[0])}

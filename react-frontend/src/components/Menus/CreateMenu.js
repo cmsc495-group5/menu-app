@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import ImagePickerInput from '../ReusableComponents/ImagePickerInput/ImagePickerInput.component';
+import ImagePickerInp from '../ReusableComponents/ImagePickerInput/ImagePickerInp';
+
 
 class CreateMenu extends Component {
 
@@ -14,6 +17,8 @@ class CreateMenu extends Component {
             sections: [],
             active: '',
             updated: '',
+            imgSrc: '',
+            imgName: ''
         };
     }
 
@@ -33,7 +38,9 @@ class CreateMenu extends Component {
             imageId,
             sections,
             active,
-            updated
+            updated,
+            imgSrc,
+            imgName
         } = this.state;
 
         axios.post('/menus', {
@@ -48,6 +55,19 @@ class CreateMenu extends Component {
             });
     }
 
+    updateImageData = (imgData) => {
+        console.log("Update image was ran")
+        let newState = this.state
+        
+        if (imgData != null) {
+            newState.imgSrc = imgData.src
+            newState.imgName = imgData.name
+        }
+        
+        console.log(newState)
+        this.setState(newState);
+    }
+
     render() {
         const {
             title,
@@ -58,6 +78,7 @@ class CreateMenu extends Component {
             active,
             updated
         } = this.state;
+
         return (
             <div className="container">
                 <div className="panel panel-default">
@@ -85,6 +106,16 @@ class CreateMenu extends Component {
                                        value={internalDescription} onChange={this.onChange}
                                        placeholder="internalDescription"/>
                             </div>
+                            <div className="form-group">
+                                <label htmlFor="menuImage">Menu Image:</label>
+                                {/* <ImagePickerInput
+                                    onChange={() => alert("test")}
+                                /> */}
+                                <ImagePickerInp
+                                    onChange={(value) => console.log(value)}
+                                />
+                            </div>
+
                             <button type="submit" className="btn btn-secondary">Submit</button>
                         </form>
                     </div>

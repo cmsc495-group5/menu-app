@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import ImagePickerInput from './components/ReusableComponents/ImagePickerInput/ImagePickerInput.component';
 
 class App extends Component {
 
@@ -35,7 +34,6 @@ class App extends Component {
                         <h4><Link to="/admin/demo/">
                             Demo
                         </Link></h4>
-                        <ImagePickerInput/>
                     </div>
                 </div>
             </div>
