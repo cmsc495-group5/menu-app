@@ -14,13 +14,17 @@ class MenuComponent extends Component {
         super(props);
         this.state = {
             menuOpen: false,
-            menu: {},
+            menu: {description: ''},
             sections: [],
             loadedSections: {},
             loadedSection: null,
             currentTotal: 0
         }
-        this.menuService = MenuService;
+        if(props.menuService) {
+            this.menuService = props.menuService;
+        } else {
+            this.menuService = new MenuService();
+        }
     }
 
     componentDidMount() {
@@ -78,7 +82,7 @@ class MenuComponent extends Component {
                 orderItems={this.menuService.getOrderItems()}
             >
             </MenuSection></div>)
-            : (<LandingMenu sections={sortedSections} navigateTo={this.onNavClick}
+            : (<LandingMenu sections={sortedSections} description={this.state.menu.description} navigateTo={this.onNavClick}
                             key={this.state.sections}></LandingMenu>)
 
         return (

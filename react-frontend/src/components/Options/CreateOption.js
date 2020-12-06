@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import {APIPaths, Paths} from "../../paths";
 
 class CreateOption extends Component {
 
@@ -31,10 +32,9 @@ class CreateOption extends Component {
             internalDescription,
             image,
             price,
-            updated
         } = this.state;
 
-        axios.post('/options', {
+        axios.post(APIPaths.options, {
             name,
             description,
             internalDescription,
@@ -42,7 +42,7 @@ class CreateOption extends Component {
             price,
         })
             .then((result) => {
-                this.props.history.push("/admin/options")
+                this.props.history.push(Paths.showAllOptions);
             });
     }
 
@@ -53,7 +53,6 @@ class CreateOption extends Component {
             internalDescription,
             image,
             price,
-            active,
             updated
         } = this.state;
         return (
@@ -65,7 +64,7 @@ class CreateOption extends Component {
                         </h3>
                     </div>
                     <div className="panel-body">
-                        <h4><Link to="../admin/options">Option List</Link></h4>
+                        <h4><Link to={Paths.showAllOptions}>Option List</Link></h4>
                         <div>updated: {updated}</div>
                         <form onSubmit={this.onSubmit}>
                             <div className="form-group">

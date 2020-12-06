@@ -4,6 +4,9 @@ import {Link} from 'react-router-dom';
 import {Multiselect} from "multiselect-react-dropdown";
 import {Col, Row} from "react-bootstrap";
 import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component";
+import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.component";
+import {reorder, formatOptions} from "../utils";
+import {APIPaths, Paths} from "../../paths";
 
 class CreateItem extends Component {
 
@@ -19,11 +22,12 @@ class CreateItem extends Component {
             optionItems: [],
             updated: '',
             loaded: 0,
+            ordinal: null,
         };
     }
 
     componentDidMount() {
-        axios.get('/options')
+        axios.get(APIPaths.options)
             .then(res => {
                 this.setState({...this.state, optionItems: res.data});
             });
@@ -51,33 +55,29 @@ class CreateItem extends Component {
             image,
             price,
             options,
-            updated,
-            optionItems,
+            ordinal
         } = this.state;
 
-        axios.post('/items', {
+        axios.post(APIPaths.items, {
             name,
             description,
             internalDescription,
             image,
             price,
             options,
+            ordinal,
         })
             .then((result) => {
-                this.props.history.push("/admin/items")
+                this.props.history.push(Paths.showAllItems)
             });
     }
     updateSelected = (selected) => {
         const newState = {...this.state, options: selected, loaded: this.state.loaded + 1};
         this.setState(newState);
     }
-
-    formatOptions(optionsArray) {
-        const formattedOptions = optionsArray.map(option => ({
-            ...option,
-            display: `${option.name} $${option.price ? option.price.toFixed(2) : 0.00}`
-        }));
-        return formattedOptions;
+    updateOrder = (option, change) => {
+        let reordered = reorder(option, change, this.state.options)
+        this.setState({...this.state, options: reordered, loaded: this.state.loaded + 1});
     }
 
     render() {
@@ -89,11 +89,9 @@ class CreateItem extends Component {
             price,
             options,
             optionItems,
-            active,
-            updated
         } = this.state;
-        const formattedOptions = this.formatOptions(optionItems)
-        const selectedOptions = this.formatOptions(options);
+        const formattedOptions = formatOptions(optionItems)
+        const selectedOptions = formatOptions(options);
         return (
             <div className="container">
                 <div className="panel panel-default">
@@ -105,7 +103,7 @@ class CreateItem extends Component {
                     <div className="panel-body">
                         <Row>
                             <Col xs={6}>
-                                <h4><Link to="../admin/items">Item List</Link></h4>
+                                <h4><Link to={Paths.showAllItems}>Item List</Link></h4>
 
                                 <form onSubmit={this.onSubmit}>
                                     <div className="form-group">
@@ -140,7 +138,17 @@ class CreateItem extends Component {
                                             selectedValues={selectedOptions}
                                             onSelect={this.updateSelected}
                                             onRemove={this.updateSelected}
+                                            showCheckbox={true}
+                                            closeOnSelect={false}
                                         />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="swap">Position:</label>
+                                        <SwapOrderComponent
+                                            options={this.state.options}
+                                            swapOptions={this.updateOrder}
+                                            key={this.state.loaded}>
+                                        </SwapOrderComponent>
                                     </div>
                                     <button type="submit" className="btn btn-secondary">Submit</button>
                                 </form>

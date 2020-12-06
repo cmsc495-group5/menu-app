@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import {APIPaths, interpolateWithId, Paths} from "../../paths";
 
 class ShowSections extends Component {
 
@@ -12,7 +13,7 @@ class ShowSections extends Component {
     }
 
     componentDidMount() {
-        axios.get('/sections')
+        axios.get(APIPaths.sections)
             .then(res => {
                 this.setState({sections: res.data});
             });
@@ -28,7 +29,7 @@ class ShowSections extends Component {
                         </h3>
                     </div>
                     <div className="panel-body">
-                        <h4><Link to="../../admin/createSection">Add Section</Link></h4>
+                        <h4><Link to={Paths.createSection}>Add Section</Link></h4>
                         <table className="table table-stripe">
                             <thead>
                             <tr>
@@ -40,7 +41,9 @@ class ShowSections extends Component {
                             {this.state.sections.map(item =>
                                 <tr key={item.id}>
                                     <td><Link
-                                        to={`/admin/showSection/${item.id || 'undefined'}`}>{item.title || 'undefined'}</Link>
+                                        to={interpolateWithId(Paths.showAllSections, item.id)}>
+                                        {item.title || 'undefined'}
+                                    </Link>
                                     </td>
                                     <td>{item.description}</td>
                                 </tr>

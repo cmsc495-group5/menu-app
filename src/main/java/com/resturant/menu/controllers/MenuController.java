@@ -55,4 +55,9 @@ public class MenuController {
         menuService.activateMenu(id);
         return "";
     }
+
+    @RequestMapping(method=RequestMethod.GET, value="/menus/active")
+    public Menu show(){
+        return menuService.getActiveMenu();
+    }
 }

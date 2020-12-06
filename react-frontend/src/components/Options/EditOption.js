@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import {Col, Row} from "react-bootstrap";
 import './options.css'
+import {APIPaths, interpolateWithId, Paths} from "../../paths";
 
 class EditOption extends Component {
 
@@ -24,7 +25,7 @@ class EditOption extends Component {
     }
 
     componentDidMount() {
-        axios.get('/options/' + this.props.match.params.id)
+        axios.get(interpolateWithId(APIPaths.options , this.props.match.params.id))
             .then(res => {
                 this.setState({optionItem: res.data, loaded: this.state.loaded + 1});
             });
@@ -56,7 +57,7 @@ class EditOption extends Component {
             updated
         } = this.state.optionItem;
 
-        axios.put('/options/' + this.props.match.params.id, {
+        axios.put(interpolateWithId(APIPaths.options , this.props.match.params.id), {
             name,
             description,
             internalDescription,
@@ -66,8 +67,13 @@ class EditOption extends Component {
             updated
         })
             .then((result) => {
-                this.props.history.push("/admin/showOption/" + this.props.match.params.id)
+                this.props.history.push(interpolateWithId(Paths.showOption , this.props.match.params.id));
             });
+    }
+
+    onCancel =(e) => {
+        e.preventDefault();
+        this.props.history.push(interpolateWithId(Paths.showOption , this.props.match.params.id))
     }
 
     render() {
@@ -82,9 +88,7 @@ class EditOption extends Component {
                     <div className="panel-body">
                         <Row>
                             <Col xs={6}>
-                                <h4><Link to={`/admin/showOption/${this.state.optionItem.id}`}><span
-                                    className="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Option
-                                    List</Link></h4>
+                                <h4><Link to={Paths.showAllOptions}> Option List</Link></h4>
                                 <form onSubmit={this.onSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="name">Name:</label>
@@ -112,6 +116,7 @@ class EditOption extends Component {
                                     </div>
 
                                     <button type="submit" className="btn btn-secondary">Update</button>
+                                    <button onClick={this.onCancel} className="btn btn-secondary">cancel</button>
                                 </form>
                             </Col>
                         </Row>
