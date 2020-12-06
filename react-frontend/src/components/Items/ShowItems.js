@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import {APIPaths, interpolateWithId, Paths} from "../../paths";
 
 class ShowItems extends Component {
 
@@ -12,7 +13,7 @@ class ShowItems extends Component {
     }
 
     componentDidMount() {
-        axios.get('/items')
+        axios.get(APIPaths.items)
             .then(res => {
                 this.setState({items: res.data});
             });
@@ -28,7 +29,7 @@ class ShowItems extends Component {
                         </h3>
                     </div>
                     <div className="panel-body">
-                        <h4><Link to="../../admin/createItem">Add Item</Link></h4>
+                        <h4><Link to={Paths.createItem}>Add Item</Link></h4>
                         <table className="table table-stripe">
                             <thead>
                             <tr>
@@ -40,7 +41,9 @@ class ShowItems extends Component {
                             {this.state.items.map(item =>
                                 <tr key={item.id}>
                                     <td><Link
-                                        to={`/admin/showItem/${item.id || 'undefined'}`}>{item.name || 'undefined'}</Link>
+                                        to={interpolateWithId(Paths.showItem, item.id)}>
+                                        {item.name || 'undefined'}
+                                    </Link>
                                     </td>
                                     <td>{item.description}</td>
                                 </tr>

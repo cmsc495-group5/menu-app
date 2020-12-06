@@ -1,6 +1,15 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import {Multiselect} from "multiselect-react-dropdown";
+import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.component";
+import {formatSection, reorder} from "../utils";
+import {Col, Row} from "react-bootstrap";
+import MenuComponent from "../MenuComponent/Menu.component";
+import MenuService from "../../Services/Menu.service";
+import "./menus.css"
+import {Checkbox} from "semantic-ui-react";
+import {APIPaths, interpolateWithId, Paths} from "../../paths";
 
 class EditMenu extends Component {
 
@@ -13,23 +22,53 @@ class EditMenu extends Component {
                 internalDescription: '',
                 imageId: null,
                 sections: [],
-                active: '',
+                active: false,
                 updated: ''
-            }
+            },
+            sectionOptions: [],
+            initialActive: false,
+            loaded: 0,
         };
     }
 
     componentDidMount() {
-        axios.get('/menus/' + this.props.match.params.id)
+        axios.get(interpolateWithId(APIPaths.menus, this.props.match.params.id))
             .then(res => {
-                this.setState({menu: res.data});
+                this.setState({menu: res.data, initialActive: res.data.active,  loaded: this.state.loaded +1});
+            });
+        axios.get(APIPaths.sections)
+            .then(res => {
+                this.setState({...this.state, sectionOptions: res.data, loaded: this.state.loaded +1});
             });
     }
 
     onChange = (e) => {
         const state = this.state.menu
         state[e.target.name] = e.target.value;
-        this.setState({menu: state});
+        this.setState({menu: state, loaded: this.state.loaded + 1});
+    }
+
+    updateSelected = (selected) => {
+        const newState = {
+            ...this.state,
+            menu: {
+                ...this.state.menu,
+                sections: selected
+            },
+            loaded: this.state.loaded + 1
+        };
+        this.setState(newState);
+    }
+    updateOrder = (option, change) => {
+        let reordered = reorder(option, change, this.state.menu.sections)
+        this.setState({
+            ...this.state,
+            menu: {
+                ...this.state.menu,
+                sections: reordered
+            },
+            loaded: this.state.loaded +1
+        });
     }
 
     onSubmit = (e) => {
@@ -43,23 +82,30 @@ class EditMenu extends Component {
             imageId,
             sections,
             active,
-            updated
         } = this.state.menu;
 
-        axios.put('/menus/' + this.props.match.params.id, {
+        axios.put(interpolateWithId(APIPaths.menus, this.props.match.params.id), {
             id,
             title,
             description,
             internalDescription,
             imageId,
             sections,
+            active
         })
             .then((result) => {
-                this.props.history.push("/admin/showMenu/" + this.props.match.params.id)
+                this.props.history.push(interpolateWithId(Paths.showMenu, this.props.match.params.id))
             });
+    }
+    onCancel =(e) => {
+        e.preventDefault();
+        this.props.history.push(interpolateWithId(Paths.showMenu, this.props.match.params.id))
     }
 
     render() {
+
+        const formattedSections = formatSection(this.state.sectionOptions);
+        const selectedSections = formatSection(this.state.menu.sections);
         return (
             <div className="container">
                 <div className="panel panel-default">
@@ -69,8 +115,11 @@ class EditMenu extends Component {
                         </h3>
                     </div>
                     <div className="panel-body">
-                        <h4><Link to={`/admin/showMenu/${this.state.menu.id}`}><span
-                            className="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Menu List</Link></h4>
+                        <Row>
+                            <Col xs={6}>
+                        <h4><Link to={interpolateWithId(Paths.showMenu, this.props.match.params.id)}>
+                            Menu List
+                        </Link></h4>
                         <form onSubmit={this.onSubmit}>
                             <div className="form-group">
                                 <label htmlFor="title">Title:</label>
@@ -89,9 +138,55 @@ class EditMenu extends Component {
                                        value={this.state.menu.internalDescription} onChange={this.onChange}
                                        placeholder="Internal Description"/>
                             </div>
-
+                            <div className="form-group ">
+                                <label htmlFor="active">Active: {this.state.initialActive ? '(to disable this menu activate another menu)' : ''}</label>
+                                <div>
+                                    <Checkbox
+                                        id='active'
+                                        toggle
+                                        name='active'
+                                        onChange={(e, d) => this.onChange({ target: {...d, value:d.checked}})}
+                                        checked={this.state.menu.active}
+                                        disabled={this.state.initialActive}
+                                        key={this.state.menu.active}
+                                    >
+                                    </Checkbox>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="options">options:</label>
+                                <Multiselect
+                                    options={formattedSections}
+                                    displayValue={'display'}
+                                    emptyRecordMessage={'select options'}
+                                    selectedValues={selectedSections}
+                                    onSelect={this.updateSelected}
+                                    onRemove={this.updateSelected}
+                                    showCheckbox={true}
+                                    closeOnSelect={false}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="swap">Position:</label>
+                                <SwapOrderComponent
+                                    options={this.state.menu.sections}
+                                    swapOptions={this.updateOrder }
+                                    key={this.state.loaded}>
+                                </SwapOrderComponent>
+                            </div>
                             <button type="submit" className="btn btn-secondary">Update</button>
+                            <button onClick={this.onCancel} className="btn btn-secondary">cancel</button>
                         </form>
+                            </Col>
+                            <Col xs={6}>
+                                <div className='preview-container-menu'>
+                                    <MenuComponent
+                                        key={this.state.loaded}
+                                        menuService={new MenuService({menu: this.state.menu, demo:true})}>
+                                    </MenuComponent>
+                                </div>
+                            </Col>
+                        </Row>
                     </div>
                 </div>
             </div>

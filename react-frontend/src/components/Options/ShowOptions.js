@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import {APIPaths, interpolateWithId, Paths} from "../../paths";
 
 class ShowOptions extends Component {
 
@@ -12,7 +13,7 @@ class ShowOptions extends Component {
     }
 
     componentDidMount() {
-        axios.get('/options')
+        axios.get(APIPaths.options)
             .then(res => {
                 this.setState({options: res.data});
             });
@@ -28,7 +29,7 @@ class ShowOptions extends Component {
                         </h3>
                     </div>
                     <div className="panel-body">
-                        <h4><Link to="../../admin/createOption">Add option</Link></h4>
+                        <h4><Link to={Paths.createOption}>Add option</Link></h4>
                         <table className="table table-stripe">
                             <thead>
                             <tr>
@@ -39,8 +40,10 @@ class ShowOptions extends Component {
                             <tbody>
                             {this.state.options.map(option =>
                                 <tr key={option.id}>
-                                    <td><Link to={`/admin/showOption/${option.id}`}>{option.name || 'Undefined'}</Link>
-                                    </td>
+                                    <td><Link
+                                        to={interpolateWithId(Paths.showOption, option.id)}>
+                                        {option.name || 'Undefined'}
+                                    </Link></td>
                                     <td>{option.description || 'Undefined'}</td>
                                 </tr>
                             )}

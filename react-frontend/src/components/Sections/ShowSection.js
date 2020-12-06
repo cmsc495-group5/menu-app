@@ -5,6 +5,7 @@ import {Col, Row} from "react-bootstrap";
 import MenuSection from "../ReusableComponents/MenuSection/MenuSection.component";
 import SectionCardComponent from "../ReusableComponents/SectionCard/SectionCard.component";
 import '../../SharedStyles/admin.css'
+import {APIPaths, interpolateWithId, Paths} from "../../paths";
 
 class ShowSection extends Component {
 
@@ -17,16 +18,16 @@ class ShowSection extends Component {
     }
 
     componentDidMount() {
-        axios.get('/sections/' + this.props.match.params.id)
+        axios.get(interpolateWithId(APIPaths.sections, this.props.match.params.id))
             .then(res => {
                 this.setState({...this.state, section: res.data, loaded: true});
             });
     }
 
     delete(id) {
-        axios.delete('/section/' + id)
+        axios.delete(interpolateWithId(APIPaths.sections, id))
             .then((result) => {
-                this.props.history.push("/")
+                this.props.history.push(Paths.showAllSections)
             });
     }
 
@@ -55,7 +56,7 @@ class ShowSection extends Component {
                     <div className="panel-body">
                         <Row>
                             <Col xs={6}>
-                                <h4><Link to="/admin/sections">
+                                <h4><Link to={Paths.showAllSections}>
                                     <span className="glyphicon glyphicon-th-list" aria-hidden="true">
                                     </span> Section List
                                 </Link></h4>
@@ -73,7 +74,7 @@ class ShowSection extends Component {
                                     <dt>Items:</dt>
                                     <dd>{itemsFormatted}</dd>
                                 </dl>
-                                <Link to={`/admin/editSection/${id}`}
+                                <Link to={interpolateWithId(Paths.editSection, id)}
                                       className="btn btn-success">Edit</Link>&nbsp;
                                 <button onClick={this.delete.bind(this, id)}
                                         className="btn btn-danger">Delete

@@ -1,4 +1,5 @@
-import {getMockMenu, getMockSection} from "../components/Demo/MockData";
+import axios from "axios";
+import {APIPaths} from "../paths";
 class MenuService {
 
     sections;
@@ -6,25 +7,42 @@ class MenuService {
     total;
 
     constructor(props) {
-        this.sections=  {};
+        const {menu, demo} = props || {};
+        let sections = {};
+        if(menu && menu.sections){
+            menu.sections.forEach(section => {
+                sections[section.id] = section;
+            })
+        }
+        this.sections= sections;
         this.orderItems = {} ;
         this.total = 0;
+        this.menu = menu || null;
+        this.demo = demo
     }
 
-
     getMenu =() => {
-        // TODO:api call to get menu
-        return Promise.resolve(getMockMenu(5));
+        if(this.menu) {
+            return Promise.resolve(this.menu);
+        }
+        return axios.get(APIPaths.activeMenu)
+            .then(res => {
+                this.menu = res.data;
+                let sections = {};
+                if(res.data && res.data.sections){
+                    res.data.sections.forEach(section => {
+                        sections[section.id] = section;
+                    })
+                }
+                this.sections= sections;
+                return this.menu;
+            });
     }
 
     getSection = (id) => {
         if (this.sections[id]){
             return  Promise.resolve( this.sections[id]);
         }
-        //TODO: here we would make the api call to get the section and add it to the sections variable
-        const section = getMockSection(id, 5);
-        this.sections[id] = section;
-        return Promise.resolve(section);
     }
 
     updateItem =(item) => {
@@ -54,4 +72,4 @@ class MenuService {
     }
 
 }
-export default new MenuService()
+export default MenuService;

@@ -11,4 +11,6 @@ public interface MenuService {
     Menu updateMenu(String id, Menu menu);
     String deleteMenu( String id);
     void activateMenu(String id);
+
+    Menu getActiveMenu();
 }

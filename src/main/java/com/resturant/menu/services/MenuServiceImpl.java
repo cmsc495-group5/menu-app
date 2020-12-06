@@ -1,11 +1,12 @@
 package com.resturant.menu.services;
-
 import com.resturant.menu.models.Menu;
+import com.resturant.menu.models.Section;
 import com.resturant.menu.repositories.MenusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -51,6 +52,9 @@ public class MenuServiceImpl implements MenuService {
             m.setSections(menu.getSections());
         }
         if(menu.getActive() != null){
+            if(menu.getActive()){
+                deactivateActiveMenu();
+            }
             m.setActive(menu.getActive());
         }
         m.setUpdated(new Date().toString());
@@ -65,21 +69,28 @@ public class MenuServiceImpl implements MenuService {
         return "";
     }
 
-    private void deactivateAllMenus(){
-        Iterable<Menu> menus = getMenus();
-        menus.forEach(menu -> {
-            menu.setActive(false);
-            updateMenu(menu.getId(), menu);
-        });
+    private void deactivateActiveMenu(){
+        Menu menu = getActiveMenu();
+        menu.setActive(false);
+        updateMenu(menu.getId(), menu);
     }
 
     public void activateMenu(String id) {
         Optional<Menu> menuOpt = getMenuById(id);
         if(menuOpt.isPresent()){
             Menu menu = menuOpt.get();
-            deactivateAllMenus();
+            deactivateActiveMenu();
             menu.setActive(true);
             updateMenu(id, menu);
         }
+    }
+
+    public Menu getActiveMenu() {
+        List<Menu> menus =  menusRepository.findByActive(true);
+        if(menus.size() >=1){
+            return menus.get(0);
+        }
+        // no record found return an empty menu to prevent errors; this could probably be handled better
+        return new Menu("no menu found", "", "", null, new Section[]{});
     }
 }

@@ -4,9 +4,11 @@ import {Link} from 'react-router-dom';
 import {Multiselect} from "multiselect-react-dropdown";
 import {Col, Row} from "react-bootstrap";
 import MenuSection from "../ReusableComponents/MenuSection/MenuSection.component";
-import {formatItemOptions} from "./section.util";
 import SectionCardComponent from "../ReusableComponents/SectionCard/SectionCard.component";
 import '../../SharedStyles/admin.css'
+import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.component";
+import {formatItemOptions, reorder} from "../utils";
+import {APIPaths, Paths} from "../../paths";
 
 class CreateSection extends Component {
 
@@ -25,7 +27,7 @@ class CreateSection extends Component {
     }
 
     componentDidMount() {
-        axios.get('/items')
+        axios.get(APIPaths.items)
             .then(res => {
                 this.setState({...this.state, optionItems: res.data});
             });
@@ -48,7 +50,7 @@ class CreateSection extends Component {
             items,
         } = this.state;
 
-        axios.post('/sections', {
+        axios.post(APIPaths.sections, {
             title,
             description,
             internalDescription,
@@ -56,12 +58,17 @@ class CreateSection extends Component {
             items
         })
             .then((result) => {
-                this.props.history.push("/admin/sections")
+                this.props.history.push(Paths.showAllSections)
             });
     }
     updateSelected = (selected) => {
         const newState = {...this.state, items: selected, loaded: this.state.loaded + 1};
         this.setState(newState);
+    }
+
+    updateOrder = (option, change) => {
+        const reordered = reorder(option, change, this.state.items);
+        this.setState({...this.state,  items: reordered, loaded: this.state.loaded +1});
     }
 
     render() {
@@ -86,7 +93,7 @@ class CreateSection extends Component {
                     <div className="panel-body">
                         <Row>
                             <Col xs={6}>
-                                <h4><Link to="../admin/sections">Section List</Link></h4>
+                                <h4><Link to={Paths.showAllSections}>Section List</Link></h4>
 
                                 <form onSubmit={this.onSubmit}>
                                     <div className="form-group">
@@ -115,7 +122,17 @@ class CreateSection extends Component {
                                             selectedValues={options}
                                             onSelect={this.updateSelected}
                                             onRemove={this.updateSelected}
+                                            showCheckbox={true}
+                                            closeOnSelect={false}
                                         />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="swap">Position:</label>
+                                        <SwapOrderComponent
+                                            options={this.state.items}
+                                            swapOptions={this.updateOrder }
+                                            key={this.state.loaded}>
+                                        </SwapOrderComponent>
                                     </div>
                                     <button type="submit" className="btn btn-secondary">Submit</button>
                                 </form>
