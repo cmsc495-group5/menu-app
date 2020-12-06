@@ -3,6 +3,7 @@ const admin = 'admin';
 
 export const Paths = {
     menu: `/${menu}`,
+    orderComplete: `/orderComplete`,
     admin: `/${admin}`,
     // Menu paths
     editMenu: `/${admin}/editMenu`,

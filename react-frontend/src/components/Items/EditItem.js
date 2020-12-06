@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import {Col, Row} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component";
 import '../../SharedStyles/admin.css'
 import {Multiselect} from "multiselect-react-dropdown";
@@ -99,18 +99,17 @@ class EditItem extends Component {
         const formattedOptions = formatOptions(this.state.optionItems);
         const formattedSelectedOptions = formatOptions(this.state.item.options);
         return (
-            <div className="container">
+            <Container className="container">
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">
-                            EDIT Item
+                            EDIT ITEM
                         </h3>
                     </div>
                     <div className="panel-body">
+                        <h4><Link to={Paths.showAllItems}> Item List</Link></h4>
                         <Row>
                             <Col xs={6}>
-                                <h4><Link to={Paths.showAllItems}> Item List</Link>
-                                </h4>
                                 <form onSubmit={this.onSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="name">Name:</label>
@@ -154,7 +153,7 @@ class EditItem extends Component {
                                         <label htmlFor="swap">Position:</label>
                                         <SwapOrderComponent
                                             options={this.state.item.options}
-                                            swapOptions={this.updateOrder }
+                                            swapOptions={this.updateOrder}
                                             key={this.state.loaded}>
                                         </SwapOrderComponent>
                                     </div>
@@ -172,7 +171,7 @@ class EditItem extends Component {
                         </Row>
                     </div>
                 </div>
-            </div>
+            </Container>
         );
     }
 

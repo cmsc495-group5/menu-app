@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import {Col, Row} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import './options.css'
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
 
@@ -78,7 +78,7 @@ class EditOption extends Component {
 
     render() {
         return (
-            <div className="container">
+            <Container className="container">
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">
@@ -86,9 +86,9 @@ class EditOption extends Component {
                         </h3>
                     </div>
                     <div className="panel-body">
+                        <h4><Link to={Paths.showAllOptions}> Option List</Link></h4>
                         <Row>
                             <Col xs={6}>
-                                <h4><Link to={Paths.showAllOptions}> Option List</Link></h4>
                                 <form onSubmit={this.onSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="name">Name:</label>
@@ -122,7 +122,7 @@ class EditOption extends Component {
                         </Row>
                     </div>
                 </div>
-            </div>
+            </Container>
         );
     }
 }

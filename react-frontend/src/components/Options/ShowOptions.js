@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
+import {Container} from "react-bootstrap";
 
 class ShowOptions extends Component {
 
@@ -21,11 +22,11 @@ class ShowOptions extends Component {
 
     render() {
         return (
-            <div className="container">
+            <Container className="container">
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">
-                            options LIST
+                            OPTIONS LIST
                         </h3>
                     </div>
                     <div className="panel-body">
@@ -51,7 +52,7 @@ class ShowOptions extends Component {
                         </table>
                     </div>
                 </div>
-            </div>
+            </Container>
         );
     }
 }

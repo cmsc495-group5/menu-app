@@ -1,0 +1,46 @@
+#root {
+    width: 100%;
+}
+
+.checkout-container {
+    padding: 10px
+}
+
+.checkout-order-submit {
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+    align-items: center;
+    z-index: 10;
+    height: 40px;
+}
+
+.checkout-title {
+    font-size: larger;
+    padding-bottom: 15px;
+}
+
+.checkout-option {
+    padding-left: 25px;
+}
+
+.checkout-order-total {
+    text-align: right;
+    padding-right: 25px;
+    padding-top: 20px;
+}
+
+.checkout-order-submit > Button {
+    width: 100%;
+}
+
+.checkout-item-name {
+    font-size: medium;
+}
+
+.order-complete {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

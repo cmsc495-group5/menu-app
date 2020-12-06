@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import './options.css'
-import {Col, Row} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
 
 class ShowOption extends Component {
@@ -31,18 +31,17 @@ class ShowOption extends Component {
 
     render() {
         return (
-            <div className="container">
-
+            <Container className="container">
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">
-                            Option Details
+                            OPTION DETAILS
                         </h3>
                     </div>
                     <div className="panel-body">
+                        <h4><Link to={Paths.showAllOptions}> Option List</Link></h4>
                         <Row>
                             <Col xs={6}>
-                                <h4><Link to={Paths.showAllOptions}> Option List</Link></h4>
                                 <dl>
                                     <dt>Name:</dt>
                                     <dd>{this.state.optionItem.name}</dd>
@@ -69,7 +68,7 @@ class ShowOption extends Component {
                 </div>
 
 
-            </div>
+            </Container>
         );
     }
 }

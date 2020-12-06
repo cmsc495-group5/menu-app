@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
+import {Container} from "react-bootstrap";
 
 class ShowItems extends Component {
 
@@ -21,7 +22,7 @@ class ShowItems extends Component {
 
     render() {
         return (
-            <div className="container">
+            <Container className="container">
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">
@@ -52,7 +53,7 @@ class ShowItems extends Component {
                         </table>
                     </div>
                 </div>
-            </div>
+            </Container>
         );
     }
 }

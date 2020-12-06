@@ -11,6 +11,7 @@ import ShowMenu from './components/Menus/ShowMenu';
 import ShowMenus from "./components/Menus/ShowMenus";
 import Demo from "./components/Demo/Demo";
 import MenuComponent from "./components/MenuComponent/Menu.component";
+import OrderCompleteComponent from "./components/MenuComponent/Checkout/OrderComplete.component";
 import ShowItems from "./components/Items/ShowItems";
 import ShowItem from "./components/Items/ShowItem";
 import CreateItem from "./components/Items/CreateItem";
@@ -30,6 +31,7 @@ ReactDOM.render(
         <div>
             <Route exact path='/' component={App}/>
             <Route path={Paths.menu} component={MenuComponent}/>
+            <Route path={Paths.orderComplete} component={OrderCompleteComponent}/>
 
             <Route path={`${Paths.editMenu}/:id`} component={EditMenu}/>
             <Route path={Paths.createMenu} component={CreateMenu}/>
