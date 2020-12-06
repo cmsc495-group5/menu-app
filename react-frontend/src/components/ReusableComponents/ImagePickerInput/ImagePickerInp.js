@@ -4,14 +4,11 @@ export default function ImagePickerInp(props) {
   let out = {};
   
   const handleImage = f => {
-    console.log("Handle image was ran");
+    // console.log("Handle image was ran");
 
     let reader = new FileReader();
 
-    
-
     reader.onloadend = imageHandler;
-  
     reader.readAsDataURL(f)
 
     out.size = f.size

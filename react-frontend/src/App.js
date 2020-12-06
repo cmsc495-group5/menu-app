@@ -1,12 +1,24 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
+import ReturnMenu from './components/ReusableComponents/ReturnMenu/ReturnMenu'
+
 class App extends Component {
 
     componentDidMount() {
     }
 
     render() {
+        const style = {
+            display: "flex",
+            flexDirection: "column",
+            paddingTop: "2rem"
+        }
+
+        const linkStyle = {
+            marginBottom: "2rem"
+        }
+
         return (
             <div className="container">
                 <div className="panel panel-default">
@@ -16,24 +28,14 @@ class App extends Component {
                         </h3>
                     </div>
                     <div className="panel-body">
-                        <h4><Link to="/admin/menus/">
-                            Menus
-                        </Link></h4>
-                        <h4><Link to="/admin/sections/">
-                            Sections
-                        </Link></h4>
-                        <h4><Link to="/admin/items/">
-                            Items
-                        </Link></h4>
-                        <h4><Link to="/admin/options/">
-                            Options
-                        </Link></h4>
-                        <h4><Link to="/menu">
-                            Full Menu
-                        </Link></h4>
-                        <h4><Link to="/admin/demo/">
-                            Demo
-                        </Link></h4>
+                        <h4 style={style}>
+                            <Link to="/admin/menus/" style={linkStyle}>Menus</Link>
+                            <Link to="/admin/sections/" style={linkStyle}>Sections</Link>
+                            <Link to="/admin/items/" style={linkStyle}>Items</Link>
+                            <Link to="/admin/options/" style={linkStyle}>Options</Link>
+                            <Link to="/menu" style={linkStyle}>Full Menu</Link>
+                            <Link to="/admin/demo/" style={linkStyle}>Demo</Link>
+                        </h4>
                     </div>
                 </div>
             </div>

@@ -1,17 +1,23 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import DisplayImage from '../ReusableComponents/DisplayImage/DisplayImage';
+import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 
 class ShowMenu extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            menu: {}
+            menu: {
+                img: {
+                    src: null
+                }
+            }
         };
     }
 
-    componentDidMount() {
+    componentWillMount() {
         axios.get('/menus/' + this.props.match.params.id)
             .then(res => {
                 this.setState({menu: res.data});
@@ -45,9 +51,12 @@ class ShowMenu extends Component {
                             <dt>Internal description:</dt>
                             <dd>{this.state.menu.internalDescription}</dd>
                         </dl>
+                        <DisplayImage imgSrc={this.state.menu.img.src}/>
+                        <br></br>
                         <Link to={`/admin/editMenu/${this.state.menu.id}`} className="btn btn-success">Edit</Link>&nbsp;
                         <button onClick={this.delete.bind(this, this.state.menu.id)} className="btn btn-danger">Delete
                         </button>
+                        <ReturnMenu/>
                     </div>
                 </div>
             </div>

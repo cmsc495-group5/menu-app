@@ -26,10 +26,6 @@ export default class ImagePickerInput extends Component {
 
   handleFile = e => this.newState.src = e.target.result
 
-  passStateUp = () => {
-    return this.state
-  }
-
   render() {
     return (
       <div>

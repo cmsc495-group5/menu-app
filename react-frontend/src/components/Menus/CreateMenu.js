@@ -17,8 +17,7 @@ class CreateMenu extends Component {
             sections: [],
             active: '',
             updated: '',
-            imgSrc: '',
-            imgName: ''
+            img: {}
         };
     }
 
@@ -39,8 +38,7 @@ class CreateMenu extends Component {
             sections,
             active,
             updated,
-            imgSrc,
-            imgName
+            img
         } = this.state;
 
         axios.post('/menus', {
@@ -49,6 +47,7 @@ class CreateMenu extends Component {
             internalDescription,
             imageId,
             sections,
+            img
         })
             .then((result) => {
                 this.props.history.push("/admin/menus")
@@ -57,12 +56,10 @@ class CreateMenu extends Component {
 
     updateImageData = (imgData) => {
         console.log("Update image was ran")
+        console.log(imgData);
         let newState = this.state
         
-        if (imgData != null) {
-            newState.imgSrc = imgData.src
-            newState.imgName = imgData.name
-        }
+        if (imgData != null) newState.img = imgData;
         
         console.log(newState)
         this.setState(newState);
@@ -112,7 +109,7 @@ class CreateMenu extends Component {
                                     onChange={() => alert("test")}
                                 /> */}
                                 <ImagePickerInp
-                                    onChange={(value) => console.log(value)}
+                                    onChange={(value) => this.updateImageData(value)}
                                 />
                             </div>
 
