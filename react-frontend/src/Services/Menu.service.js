@@ -72,10 +72,12 @@ class MenuService {
         this.total = total;
     }
     getTotal = () => {
-        const total  = this.total || 0;
+        const total = this.total || 0;
         return total.toFixed(2);
     }
-
+    getIsDemo = () => {
+        return this.demo
+    }
 
 }
 export default MenuService;

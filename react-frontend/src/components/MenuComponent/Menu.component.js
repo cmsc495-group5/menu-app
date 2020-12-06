@@ -70,7 +70,8 @@ class MenuComponent extends Component {
                                      navigateTo={this.onNavClick}
                                      key={this.state.sections}></LandingMenu>);
             case this.CHECKOUT :
-                return (<CheckoutComponent {...this.props} orderItems={this.menuService.getOrderItemsAsArray()}
+                return (<CheckoutComponent {...this.props} isDemo={this.menuService.getIsDemo()}
+                                           orderItems={this.menuService.getOrderItemsAsArray()}
                                            total={this.menuService.getTotal()}></CheckoutComponent>);
             default:
                 return (<div><MenuSection

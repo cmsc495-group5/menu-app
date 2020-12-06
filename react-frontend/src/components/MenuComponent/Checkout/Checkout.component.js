@@ -7,11 +7,12 @@ import {Paths} from "../../../paths";
 class CheckoutComponent extends Component {
     constructor(props) {
         super(props);
-        const {orderItems, total} = props;
+        const {orderItems, total, isDemo} = props;
         this.state = {
             orderItems: orderItems || [],
             total: total || 0,
-            table: getQueryVariable('table')
+            table: getQueryVariable('table'),
+            isDemo: isDemo,
         }
     }
 
@@ -30,7 +31,9 @@ class CheckoutComponent extends Component {
     onSubmit = (e) => {
         // TODO hit api
         e.preventDefault();
-        this.props.history.push(Paths.orderComplete)
+        if (!this.state.isDemo) {
+            this.props.history.push(Paths.orderComplete)
+        }
     }
 
     render() {
