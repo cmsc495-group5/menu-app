@@ -3,6 +3,8 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import ImagePickerInput from '../ReusableComponents/ImagePickerInput/ImagePickerInput.component';
 import ImagePickerInp from '../ReusableComponents/ImagePickerInput/ImagePickerInp';
+import DisplayImage from '../ReusableComponents/DisplayImage/DisplayImage';
+import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 
 
 class CreateMenu extends Component {
@@ -17,7 +19,9 @@ class CreateMenu extends Component {
             sections: [],
             active: '',
             updated: '',
-            img: {}
+            img: {
+                src: ""
+            }
         };
     }
 
@@ -56,12 +60,12 @@ class CreateMenu extends Component {
 
     updateImageData = (imgData) => {
         console.log("Update image was ran")
-        console.log(imgData);
+        // console.log(imgData);
         let newState = this.state
         
         if (imgData != null) newState.img = imgData;
         
-        console.log(newState)
+        // console.log(newState)
         this.setState(newState);
     }
 
@@ -105,9 +109,6 @@ class CreateMenu extends Component {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="menuImage">Menu Image:</label>
-                                {/* <ImagePickerInput
-                                    onChange={() => alert("test")}
-                                /> */}
                                 <ImagePickerInp
                                     onChange={(value) => this.updateImageData(value)}
                                 />
@@ -115,6 +116,7 @@ class CreateMenu extends Component {
 
                             <button type="submit" className="btn btn-secondary">Submit</button>
                         </form>
+                        <ReturnMenu/>
                     </div>
                 </div>
             </div>

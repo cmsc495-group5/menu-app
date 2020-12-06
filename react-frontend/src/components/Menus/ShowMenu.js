@@ -17,7 +17,7 @@ class ShowMenu extends Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         axios.get('/menus/' + this.props.match.params.id)
             .then(res => {
                 this.setState({menu: res.data});

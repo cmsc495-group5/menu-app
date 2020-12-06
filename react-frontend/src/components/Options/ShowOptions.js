@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 
 class ShowOptions extends Component {
 
@@ -24,7 +25,7 @@ class ShowOptions extends Component {
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">
-                            options LIST
+                            OPTIONS LIST
                         </h3>
                     </div>
                     <div className="panel-body">
@@ -46,6 +47,7 @@ class ShowOptions extends Component {
                             )}
                             </tbody>
                         </table>
+                        <ReturnMenu/>
                     </div>
                 </div>
             </div>

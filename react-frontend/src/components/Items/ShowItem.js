@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component";
 import '../../SharedStyles/admin.css'
 import {Col, Row} from "react-bootstrap";
+import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 
 class ShowItem extends Component {
 
@@ -72,6 +73,7 @@ class ShowItem extends Component {
                                 </div>
                             </Col>
                         </Row>
+                        <ReturnMenu/>
                     </div>
 
                 </div>

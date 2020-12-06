@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 
 class ShowMenus extends Component {
 
@@ -45,6 +46,7 @@ class ShowMenus extends Component {
                             )}
                             </tbody>
                         </table>
+                        <ReturnMenu/>
                     </div>
                 </div>
             </div>
