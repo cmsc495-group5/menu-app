@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
+import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 
 class ShowSections extends Component {
 
@@ -41,7 +42,7 @@ class ShowSections extends Component {
                             {this.state.sections.map(item =>
                                 <tr key={item.id}>
                                     <td><Link
-                                        to={interpolateWithId(Paths.showAllSections, item.id)}>
+                                        to={interpolateWithId(Paths.showSection, item.id)}>
                                         {item.title || 'undefined'}
                                     </Link>
                                     </td>
@@ -51,6 +52,7 @@ class ShowSections extends Component {
                             </tbody>
                         </table>
                     </div>
+                    <ReturnMenu/>
                 </div>
             </div>
         );

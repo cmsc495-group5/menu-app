@@ -80,10 +80,12 @@ class CreateItem extends Component {
                 this.props.history.push(Paths.showAllItems)
             });
     }
+
     updateSelected = (selected) => {
         const newState = {...this.state, options: selected, loaded: this.state.loaded + 1};
         this.setState(newState);
     }
+
     updateOrder = (option, change) => {
         let reordered = reorder(option, change, this.state.options)
         this.setState({...this.state, options: reordered, loaded: this.state.loaded + 1});
@@ -108,8 +110,8 @@ class CreateItem extends Component {
             optionItems,
         } = this.state;
 
-        const formattedOptions = this.formatOptions(optionItems)
-        const selectedOptions = this.formatOptions(options);
+        const formattedOptions = formatOptions(optionItems)
+        const selectedOptions = formatOptions(options);
         
         return (
             <div className="container">

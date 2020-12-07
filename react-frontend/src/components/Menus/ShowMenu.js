@@ -70,6 +70,7 @@ class ShowMenu extends Component {
                                     </dd>
                                 </dl>
                                 <DisplayImage imgSrc={this.state.menu.img.src}/>
+                                <br/>
                                 <Link
                                     to={interpolateWithId(Paths.editMenu, this.state.menu.id)}
                                     className="btn btn-success">

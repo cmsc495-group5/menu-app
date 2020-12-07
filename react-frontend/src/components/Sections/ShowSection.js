@@ -6,6 +6,7 @@ import MenuSection from "../ReusableComponents/MenuSection/MenuSection.component
 import SectionCardComponent from "../ReusableComponents/SectionCard/SectionCard.component";
 import '../../SharedStyles/admin.css'
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
+import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 
 class ShowSection extends Component {
 
@@ -98,7 +99,7 @@ class ShowSection extends Component {
                             </Col>
                         </Row>
                     </div>
-
+                    <ReturnMenu/>
                 </div>
 
 
