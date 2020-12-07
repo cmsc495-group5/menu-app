@@ -2,11 +2,8 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
-<<<<<<< HEAD
 import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
-=======
 import {Container} from "react-bootstrap";
->>>>>>> 589b820bd9610ae9064f1fbf344704864c723510
 
 class ShowSections extends Component {
 

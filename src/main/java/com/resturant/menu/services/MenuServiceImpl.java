@@ -89,6 +89,6 @@ public class MenuServiceImpl implements MenuService {
             return menus.get(0);
         }
         // no record found return an empty menu to prevent errors; this could probably be handled better
-        return new Menu("no menu found", "", "", null, new Section[]{}, new HashMap());
+        return new Menu("no menu found", "", "", null, new HashMap());
     }
 }

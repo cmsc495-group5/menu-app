@@ -2,12 +2,8 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import './options.css'
-<<<<<<< HEAD
-import {Col, Row} from "react-bootstrap";
-import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
-=======
 import {Col, Container, Row} from "react-bootstrap";
->>>>>>> 589b820bd9610ae9064f1fbf344704864c723510
+import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
 
 class ShowOption extends Component {

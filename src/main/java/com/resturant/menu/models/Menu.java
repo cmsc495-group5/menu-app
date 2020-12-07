@@ -24,7 +24,7 @@ public class Menu {
     @DBRef
     Section[] sections;
 
-    public Menu(String title, String description, String internalDescription, Section[] sections, Section[] sections1, HashMap img) {
+    public Menu(String title, String description, String internalDescription, Section[] sections, HashMap img) {
         this.title = title;
         this.description = description;
         this.internalDescription = internalDescription;

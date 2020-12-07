@@ -57,7 +57,6 @@ class ShowSection extends Component {
                         <h4><Link to={Paths.showAllSections}>Section List</Link></h4>
                         <Row>
                             <Col xs={6}>
-
                                 <dl>
                                     <dt>Title:</dt>
                                     <dd>{this.state.section.title}</dd>
@@ -98,8 +97,6 @@ class ShowSection extends Component {
                     </div>
                     <ReturnMenu/>
                 </div>
-
-
             </Container>
         );
     }
