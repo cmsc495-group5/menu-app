@@ -5,6 +5,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import java.util.Arrays;
+import java.util.HashMap;
+
 @Document(collection= "items")
 public class Item {
     @Id
@@ -19,7 +22,33 @@ public class Item {
     String internalDescription;
     Double price;
     String updated;
-    
+
+    HashMap img;
+
+    public HashMap getImg() {
+        return img;
+    }
+
+    public void setImg(HashMap img) {
+        this.img = img;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", sectionId='" + sectionId + '\'' +
+                ", internalDescription='" + internalDescription + '\'' +
+                ", price=" + price +
+                ", updated='" + updated + '\'' +
+                ", img=" + img +
+                ", image=" + image +
+                ", options=" + Arrays.toString(options) +
+                '}';
+    }
+
     @DBRef
     Image image;
     
@@ -27,7 +56,7 @@ public class Item {
     Option[] options;
 
     
-     public Item(String name, String description, String internalDescription, String sectionId, Double price, Image image, Option[] options) {
+     public Item(String name, String description, String internalDescription, String sectionId, Double price, Image image, Option[] options, HashMap img) {
         this.name = name;
         this.description = description;
         this.internalDescription = internalDescription;
@@ -35,6 +64,7 @@ public class Item {
         this.price = price;
         this.image = image;
         this.options = options;
+        this.img = img;
     }
 
 

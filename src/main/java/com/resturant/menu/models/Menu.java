@@ -6,6 +6,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import java.util.Arrays;
+import java.util.HashMap;
+
 @Document(collection= "menus")
 public class Menu {
     @Id
@@ -16,6 +19,7 @@ public class Menu {
     @BsonProperty(value="internal_description")
     String internalDescription;
     String updated;
+    HashMap img;
     
     @DBRef
     Image image;
@@ -23,13 +27,14 @@ public class Menu {
     @DBRef
     Section[] sections;
 
-    public Menu(String title, String description, String internalDescription, Image image, Section[] sections) {
+    public Menu(String title, String description, String internalDescription, Image image, Section[] sections, HashMap img) {
         this.title = title;
         this.description = description;
         this.internalDescription = internalDescription;
         this.active = false;
         this.image = image;
         this.sections = sections;
+        this.img = img;
     }
 
 
@@ -43,6 +48,29 @@ public class Menu {
 
     public String getTitle() {
         return title;
+    }
+
+    public HashMap getImg() {
+        return img;
+    }
+
+    public void setImg(HashMap img) {
+        this.img = img;
+    }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", active=" + active +
+                ", internalDescription='" + internalDescription + '\'' +
+                ", updated='" + updated + '\'' +
+                ", img=" + img +
+                ", image=" + image +
+                ", sections=" + Arrays.toString(sections) +
+                '}';
     }
 
     public void setTitle(String title) {
