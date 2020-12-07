@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,6 +92,6 @@ public class MenuServiceImpl implements MenuService {
             return menus.get(0);
         }
         // no record found return an empty menu to prevent errors; this could probably be handled better
-        return new Menu("no menu found", "", "", null, new Section[]{});
+        return new Menu("no menu found", "", "", null, new Section[]{}, new HashMap());
     }
 }
