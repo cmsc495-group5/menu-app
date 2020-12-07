@@ -69,7 +69,7 @@ class ShowMenu extends Component {
                                     {this.state.menu.active ? "(Active menu cannot be deleted)" : ""}
                                     </dd>
                                 </dl>
-                                <DisplayImage imgSrc={this.state.menu.img.src}/>
+                                <DisplayImage imgSrc={this.state.menu.img && this.state.menu.img.src || ''}/>
                                 <br/>
                                 <Link
                                     to={interpolateWithId(Paths.editMenu, this.state.menu.id)}
