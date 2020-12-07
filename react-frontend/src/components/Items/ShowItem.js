@@ -62,7 +62,7 @@ class ShowItem extends Component {
                                     <dt>Updated:</dt>
                                     <dd>{this.state.item.updated}</dd>
                                     <dt>Image:</dt>
-                                    <dd><DisplayImage imgSrc={this.state.img.src}/></dd>
+                                    <dd><DisplayImage imgSrc={this.state.img && this.state.img.src || ''}/></dd>
                                 </dl>
                                 <Link to={interpolateWithId(Paths.editItem, this.state.item.id)}
                                       className="btn btn-success">Edit</Link>&nbsp;
