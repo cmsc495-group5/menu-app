@@ -44,3 +44,11 @@
     justify-content: center;
     align-items: center;
 }
+
+.checkout-prep-notes {
+    width: inherit;
+}
+
+.row {
+    padding: 5px
+}

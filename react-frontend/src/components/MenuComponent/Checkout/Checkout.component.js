@@ -51,7 +51,8 @@ class CheckoutComponent extends Component {
 
                     {(selectedOptions && selectedOptions.length > 0) ? selectedOptionsFormatted : null}
 
-                    {prepNotes ? (<Row><Col xs={{span: 'auto', offset: 2}}>Notes : {prepNotes}</Col> </Row>) : null}
+                    {prepNotes ? (<Row className='checkout-prep-notes'><Col xs={{span: 'auto', offset: 2}}>Notes
+                        : {prepNotes}</Col> </Row>) : null}
                 </Container>
             );
         })
