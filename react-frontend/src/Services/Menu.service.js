@@ -1,5 +1,6 @@
 import axios from "axios";
 import {APIPaths} from "../paths";
+
 class MenuService {
 
     sections;
@@ -46,29 +47,36 @@ class MenuService {
     }
 
     updateItem =(item) => {
-        if(item){
+        if (item) {
             this.orderItems[item.id] = item;
         }
         this.setTotal();
     }
 
-    getOrderItems =() => {
+    getOrderItems = () => {
         return this.orderItems || {};
+    }
+
+    getOrderItemsAsArray = () => {
+        return Object.values(this.getOrderItems()) || [];
     }
 
     setTotal = () => {
         const keys = Object.keys(this.orderItems);
         let total = 0;
         keys.forEach(key => {
-            if(this.orderItems[key].total){
+            if (this.orderItems[key].total) {
                 total = total + this.orderItems[key].total
             }
         });
         this.total = total;
     }
     getTotal = () => {
-        const total  = this.total || 0;
+        const total = this.total || 0;
         return total.toFixed(2);
+    }
+    getIsDemo = () => {
+        return this.demo
     }
 
 }

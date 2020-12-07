@@ -33,7 +33,7 @@ class ItemCardComponent extends Component {
     }
 
     getPropsToSubmit = (state) => {
-        const {id, prepNotes, count, price, selectedOptions} = state;
+        const {id, prepNotes, count, price, selectedOptions, name} = state;
         let optionCost = 0;
         selectedOptions.forEach(option => {
             if (option && option.price) {
@@ -41,7 +41,7 @@ class ItemCardComponent extends Component {
             }
         });
         return {
-            id, prepNotes, count,
+            id, prepNotes, count, name, price,
             selectedOptions: selectedOptions || [],
             total: (((price + optionCost) * 100) * count) / 100
         };

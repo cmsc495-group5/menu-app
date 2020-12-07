@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import {Multiselect} from "multiselect-react-dropdown";
-import {Col, Row} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component";
 import ImagePickerInp from '../ReusableComponents/ImagePickerInput/ImagePickerInp';
 import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.component";
-import {reorder, formatOptions} from "../utils";
+import {formatOptions, reorder} from "../utils";
 import {APIPaths, Paths} from "../../paths";
 
 class CreateItem extends Component {
@@ -111,7 +111,7 @@ class CreateItem extends Component {
         const selectedOptions = formatOptions(options);
         
         return (
-            <div className="container">
+            <Container className="container">
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">
@@ -119,9 +119,10 @@ class CreateItem extends Component {
                         </h3>
                     </div>
                     <div className="panel-body">
+                        <h4><Link to={Paths.showAllItems}>Item List</Link></h4>
                         <Row>
                             <Col xs={6}>
-                                <h4><Link to={Paths.showAllItems}>Item List</Link></h4>
+
 
                                 <form onSubmit={this.onSubmit}>
                                     <div className="form-group">
@@ -188,7 +189,7 @@ class CreateItem extends Component {
                         <ReturnMenu/>
                     </div>
                 </div>
-            </div>
+            </Container>
         );
     }
 }

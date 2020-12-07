@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import {Multiselect} from "multiselect-react-dropdown";
-import {Col, Row} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import MenuSection from "../ReusableComponents/MenuSection/MenuSection.component";
 import SectionCardComponent from "../ReusableComponents/SectionCard/SectionCard.component";
 import '../../SharedStyles/admin.css'
@@ -83,7 +83,7 @@ class CreateSection extends Component {
         const formattedOptions = formatItemOptions(optionItems)
 
         return (
-            <div className="container">
+            <Container className="container">
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">
@@ -91,10 +91,9 @@ class CreateSection extends Component {
                         </h3>
                     </div>
                     <div className="panel-body">
+                        <h4><Link to={Paths.showAllSections}>Section List</Link></h4>
                         <Row>
                             <Col xs={6}>
-                                <h4><Link to={Paths.showAllSections}>Section List</Link></h4>
-
                                 <form onSubmit={this.onSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="title">Title:</label>
@@ -155,7 +154,7 @@ class CreateSection extends Component {
                         </Row>
                     </div>
                 </div>
-            </div>
+            </Container>
         );
     }
 }

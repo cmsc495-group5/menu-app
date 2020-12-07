@@ -17,13 +17,14 @@ class LandingMenu extends Component {
         const {sections, navigateTo} = this.state;
         const sectionsOptions = sections.length ? sections.map(section => {
             return (
-                <SectionCardComponent section={section} navigateTo={navigateTo}></SectionCardComponent>
+                <SectionCardComponent section={section} navigateTo={navigateTo} key={section.id}></SectionCardComponent>
             );
         }) : null;
         return (
             <div>
-                <div className="menu-description">{}</div>
+
                 <div className='menu-header-menu'> Menu</div>
+                <div className="menu-description">{this.state.description}</div>
                 <div className={'main-menu-container'}>
                     {sectionsOptions}
                 </div>

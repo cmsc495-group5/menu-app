@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
+import {Container} from "react-bootstrap";
 
 class ShowItems extends Component {
 
@@ -22,7 +23,7 @@ class ShowItems extends Component {
 
     render() {
         return (
-            <div className="container">
+            <Container className="container">
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">
@@ -54,7 +55,7 @@ class ShowItems extends Component {
                         <ReturnMenu/>
                     </div>
                 </div>
-            </div>
+            </Container>
         );
     }
 }

@@ -1,6 +1,6 @@
 import {Component} from "react";
 import Row from "react-bootstrap/Row";
-import {Col} from "react-bootstrap";
+import {Col, Container} from "react-bootstrap";
 import IconButton from "@material-ui/core/IconButton";
 import {Icon} from "semantic-ui-react";
 import './swap.css'
@@ -43,7 +43,7 @@ class SwapOrderComponent extends Component {
             return construct;
         })
 
-        return (<div className={'swap-order-container'}>{options}</div>);
+        return (<Container className={'swap-order-container'}>{options}</Container>);
 
     }
 }

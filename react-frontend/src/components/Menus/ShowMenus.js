@@ -4,6 +4,7 @@ import axios from 'axios';
 import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 import './menus.css'
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
+import {Container} from "react-bootstrap";
 
 class ShowMenus extends Component {
 
@@ -23,7 +24,7 @@ class ShowMenus extends Component {
 
     render() {
         return (
-            <div className="container">
+            <Container className="container">
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">
@@ -58,7 +59,7 @@ class ShowMenus extends Component {
                         <ReturnMenu/>
                     </div>
                 </div>
-            </div>
+            </Container>
         );
     }
 }
