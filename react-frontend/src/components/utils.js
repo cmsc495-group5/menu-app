@@ -46,9 +46,28 @@ export function formatItemOptions(optionsArray) {
 
         return ({
             ...option,
-            display: `${trimName} $${price ? price.toFixed(2) : 0.00}`
+            display: `${trimName} $${formatPrice(price)}`
         })
 
     });
     return formattedItemsOptions;
+}
+
+export function formatPrice(price) {
+    if (isNaN(price)) {
+        return 0.00;
+    }
+    return `$${price ? parseFloat(price).toFixed(2) : 0.00}`
+}
+
+export function getQueryVariable(variable) {
+    const query = window.location.search.substring(1);
+    const vars = query.split("&");
+    for (let i = 0; i < vars.length; i++) {
+        const pair = vars[i].split("=");
+        if (pair[0] === variable) {
+            return pair[1];
+        }
+    }
+    return false;
 }

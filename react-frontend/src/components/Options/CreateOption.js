@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import {APIPaths, Paths} from "../../paths";
+import {Container} from "react-bootstrap";
 
 class CreateOption extends Component {
 
@@ -56,7 +57,7 @@ class CreateOption extends Component {
             updated
         } = this.state;
         return (
-            <div className="container">
+            <Container className="container">
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">
@@ -92,7 +93,7 @@ class CreateOption extends Component {
                         </form>
                     </div>
                 </div>
-            </div>
+            </Container>
         );
     }
 }

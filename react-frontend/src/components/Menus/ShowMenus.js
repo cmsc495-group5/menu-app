@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import './menus.css'
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
+import {Container} from "react-bootstrap";
 
 class ShowMenus extends Component {
 
@@ -22,7 +23,7 @@ class ShowMenus extends Component {
 
     render() {
         return (
-            <div className="container">
+            <Container className="container">
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">
@@ -56,7 +57,7 @@ class ShowMenus extends Component {
                         </table>
                     </div>
                 </div>
-            </div>
+            </Container>
         );
     }
 }

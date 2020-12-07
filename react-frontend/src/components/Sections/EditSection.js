@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import {Col, Row} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import {Multiselect} from "multiselect-react-dropdown";
 import MenuSection from "../ReusableComponents/MenuSection/MenuSection.component";
 import SectionCardComponent from "../ReusableComponents/SectionCard/SectionCard.component";
@@ -90,7 +90,7 @@ class EditSection extends Component {
         const formattedOptions = formatItemOptions(this.state.optionItems)
         const formattedSelections = formatItemOptions(this.state.section.items);
         return (
-            <div className="container">
+            <Container className="container">
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">
@@ -98,11 +98,10 @@ class EditSection extends Component {
                         </h3>
                     </div>
                     <div className="panel-body">
+                        <h4><Link to={Paths.showAllSections}> Section List</Link></h4>
                         <Row>
                             <Col xs={6}>
-                                <h4>
-                                    <Link to={Paths.showAllSections}> Section List</Link>
-                                </h4>
+
                                 <form onSubmit={this.onSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="title">Title:</label>
@@ -172,7 +171,7 @@ class EditSection extends Component {
                         </Row>
                     </div>
                 </div>
-            </div>
+            </Container>
         );
     }
 

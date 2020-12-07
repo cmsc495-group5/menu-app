@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {Multiselect} from "multiselect-react-dropdown";
 import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.component";
 import {formatSection, reorder} from "../utils";
-import {Col, Row} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import MenuComponent from "../MenuComponent/Menu.component";
 import MenuService from "../../Services/Menu.service";
 import "./menus.css"
@@ -107,36 +107,39 @@ class EditMenu extends Component {
         const formattedSections = formatSection(this.state.sectionOptions);
         const selectedSections = formatSection(this.state.menu.sections);
         return (
-            <div className="container">
+            <Container className="container">
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">
                             EDIT Menu
                         </h3>
                     </div>
+
                     <div className="panel-body">
-                        <Row>
-                            <Col xs={6}>
-                        <h4><Link to={interpolateWithId(Paths.showMenu, this.props.match.params.id)}>
+                        <h4><Link to={interpolateWithId(Paths.showAllMenus, this.props.match.params.id)}>
                             Menu List
                         </Link></h4>
-                        <form onSubmit={this.onSubmit}>
-                            <div className="form-group">
-                                <label htmlFor="title">Title:</label>
-                                <input type="text" className="form-control" name="title" value={this.state.menu.title}
-                                       onChange={this.onChange} placeholder="Title"/>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="description">Description:</label>
-                                <input type="text" className="form-control" name="description"
-                                       value={this.state.menu.description} onChange={this.onChange}
-                                       placeholder="Description"/>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="internalDescription">Internal Description:</label>
-                                <input type="text" className="form-control" name="internalDescription"
-                                       value={this.state.menu.internalDescription} onChange={this.onChange}
-                                       placeholder="Internal Description"/>
+                        <Row>
+                            <Col xs={6}>
+
+                                <form onSubmit={this.onSubmit}>
+                                    <div className="form-group">
+                                        <label htmlFor="title">Title:</label>
+                                        <input type="text" className="form-control" name="title"
+                                               value={this.state.menu.title}
+                                               onChange={this.onChange} placeholder="Title"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="description">Description:</label>
+                                        <input type="text" className="form-control" name="description"
+                                               value={this.state.menu.description} onChange={this.onChange}
+                                               placeholder="Description"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="internalDescription">Internal Description:</label>
+                                        <input type="text" className="form-control" name="internalDescription"
+                                               value={this.state.menu.internalDescription} onChange={this.onChange}
+                                               placeholder="Internal Description"/>
                             </div>
                             <div className="form-group ">
                                 <label htmlFor="active">Active: {this.state.initialActive ? '(to disable this menu activate another menu)' : ''}</label>
@@ -166,30 +169,30 @@ class EditMenu extends Component {
                                     closeOnSelect={false}
                                 />
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="swap">Position:</label>
-                                <SwapOrderComponent
-                                    options={this.state.menu.sections}
-                                    swapOptions={this.updateOrder }
-                                    key={this.state.loaded}>
-                                </SwapOrderComponent>
-                            </div>
-                            <button type="submit" className="btn btn-secondary">Update</button>
-                            <button onClick={this.onCancel} className="btn btn-secondary">cancel</button>
-                        </form>
+                                    <div className="form-group">
+                                        <label htmlFor="swap">Position:</label>
+                                        <SwapOrderComponent
+                                            options={this.state.menu.sections}
+                                            swapOptions={this.updateOrder}
+                                            key={this.state.loaded}>
+                                        </SwapOrderComponent>
+                                    </div>
+                                    <button type="submit" className="btn btn-secondary">Update</button>
+                                    <button onClick={this.onCancel} className="btn btn-secondary">cancel</button>
+                                </form>
                             </Col>
                             <Col xs={6}>
                                 <div className='preview-container-menu'>
                                     <MenuComponent
                                         key={this.state.loaded}
-                                        menuService={new MenuService({menu: this.state.menu, demo:true})}>
+                                        menuService={new MenuService({menu: this.state.menu, demo: true})}>
                                     </MenuComponent>
                                 </div>
                             </Col>
                         </Row>
                     </div>
                 </div>
-            </div>
+            </Container>
         );
     }
 }

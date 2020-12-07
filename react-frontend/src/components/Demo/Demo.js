@@ -3,6 +3,7 @@ import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component
 import Row from "react-bootstrap/Row";
 import "./Demo.css"
 import {getMockItem, getMockOption} from "./MockData";
+import {Container} from "react-bootstrap";
 
 class Demo extends Component {
     constructor(props) {
@@ -45,19 +46,18 @@ class Demo extends Component {
     render() {
         // we can sort items before mapping to ensure they go on the menu in order using the ordinal
         const items = this.items
-            .sort((itemA, itemB) => itemA.ordinal - itemB.ordinal)
             .map((item) =>
                 <ItemCardComponent data={item} itemUpdate={this.itemUpdate} key={item.id}/>
             )
         return (
-            <div>
+            <Container>
                 <Row>
                     <div className="demoHeightLimit">
                         {items}
                     </div>
                     Items from state: {JSON.stringify(this.state.items)}
                 </Row>
-            </div>
+            </Container>
         );
     }
 }
