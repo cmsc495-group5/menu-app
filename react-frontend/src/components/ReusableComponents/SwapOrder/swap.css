@@ -1,0 +1,10 @@
+.swap-hidden {
+    visibility: hidden;
+}
+.swap-order-container {
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    padding: 5px;
+    min-height: 22px;
+    position: relative;
+}

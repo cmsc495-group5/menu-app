@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import './options.css'
 import {Col, Row} from "react-bootstrap";
 import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
+import {APIPaths, interpolateWithId, Paths} from "../../paths";
 
 class ShowOption extends Component {
 
@@ -16,16 +17,16 @@ class ShowOption extends Component {
     }
 
     componentDidMount() {
-        axios.get('/options/' + this.props.match.params.id)
+        axios.get(interpolateWithId(APIPaths.options , this.props.match.params.id))
             .then(res => {
                 this.setState({optionItem: res.data, loaded: true});
             });
     }
 
     delete(id) {
-        axios.delete('/options/' + id)
+        axios.delete(interpolateWithId(APIPaths.options , id))
             .then((result) => {
-                this.props.history.push("/")
+                this.props.history.push(Paths.showAllOptions)
             });
     }
 
@@ -42,8 +43,7 @@ class ShowOption extends Component {
                     <div className="panel-body">
                         <Row>
                             <Col xs={6}>
-                                <h4><Link to="/admin/options"><span className="glyphicon glyphicon-th-list"
-                                                                    aria-hidden="true"></span> Option List</Link></h4>
+                                <h4><Link to={Paths.showAllOptions}> Option List</Link></h4>
                                 <dl>
                                     <dt>Name:</dt>
                                     <dd>{this.state.optionItem.name}</dd>
@@ -58,7 +58,7 @@ class ShowOption extends Component {
                                     <dt>Image:</dt>
                                     <dd>{this.state.optionItem.image}</dd>
                                 </dl>
-                                <Link to={`/admin/editOption/${this.state.optionItem.id}`}
+                                <Link to={interpolateWithId(Paths.editOption, this.state.optionItem.id)}
                                       className="btn btn-success">Edit</Link>&nbsp;
                                 <button onClick={this.delete.bind(this, this.state.optionItem.id)}
                                         className="btn btn-danger">Delete

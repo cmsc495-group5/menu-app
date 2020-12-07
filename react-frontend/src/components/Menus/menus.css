@@ -1,0 +1,20 @@
+.preview-container-menu {
+    height: 667px;
+    width: 375px;
+}
+
+.menu-container {
+    max-height: 100%;
+    transform: translateX(0);
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    min-height: 22px;
+    position: relative;
+}
+
+.container.item-card-container {
+    padding: 0;
+}
+.table-highlight-green {
+    background-color: lightgreen;
+}

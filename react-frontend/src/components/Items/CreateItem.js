@@ -6,6 +6,9 @@ import {Col, Row} from "react-bootstrap";
 import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component";
 import ImagePickerInp from '../ReusableComponents/ImagePickerInput/ImagePickerInp';
 import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
+import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.component";
+import {reorder, formatOptions} from "../utils";
+import {APIPaths, Paths} from "../../paths";
 
 class CreateItem extends Component {
 
@@ -23,12 +26,13 @@ class CreateItem extends Component {
             loaded: 0,
             img: {
                 src: ""
-            }
+            },
+            ordinal: null,
         };
     }
 
     componentDidMount() {
-        axios.get('/options')
+        axios.get(APIPaths.options)
             .then(res => {
                 this.setState({...this.state, optionItems: res.data});
             });
@@ -59,9 +63,10 @@ class CreateItem extends Component {
             updated,
             optionItems,
             img,
+            ordinal
         } = this.state;
 
-        axios.post('/items', {
+        axios.post(APIPaths.items, {
             name,
             description,
             internalDescription,
@@ -69,22 +74,19 @@ class CreateItem extends Component {
             price,
             options,
             img,
+            ordinal,
         })
             .then((result) => {
-                this.props.history.push("/admin/items")
+                this.props.history.push(Paths.showAllItems)
             });
     }
     updateSelected = (selected) => {
         const newState = {...this.state, options: selected, loaded: this.state.loaded + 1};
         this.setState(newState);
     }
-
-    formatOptions(optionsArray) {
-        const formattedOptions = optionsArray.map(option => ({
-            ...option,
-            display: `${option.name} $${option.price ? option.price.toFixed(2) : 0.00}`
-        }));
-        return formattedOptions;
+    updateOrder = (option, change) => {
+        let reordered = reorder(option, change, this.state.options)
+        this.setState({...this.state, options: reordered, loaded: this.state.loaded + 1});
     }
 
     updateImageData = (imgData) => {
@@ -104,8 +106,6 @@ class CreateItem extends Component {
             price,
             options,
             optionItems,
-            active,
-            updated
         } = this.state;
 
         const formattedOptions = this.formatOptions(optionItems)
@@ -122,7 +122,7 @@ class CreateItem extends Component {
                     <div className="panel-body">
                         <Row>
                             <Col xs={6}>
-                                <h4><Link to="../admin/items">Item List</Link></h4>
+                                <h4><Link to={Paths.showAllItems}>Item List</Link></h4>
 
                                 <form onSubmit={this.onSubmit}>
                                     <div className="form-group">
@@ -157,9 +157,18 @@ class CreateItem extends Component {
                                             selectedValues={selectedOptions}
                                             onSelect={this.updateSelected}
                                             onRemove={this.updateSelected}
+                                            showCheckbox={true}
+                                            closeOnSelect={false}
                                         />
                                     </div>
-
+                                    <div className="form-group">
+                                        <label htmlFor="swap">Position:</label>
+                                        <SwapOrderComponent
+                                            options={this.state.options}
+                                            swapOptions={this.updateOrder}
+                                            key={this.state.loaded}>
+                                        </SwapOrderComponent>
+                                    </div>
                                     <div className="form-group">
                                         <label htmlFor="image">Item Image:</label>
                                         <ImagePickerInp
@@ -177,7 +186,6 @@ class CreateItem extends Component {
                                 </div>
                             </Col>
                         </Row>
-
                         <ReturnMenu/>
                     </div>
                 </div>

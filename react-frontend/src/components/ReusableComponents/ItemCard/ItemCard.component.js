@@ -7,6 +7,7 @@ import "./ItemCard.css"
 import PopupTextFieldComponent from "../PopupTextfield/PopupTextField.component";
 import {IconButton} from "@material-ui/core";
 import {Form, Icon} from "semantic-ui-react";
+import {formatOptions} from "../../utils";
 
 class ItemCardComponent extends Component {
     constructor(props) {
@@ -92,10 +93,7 @@ class ItemCardComponent extends Component {
             image, price,
             options, prepNotes, selectedOptions
         } = this.state;
-        const formattedOptions = options.map(option => ({
-            ...option,
-            display: `${option.name} $${option.price ? option.price.toFixed(2) : 0.00}`
-        }));
+        const formattedOptions = formatOptions(options);
 
         const imageElement = image
             ? (<Col xs={5}><Card.Img as={Image} fluid={true} src={image} className='item-image'/></Col>)
@@ -152,6 +150,8 @@ class ItemCardComponent extends Component {
                                         selectedValues={selectedOptions}
                                         onSelect={this.updateSelected}
                                         onRemove={this.updateSelected}
+                                        showCheckbox={true}
+                                        closeOnSelect={false}
                                     >
                                     </Multiselect>
                                 </Col>

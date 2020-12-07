@@ -4,8 +4,10 @@ import {Link} from 'react-router-dom';
 import {Col, Row} from "react-bootstrap";
 import {Multiselect} from "multiselect-react-dropdown";
 import MenuSection from "../ReusableComponents/MenuSection/MenuSection.component";
-import {formatItemOptions} from "./section.util";
 import SectionCardComponent from "../ReusableComponents/SectionCard/SectionCard.component";
+import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.component";
+import {formatItemOptions, reorder} from "../utils";
+import {APIPaths, interpolateWithId, Paths} from "../../paths";
 
 class EditSection extends Component {
 
@@ -27,11 +29,11 @@ class EditSection extends Component {
     }
 
     componentDidMount() {
-        axios.get('/sections/' + this.props.match.params.id)
+        axios.get(interpolateWithId(APIPaths.sections, this.props.match.params.id))
             .then(res => {
                 this.setState({...this.state, section: res.data, loaded: this.state.loaded + 1});
             });
-        axios.get('/items')
+        axios.get(APIPaths.items)
             .then(res => {
                 this.setState({...this.state, optionItems: res.data});
             });
@@ -52,6 +54,11 @@ class EditSection extends Component {
         this.setState(newState);
     }
 
+    updateOrder = (option, change) => {
+        const orderedOptions = reorder(option, change, this.state.section.items);
+        this.setState({...this.state, section: {...this.state.section, items: orderedOptions}, loaded: this.state.loaded +1});
+    }
+
     onSubmit = (e) => {
         e.preventDefault();
 
@@ -63,7 +70,7 @@ class EditSection extends Component {
             items,
         } = this.state.section;
 
-        axios.put('/sections/' + this.props.match.params.id, {
+        axios.put(interpolateWithId(APIPaths.sections, this.props.match.params.id), {
             title,
             description,
             internalDescription,
@@ -71,13 +78,17 @@ class EditSection extends Component {
             items,
         })
             .then((result) => {
-                this.props.history.push("/admin/showSection/" + this.props.match.params.id)
+                this.props.history.push(interpolateWithId(Paths.showSection, this.props.match.params.id))
             });
+    }
+    onCancel =(e) => {
+        e.preventDefault();
+        this.props.history.push(interpolateWithId(Paths.showSection, this.props.match.params.id))
     }
 
     render() {
         const formattedOptions = formatItemOptions(this.state.optionItems)
-        const formattedSelections = formatItemOptions(this.state.section.items)
+        const formattedSelections = formatItemOptions(this.state.section.items);
         return (
             <div className="container">
                 <div className="panel panel-default">
@@ -89,9 +100,8 @@ class EditSection extends Component {
                     <div className="panel-body">
                         <Row>
                             <Col xs={6}>
-                                <h4><Link to={`/admin/sections/${this.state.section.id}`}><span
-                                    className="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Section
-                                    List</Link>
+                                <h4>
+                                    <Link to={Paths.showAllSections}> Section List</Link>
                                 </h4>
                                 <form onSubmit={this.onSubmit}>
                                     <div className="form-group">
@@ -123,9 +133,21 @@ class EditSection extends Component {
                                             onSelect={this.updateSelected}
                                             onRemove={this.updateSelected}
                                             key={this.state.optionItems}
+                                            showCheckbox={true}
+                                            closeOnSelect={false}
                                         />
                                     </div>
+                                    <div className="form-group">
+                                        <label htmlFor="swap">Position:</label>
+                                        <SwapOrderComponent
+                                            options={this.state.section.items}
+                                            swapOptions={this.updateOrder }
+                                            key={this.state.loaded}>
+                                        </SwapOrderComponent>
+                                    </div>
                                     <button type="submit" className="btn btn-secondary">Update</button>
+                                    <button onClick={this.onCancel} className="btn btn-secondary">cancel</button>
+
                                 </form>
                             </Col>
                             <Col xs={6}>
@@ -144,6 +166,9 @@ class EditSection extends Component {
                                     </div>
                                 </Row>
                             </Col>
+                        </Row>
+                        <Row>
+
                         </Row>
                     </div>
                 </div>
