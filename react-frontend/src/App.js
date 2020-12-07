@@ -1,13 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
-import ReturnMenu from './components/ReusableComponents/ReturnMenu/ReturnMenu'
-
 class App extends Component {
-
-    componentDidMount() {
-    }
-
     render() {
         const style = {
             display: "flex",

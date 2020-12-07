@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom';
 import {Multiselect} from "multiselect-react-dropdown";
 import {Col, Row} from "react-bootstrap";
 import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component";
+import ImagePickerInp from '../ReusableComponents/ImagePickerInput/ImagePickerInp';
+import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 
 class CreateItem extends Component {
 
@@ -19,6 +21,9 @@ class CreateItem extends Component {
             optionItems: [],
             updated: '',
             loaded: 0,
+            img: {
+                src: ""
+            }
         };
     }
 
@@ -53,6 +58,7 @@ class CreateItem extends Component {
             options,
             updated,
             optionItems,
+            img,
         } = this.state;
 
         axios.post('/items', {
@@ -62,6 +68,7 @@ class CreateItem extends Component {
             image,
             price,
             options,
+            img,
         })
             .then((result) => {
                 this.props.history.push("/admin/items")
@@ -80,6 +87,14 @@ class CreateItem extends Component {
         return formattedOptions;
     }
 
+    updateImageData = (imgData) => {
+        let newState = this.state
+        
+        if (imgData != null) newState.img = imgData;
+        
+        this.setState(newState);
+    }
+
     render() {
         const {
             name,
@@ -92,8 +107,10 @@ class CreateItem extends Component {
             active,
             updated
         } = this.state;
+
         const formattedOptions = this.formatOptions(optionItems)
         const selectedOptions = this.formatOptions(options);
+        
         return (
             <div className="container">
                 <div className="panel panel-default">
@@ -126,13 +143,13 @@ class CreateItem extends Component {
                                                placeholder="internalDescription"/>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="price">price:</label>
+                                        <label htmlFor="price">Price:</label>
                                         <input type="number" className="form-control" name="price" value={price}
                                                onChange={this.onChange} placeholder={0.00}/>
                                     </div>
 
                                     <div className="form-group">
-                                        <label htmlFor="options">options:</label>
+                                        <label htmlFor="options">Options:</label>
                                         <Multiselect
                                             options={formattedOptions}
                                             displayValue={'display'}
@@ -142,6 +159,14 @@ class CreateItem extends Component {
                                             onRemove={this.updateSelected}
                                         />
                                     </div>
+
+                                    <div className="form-group">
+                                        <label htmlFor="image">Item Image:</label>
+                                        <ImagePickerInp
+                                            onChange={(value) => this.updateImageData(value)}
+                                        />
+                                    </div>
+
                                     <button type="submit" className="btn btn-secondary">Submit</button>
                                 </form>
                             </Col>
@@ -152,6 +177,8 @@ class CreateItem extends Component {
                                 </div>
                             </Col>
                         </Row>
+
+                        <ReturnMenu/>
                     </div>
                 </div>
             </div>

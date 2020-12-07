@@ -59,13 +59,10 @@ class CreateMenu extends Component {
     }
 
     updateImageData = (imgData) => {
-        console.log("Update image was ran")
-        // console.log(imgData);
         let newState = this.state
         
         if (imgData != null) newState.img = imgData;
         
-        // console.log(newState)
         this.setState(newState);
     }
 

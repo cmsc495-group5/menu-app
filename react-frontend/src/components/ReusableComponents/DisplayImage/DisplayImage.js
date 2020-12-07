@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function DisplayImage(props) {
-
+  // console.log(props);
   if (props.imgSrc) {
     return (
       <div>

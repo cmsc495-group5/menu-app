@@ -5,6 +5,7 @@ import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component
 import '../../SharedStyles/admin.css'
 import {Col, Row} from "react-bootstrap";
 import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
+import DisplayImage from '../ReusableComponents/DisplayImage/DisplayImage';
 
 class ShowItem extends Component {
 
@@ -12,6 +13,9 @@ class ShowItem extends Component {
         super(props);
         this.state = {
             item: {},
+            img: {
+                src: null
+            },
             optionItems: [],
             loaded: false,
         };
@@ -20,7 +24,7 @@ class ShowItem extends Component {
     componentDidMount() {
         axios.get('/items/' + this.props.match.params.id)
             .then(res => {
-                this.setState({...this.state, item: res.data, loaded: true});
+                this.setState({...this.state, item: res.data, img: res.data.img, loaded: true});
             });
     }
 
@@ -58,7 +62,7 @@ class ShowItem extends Component {
                                     <dt>Updated:</dt>
                                     <dd>{this.state.item.updated}</dd>
                                     <dt>Image:</dt>
-                                    <dd>{this.state.item.image}</dd>
+                                    <dd><DisplayImage imgSrc={this.state.img.src}/></dd>
                                 </dl>
                                 <Link to={`/admin/editItem/${this.state.item.id}`}
                                       className="btn btn-success">Edit</Link>&nbsp;
