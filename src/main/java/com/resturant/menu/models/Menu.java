@@ -20,19 +20,15 @@ public class Menu {
     String internalDescription;
     String updated;
     HashMap img;
-    
-    @DBRef
-    Image image;
-    
+
     @DBRef
     Section[] sections;
 
-    public Menu(String title, String description, String internalDescription, Image image, Section[] sections, HashMap img) {
+    public Menu(String title, String description, String internalDescription, Section[] sections, Section[] sections1, HashMap img) {
         this.title = title;
         this.description = description;
         this.internalDescription = internalDescription;
         this.active = false;
-        this.image = image;
         this.sections = sections;
         this.img = img;
     }
@@ -68,7 +64,6 @@ public class Menu {
                 ", internalDescription='" + internalDescription + '\'' +
                 ", updated='" + updated + '\'' +
                 ", img=" + img +
-                ", image=" + image +
                 ", sections=" + Arrays.toString(sections) +
                 '}';
     }
@@ -91,14 +86,6 @@ public class Menu {
 
     public void setInternalDescription(String internalDescription) {
         this.internalDescription = internalDescription;
-    }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
     }
 
     public Section[] getSections() {

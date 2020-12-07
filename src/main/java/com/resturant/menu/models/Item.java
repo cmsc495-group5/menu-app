@@ -44,25 +44,21 @@ public class Item {
                 ", price=" + price +
                 ", updated='" + updated + '\'' +
                 ", img=" + img +
-                ", image=" + image +
                 ", options=" + Arrays.toString(options) +
                 '}';
     }
 
-    @DBRef
-    Image image;
     
     @DBRef
     Option[] options;
 
     
-     public Item(String name, String description, String internalDescription, String sectionId, Double price, Image image, Option[] options, HashMap img) {
+     public Item(String name, String description, String internalDescription, String sectionId, Double price, Option[] options, HashMap img) {
         this.name = name;
         this.description = description;
         this.internalDescription = internalDescription;
         this.sectionId = sectionId;
         this.price = price;
-        this.image = image;
         this.options = options;
         this.img = img;
     }
@@ -115,16 +111,8 @@ public class Item {
     public void setPrice(Double price) {
         this.price = price;
     }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
     
-     public Option[] getOptions() {
+    public Option[] getOptions() {
         return options;
     }
 

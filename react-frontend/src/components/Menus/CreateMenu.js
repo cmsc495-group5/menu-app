@@ -20,7 +20,6 @@ class CreateMenu extends Component {
             title: '',
             description: '',
             internalDescription: '',
-            imageId: null,
             sections: [],
             active: false,
             updated: '',
@@ -62,7 +61,6 @@ class CreateMenu extends Component {
             title,
             description,
             internalDescription,
-            imageId,
             sections,
             active,
             updated,
@@ -73,7 +71,6 @@ class CreateMenu extends Component {
             title,
             description,
             internalDescription,
-            imageId,
             sections,
             img,
             active
@@ -96,7 +93,6 @@ class CreateMenu extends Component {
             title,
             description,
             internalDescription,
-            imageId,
             sections,
             active,
             optionSections
