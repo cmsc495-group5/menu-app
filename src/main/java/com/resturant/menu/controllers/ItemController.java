@@ -16,9 +16,11 @@ public class ItemController {
     ImageService imageService;
 
     @Autowired
-    public ItemController(ItemService itemService){
+    public ItemController(ItemService itemService, ImageService imageService){
+        this.imageService = imageService;
         this.itemService = itemService;
     }
+
 
     @RequestMapping(method= RequestMethod.GET, value="/items")
     public Iterable<Item> item(){
@@ -28,10 +30,10 @@ public class ItemController {
     @RequestMapping(method=RequestMethod.POST, value="/items")
     public Item save(@RequestBody Item item){
         item.setUpdated(new Date().toString());
-        System.out.println(item.getImg());
 
         imageService.saveImage(new Image(item.getImg().get("name").toString(), item.getImg().get("src").toString()));
         itemService.saveItem(item);
+
         return item;
     }
 

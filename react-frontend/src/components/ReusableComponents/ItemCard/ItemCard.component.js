@@ -32,17 +32,10 @@ class ItemCardComponent extends Component {
         this.open = false;
     }
 
-    componentWillUnmount = () => {
-        // console.log(this.state);
-        // console.log(this.props);
-    }
-
     componentDidMount = () => {
-        console.log({compDidMount: this.props.data.img});
         let newState = {...this.state};
         newState.image = this.props.data.img.src;
         this.setState(newState);
-        console.log(this.state)
     }
 
     getPropsToSubmit = (state) => {

@@ -16,7 +16,6 @@ public class Image {
         this.image = image;
     }
 
-
     public String getId() {
         return id;
     }
@@ -39,5 +38,14 @@ public class Image {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "Image{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
+                '}';
     }
 }

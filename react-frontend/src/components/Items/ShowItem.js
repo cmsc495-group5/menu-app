@@ -26,7 +26,6 @@ class ShowItem extends Component {
         axios.get(interpolateWithId(APIPaths.items, this.props.match.params.id))
             .then(res => {
                 this.setState({...this.state, item: res.data, img: res.data.img, loaded: true});
-                console.log(this.state)
             });
     }
 
