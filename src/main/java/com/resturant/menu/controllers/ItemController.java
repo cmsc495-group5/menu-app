@@ -1,6 +1,8 @@
 package com.resturant.menu.controllers;
 
+import com.resturant.menu.models.Image;
 import com.resturant.menu.models.Item;
+import com.resturant.menu.services.ImageService;
 import com.resturant.menu.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,7 @@ import java.util.Optional;
 @RestController
 public class ItemController {
     ItemService itemService;
+    ImageService imageService;
 
     @Autowired
     public ItemController(ItemService itemService){
@@ -27,7 +30,7 @@ public class ItemController {
         item.setUpdated(new Date().toString());
         System.out.println(item.getImg());
 
-
+        imageService.saveImage(new Image(item.getImg().get("name").toString(), item.getImg().get("src").toString()));
         itemService.saveItem(item);
         return item;
     }

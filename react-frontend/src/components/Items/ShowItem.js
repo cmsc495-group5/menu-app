@@ -22,11 +22,16 @@ class ShowItem extends Component {
         };
     }
 
-    componentDidMount() {
+    componentWillMount() {
         axios.get(interpolateWithId(APIPaths.items, this.props.match.params.id))
             .then(res => {
                 this.setState({...this.state, item: res.data, img: res.data.img, loaded: true});
+                console.log(this.state)
             });
+    }
+
+    componentDidMount() {
+        this.forceUpdate();
     }
 
     delete(id) {
@@ -37,6 +42,8 @@ class ShowItem extends Component {
     }
 
     render() {
+        if (!this.state.loaded) return <div/>
+
         return (
             <Container className="container">
 
@@ -79,9 +86,7 @@ class ShowItem extends Component {
                         </Row>
                         <ReturnMenu/>
                     </div>
-
                 </div>
-
 
             </Container>
         );

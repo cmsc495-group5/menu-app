@@ -25,11 +25,24 @@ class ItemCardComponent extends Component {
             total: total || 0,
             prepNotes: prepNotes || '',
             options: options || [],
-            image: data.img.src,
+            image: "",
             price,
             selectedOptions: selectedOptions || []
         };
         this.open = false;
+    }
+
+    componentWillUnmount = () => {
+        // console.log(this.state);
+        // console.log(this.props);
+    }
+
+    componentDidMount = () => {
+        console.log({compDidMount: this.props.data.img});
+        let newState = {...this.state};
+        newState.image = this.props.data.img.src;
+        this.setState(newState);
+        console.log(this.state)
     }
 
     getPropsToSubmit = (state) => {
@@ -162,7 +175,6 @@ class ItemCardComponent extends Component {
             </div>
         );
     }
-
 }
 
 export default ItemCardComponent;
