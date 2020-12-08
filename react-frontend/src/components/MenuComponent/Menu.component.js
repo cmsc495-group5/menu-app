@@ -18,7 +18,8 @@ class MenuComponent extends Component {
             sections: [],
             loadedSections: {},
             loadedSection: this.HOME,
-            currentTotal: 0
+            currentTotal: 0,
+            menuImage: props.menuImg || ''
         }
         if(props.menuService) {
             this.menuService = props.menuService;
@@ -126,6 +127,7 @@ class MenuComponent extends Component {
                         </Dropdown.Menu>
                     </Dropdown>
                     <Menu.Menu id={this.HOME} className='menu-header-title' onClick={() => this.onNavClick(this.HOME)}>
+                        {this.state.menuImage ?  <img src={this.state.menuImage} style={{"height" : "25px", "margin-right": "7px"}} alt="menu logo"></img> : 'x'}
                         {this.getTitleContents(loadedSection)}
                     </Menu.Menu>
                 </Menu>

@@ -25,7 +25,7 @@ class ItemCardComponent extends Component {
             total: total || 0,
             prepNotes: prepNotes || '',
             options: options || [],
-            image,
+            image: data.img.src,
             price,
             selectedOptions: selectedOptions || []
         };

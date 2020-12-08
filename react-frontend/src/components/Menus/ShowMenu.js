@@ -88,7 +88,9 @@ class ShowMenu extends Component {
                                 <div className='preview-container-menu'>
                                     <MenuComponent
                                         key={this.state.loaded}
-                                        menuService={new MenuService({menu: this.state.menu, demo: true})}>
+                                        menuService={new MenuService({menu: this.state.menu, demo: true})}
+                                        menuImg={this.state.menu.img && this.state.menu.img.src || ''}
+                                        >
                                     </MenuComponent>
                                 </div>
                             </Col>
