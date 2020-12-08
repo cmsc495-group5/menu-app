@@ -25,6 +25,9 @@ public class ItemController {
     @RequestMapping(method=RequestMethod.POST, value="/items")
     public Item save(@RequestBody Item item){
         item.setUpdated(new Date().toString());
+        System.out.println(item.getImg());
+
+
         itemService.saveItem(item);
         return item;
     }
