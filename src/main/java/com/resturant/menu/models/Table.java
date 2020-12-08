@@ -20,6 +20,8 @@ public class Table {
     //Reading from application.properties would be a good next step
     private final String tableBaseUrl = "http://localhost:8080/order/table/";
     
+    public Table() {}
+    
     public Table(String label) {
         this.label = label;
     }
