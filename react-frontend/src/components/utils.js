@@ -60,6 +60,15 @@ export function formatPrice(price) {
     return `$${price ? parseFloat(price).toFixed(2) : 0.00}`
 }
 
+export function formatImages(imagesArray) {
+    let out = [];
+    imagesArray.map(e => {
+        out.push(e.name)
+    });
+    console.log(out)
+    return out;
+}
+
 export function getQueryVariable(variable) {
     const query = window.location.search.substring(1);
     const vars = query.split("&");

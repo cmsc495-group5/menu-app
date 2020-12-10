@@ -9,6 +9,7 @@ import '../../SharedStyles/admin.css'
 import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.component";
 import {formatItemOptions, reorder} from "../utils";
 import {APIPaths, Paths} from "../../paths";
+import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 
 class CreateSection extends Component {
 
@@ -153,6 +154,7 @@ class CreateSection extends Component {
                             </Col>
                         </Row>
                     </div>
+                    <ReturnMenu/>
                 </div>
             </Container>
         );

@@ -43,6 +43,16 @@ public class ImageServiceImpl implements ImageService {
         return imageRepository.findById(id);
     }
 
+    // Used in itemController.java:save()
+    @Override
+    public Image getImageByName(String name) {
+        Iterable<Image> images = getImages();
+
+        for (Image i : images) if (i.getName().equals(name)) return i;
+
+        return null;
+    }
+
     @Override
     public String deleteImage(String id) {
         Optional<Image> optImage = imageRepository.findById(id);

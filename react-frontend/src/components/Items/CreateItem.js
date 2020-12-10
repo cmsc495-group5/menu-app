@@ -7,8 +7,11 @@ import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component
 import ImagePickerInp from '../ReusableComponents/ImagePickerInput/ImagePickerInp';
 import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.component";
-import {formatOptions, reorder} from "../utils";
+import {formatOptions, formatImages, reorder} from "../utils";
 import {APIPaths, Paths} from "../../paths";
+import Dropdown from 'react-dropdown';
+
+import 'react-dropdown/style.css';
 
 class CreateItem extends Component {
 
@@ -21,6 +24,7 @@ class CreateItem extends Component {
             price: 0,
             options: [],
             optionItems: [],
+            images: [],
             updated: '',
             loaded: 0,
             img: {
@@ -34,6 +38,12 @@ class CreateItem extends Component {
         axios.get(APIPaths.options)
             .then(res => {
                 this.setState({...this.state, optionItems: res.data});
+            });
+
+        axios.get(APIPaths.images)
+            .then(res => {
+                this.setState({...this.state, images: res.data});
+                console.log(res.data)
             });
     }
 
@@ -88,9 +98,16 @@ class CreateItem extends Component {
         this.setState({...this.state, options: reordered, loaded: this.state.loaded + 1});
     }
 
-    updateImageData = (imgData) => {
+    updateImageData = (imgData, fromDropdown) => {
         let newState = this.state
         
+        if (fromDropdown) {
+            if (this.state.images.contains(imgData)) {
+                const idx = this.state.images.indexOf(imgData);
+                imgData = this.state.images[idx]
+            }
+        }
+
         if (imgData != null) newState.img = imgData;
         
         this.setState(newState);
@@ -102,6 +119,7 @@ class CreateItem extends Component {
             description,
             internalDescription,
             image,
+            images,
             price,
             options,
             optionItems,
@@ -109,7 +127,8 @@ class CreateItem extends Component {
 
         const formattedOptions = formatOptions(optionItems)
         const selectedOptions = formatOptions(options);
-        
+        const imageOptions = formatImages(images)
+
         return (
             <Container className="container">
                 <div className="panel panel-default">
@@ -172,8 +191,20 @@ class CreateItem extends Component {
                                     <div className="form-group">
                                         <label htmlFor="image">Item Image:</label>
                                         <ImagePickerInp
-                                            onChange={(value) => this.updateImageData(value)}
+                                            onChange={(value) => this.updateImageData(value, false)}
                                         />
+                                        <br/>
+                                        { 
+                                            (this.state.images.length != 0) ? 
+                                                <Dropdown 
+                                                    options={imageOptions} 
+                                                    onChange={(value) => this.updateImageData(value, true)} 
+                                                    value={null} 
+                                                    placeholder="Select a previously uploaded image" 
+                                                />
+                                                : ""
+                                        }
+                                        <br/>
                                     </div>
 
                                     <button type="submit" className="btn btn-secondary">Submit</button>

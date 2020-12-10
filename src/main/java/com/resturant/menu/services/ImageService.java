@@ -10,4 +10,5 @@ public interface ImageService {
     Image updateImage(String id, Image image);
     Optional<Image> getImageById(String id);
     String deleteImage(String id);
+    Image getImageByName(String name);
 }

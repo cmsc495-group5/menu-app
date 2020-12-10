@@ -21,7 +21,6 @@ public class ItemController {
         this.itemService = itemService;
     }
 
-
     @RequestMapping(method= RequestMethod.GET, value="/items")
     public Iterable<Item> item(){
         return itemService.getItems();
@@ -31,7 +30,13 @@ public class ItemController {
     public Item save(@RequestBody Item item){
         item.setUpdated(new Date().toString());
 
-        imageService.saveImage(new Image(item.getImg().get("name").toString(), item.getImg().get("src").toString()));
+        if (item.getImg() != null) {
+            String n = item.getImg().get("name").toString();
+
+            imageService.getImageByName(n);
+            imageService.saveImage(new Image(n, item.getImg().get("src").toString()));
+        }
+
         itemService.saveItem(item);
 
         return item;
