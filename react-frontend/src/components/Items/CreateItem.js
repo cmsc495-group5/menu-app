@@ -25,6 +25,8 @@ class CreateItem extends Component {
             options: [],
             optionItems: [],
             images: [],
+            imageListForDropdown: [],
+            imgID: "",
             updated: '',
             loaded: 0,
             img: {
@@ -35,15 +37,18 @@ class CreateItem extends Component {
     }
 
     componentDidMount() {
+        let newState = {...this.state}
+
         axios.get(APIPaths.options)
             .then(res => {
-                this.setState({...this.state, optionItems: res.data});
+                newState.optionItems = res.data;
             });
 
         axios.get(APIPaths.images)
             .then(res => {
-                this.setState({...this.state, images: res.data});
-                console.log(res.data)
+                newState.images = res.data;
+                res.data.map((e) => { this.state.imageListForDropdown.push(e[0]) })
+                this.setState(newState)
             });
     }
 
@@ -71,6 +76,7 @@ class CreateItem extends Component {
             updated,
             optionItems,
             img,
+            imgID,
             ordinal
         } = this.state;
 
@@ -81,6 +87,7 @@ class CreateItem extends Component {
             price,
             options,
             img,
+            imgID,
             ordinal,
         })
             .then((result) => {
@@ -102,14 +109,14 @@ class CreateItem extends Component {
         let newState = this.state
         
         if (fromDropdown) {
-            if (this.state.images.contains(imgData)) {
-                const idx = this.state.images.indexOf(imgData);
-                imgData = this.state.images[idx]
-            }
+            this.state.images.map(e => {
+                if (e[0] == imgData.value) newState.imgID = e[1];
+            })
+        } else {
+            if (imgData != null) newState.img = imgData;
         }
-
-        if (imgData != null) newState.img = imgData;
         
+        console.log(newState)
         this.setState(newState);
     }
 
@@ -127,8 +134,8 @@ class CreateItem extends Component {
 
         const formattedOptions = formatOptions(optionItems)
         const selectedOptions = formatOptions(options);
-        const imageOptions = formatImages(images)
-
+        // const imageOptions = formatImages(images)
+        
         return (
             <Container className="container">
                 <div className="panel panel-default">
@@ -147,24 +154,24 @@ class CreateItem extends Component {
                                     <div className="form-group">
                                         <label htmlFor="name">Name:</label>
                                         <input type="text" className="form-control" name="name" value={name}
-                                               onChange={this.onChange} placeholder="Name"/>
+                                            onChange={this.onChange} placeholder="Name"/>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="description">Description:</label>
                                         <input type="text" className="form-control" name="description"
-                                               value={description}
-                                               onChange={this.onChange} placeholder="description"/>
+                                            value={description}
+                                            onChange={this.onChange} placeholder="description"/>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="internalDescription">Internal Description:</label>
                                         <input type="text" className="form-control" name="internalDescription"
-                                               value={internalDescription} onChange={this.onChange}
-                                               placeholder="internalDescription"/>
+                                            value={internalDescription} onChange={this.onChange}
+                                            placeholder="internalDescription"/>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="price">Price:</label>
                                         <input type="number" className="form-control" name="price" value={price}
-                                               onChange={this.onChange} placeholder={0.00}/>
+                                            onChange={this.onChange} placeholder={0.00}/>
                                     </div>
 
                                     <div className="form-group">
@@ -197,12 +204,12 @@ class CreateItem extends Component {
                                         { 
                                             (this.state.images.length != 0) ? 
                                                 <Dropdown 
-                                                    options={imageOptions} 
+                                                    options={this.state.imageListForDropdown} 
                                                     onChange={(value) => this.updateImageData(value, true)} 
                                                     value={null} 
                                                     placeholder="Select a previously uploaded image" 
                                                 />
-                                                : ""
+                                                : ":("
                                         }
                                         <br/>
                                     </div>

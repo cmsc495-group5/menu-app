@@ -65,7 +65,6 @@ export function formatImages(imagesArray) {
     imagesArray.map(e => {
         out.push(e.name)
     });
-    console.log(out)
     return out;
 }
 

@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 @RestController
 public class ImageController {
     ImageService imageService;
@@ -17,7 +20,21 @@ public class ImageController {
     }
 
     @RequestMapping(method= RequestMethod.GET, value="/image")
-    public Iterable<Image> getAllImages() {
-        return imageService.getImages();
+    public ArrayList<ArrayList> getAllImages() {
+
+        Iterable<Image> imagesTemp = imageService.getImages();
+        ArrayList<ArrayList> out = new ArrayList<>();
+
+        for (Image i : imagesTemp) {
+            ArrayList<String> temp = new ArrayList<>();
+
+            temp.add(i.getName());
+            temp.add(i.getId());
+            temp.add(i.getImage());
+
+            out.add(temp);
+        }
+
+        return out;
     }
 }

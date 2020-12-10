@@ -14,16 +14,25 @@ public class Item {
     String id;
     String name;
     String description;
-    
+
     @BsonProperty(value="section_id")
     String sectionId;
-    
+
     @BsonProperty(value="internal_description")
     String internalDescription;
     Double price;
     String updated;
 
     HashMap img;
+    String imgID;
+
+    public String getImgID() {
+        return imgID;
+    }
+
+    public void setImgID(String imgID) {
+        this.imgID = imgID;
+    }
 
     public HashMap getImg() {
         return img;
@@ -44,15 +53,15 @@ public class Item {
                 ", price=" + price +
                 ", updated='" + updated + '\'' +
                 ", img=" + img +
+                ", imgID='" + imgID + '\'' +
                 ", options=" + Arrays.toString(options) +
                 '}';
     }
 
-    
     @DBRef
     Option[] options;
 
-    
+
      public Item(String name, String description, String internalDescription, String sectionId, Double price, Option[] options, HashMap img) {
         this.name = name;
         this.description = description;
@@ -87,7 +96,7 @@ public class Item {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public String getInternalDescription() {
         return internalDescription;
     }
@@ -95,15 +104,15 @@ public class Item {
     public void setInternalDescription(String internalDescription) {
         this.internalDescription = internalDescription;
     }
-    
+
     public String getSectionId() {
         return sectionId;
     }
-    
+
     public void setSectionId(String sectionId) {
         this.sectionId = sectionId;
     }
-    
+
     public Double getPrice() {
         return price;
     }
@@ -111,7 +120,7 @@ public class Item {
     public void setPrice(Double price) {
         this.price = price;
     }
-    
+
     public Option[] getOptions() {
         return options;
     }

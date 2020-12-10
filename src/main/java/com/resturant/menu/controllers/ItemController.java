@@ -27,19 +27,28 @@ public class ItemController {
     }
 
     @RequestMapping(method=RequestMethod.POST, value="/items")
-    public Item save(@RequestBody Item item){
+    public Item save(@RequestBody Item item) {
         item.setUpdated(new Date().toString());
 
-        if (item.getImg() != null) {
+        System.out.println(item);
+
+        if (item.getImg().get("src") == null) {
+            itemService.saveItem(item);
+            return item;
+        } else if (item.getImgID() != null) {
+            item.setImgID(item.getImgID());
+
+            itemService.saveItem(item);
+            return item;
+        } else {
             String n = item.getImg().get("name").toString();
 
-            imageService.getImageByName(n);
-            imageService.saveImage(new Image(n, item.getImg().get("src").toString()));
+            // Save the image and return the id to the item object
+            item.setImgID(imageService.saveImage(new Image(n, item.getImg().get("src").toString())).getId());
+
+            itemService.saveItem(item);
+            return item;
         }
-
-        itemService.saveItem(item);
-
-        return item;
     }
 
     @RequestMapping(method=RequestMethod.GET, value="/items/{id}")
