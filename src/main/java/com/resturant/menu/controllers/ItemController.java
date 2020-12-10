@@ -30,8 +30,6 @@ public class ItemController {
     public Item save(@RequestBody Item item) {
         item.setUpdated(new Date().toString());
 
-        System.out.println(item);
-
         if (item.getImg().get("src") == null) {
             itemService.saveItem(item);
             return item;

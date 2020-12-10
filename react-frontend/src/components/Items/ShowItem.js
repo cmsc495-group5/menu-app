@@ -14,24 +14,47 @@ class ShowItem extends Component {
         super(props);
         this.state = {
             item: {},
-            img: {
-                src: null
-            },
+            images: {},
             optionItems: [],
             loaded: false,
         };
     }
 
     componentWillMount() {
+        let newState = {...this.state}
+
         axios.get(interpolateWithId(APIPaths.items, this.props.match.params.id))
             .then(res => {
-                this.setState({...this.state, item: res.data, img: res.data.img, loaded: true});
+                newState.item = res.data; 
+                newState.loaded = true;
+            });
+
+        axios.get(APIPaths.images)
+            .then(res => {
+                newState.images = this.convertImageArrToObj(res.data);
+                newState.loaded = true;
+                // console.log(newState)
+                this.setImgDataToState(newState)
+                console.log(newState)
+                this.setState(newState)
             });
     }
 
     componentDidMount() {
         this.forceUpdate();
     }
+
+    convertImageArrToObj(imageArr) {
+        let out = {};
+
+        imageArr.map((e,i) => {
+            out[imageArr[i][1]] = imageArr[i][2];
+        })
+
+        return out;
+    }
+
+    setImgDataToState(ns) { if (ns.item.img.src == "") return ns.item.img.src = ns.images[ns.item.imgID] }
 
     delete(id) {
         axios.delete(interpolateWithId(APIPaths.items, id))
@@ -68,7 +91,7 @@ class ShowItem extends Component {
                                     <dt>Updated:</dt>
                                     <dd>{this.state.item.updated}</dd>
                                     <dt>Image:</dt>
-                                    <dd><DisplayImage imgSrc={this.state.img.src && this.state.item.img.src || ''}/></dd>
+                                    <dd><DisplayImage imgSrc={this.state.item.img.src || ''}/></dd>
                                 </dl>
                                 <Link to={interpolateWithId(Paths.editItem, this.state.item.id)}
                                       className="btn btn-success">Edit</Link>&nbsp;

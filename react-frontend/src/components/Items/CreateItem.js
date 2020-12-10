@@ -134,7 +134,6 @@ class CreateItem extends Component {
 
         const formattedOptions = formatOptions(optionItems)
         const selectedOptions = formatOptions(options);
-        // const imageOptions = formatImages(images)
         
         return (
             <Container className="container">
@@ -209,7 +208,7 @@ class CreateItem extends Component {
                                                     value={null} 
                                                     placeholder="Select a previously uploaded image" 
                                                 />
-                                                : ":("
+                                                : ""
                                         }
                                         <br/>
                                     </div>
