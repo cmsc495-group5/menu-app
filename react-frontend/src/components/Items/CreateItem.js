@@ -4,9 +4,14 @@ import {Link} from 'react-router-dom';
 import {Multiselect} from "multiselect-react-dropdown";
 import {Col, Container, Row} from "react-bootstrap";
 import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component";
+import ImagePickerInp from '../ReusableComponents/ImagePickerInput/ImagePickerInp';
+import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.component";
 import {formatOptions, reorder} from "../utils";
 import {APIPaths, Paths} from "../../paths";
+import Dropdown from 'react-dropdown';
+
+import 'react-dropdown/style.css';
 
 class CreateItem extends Component {
 
@@ -16,20 +21,34 @@ class CreateItem extends Component {
             name: '',
             description: '',
             internalDescription: '',
-            image: null,
             price: 0,
             options: [],
             optionItems: [],
             updated: '',
             loaded: 0,
+            images: [],
+            imageListForDropdown: [],
+            imgID: "0",           // 0 = no image uploaded or selected, 1 = uploaded, [imgID] = uploaded
+            img: {
+                src: ""
+            },
             ordinal: null,
         };
     }
 
     componentDidMount() {
+        let newState = {...this.state}
+
         axios.get(APIPaths.options)
             .then(res => {
-                this.setState({...this.state, optionItems: res.data});
+                newState.optionItems = res.data;
+            });
+
+        axios.get(APIPaths.images)
+            .then(res => {
+                newState.images = res.data;
+                res.data.map(e => this.state.imageListForDropdown.push(e[0]))
+                this.setState(newState)
             });
     }
 
@@ -52,9 +71,12 @@ class CreateItem extends Component {
             name,
             description,
             internalDescription,
-            image,
             price,
             options,
+            updated,
+            optionItems,
+            img,
+            imgID,
             ordinal
         } = this.state;
 
@@ -62,22 +84,40 @@ class CreateItem extends Component {
             name,
             description,
             internalDescription,
-            image,
             price,
             options,
+            img,
+            imgID,
             ordinal,
         })
             .then((result) => {
                 this.props.history.push(Paths.showAllItems)
             });
     }
+
     updateSelected = (selected) => {
         const newState = {...this.state, options: selected, loaded: this.state.loaded + 1};
         this.setState(newState);
     }
+
     updateOrder = (option, change) => {
         let reordered = reorder(option, change, this.state.options)
         this.setState({...this.state, options: reordered, loaded: this.state.loaded + 1});
+    }
+
+    updateImageData = (imgData, fromDropdown) => {
+        let newState = this.state
+        if (fromDropdown) {
+            this.state.images.map(e => {
+                if (e[0] === imgData.value) newState.imgID = e[1];
+            })
+        } else {
+            newState.imgID = "1";
+            if (imgData != null) newState.img = imgData;
+        }
+        
+        console.log(newState)
+        this.setState(newState);
     }
 
     render() {
@@ -86,12 +126,15 @@ class CreateItem extends Component {
             description,
             internalDescription,
             image,
+            images,
             price,
             options,
             optionItems,
         } = this.state;
+
         const formattedOptions = formatOptions(optionItems)
         const selectedOptions = formatOptions(options);
+        
         return (
             <Container className="container">
                 <div className="panel panel-default">
@@ -104,34 +147,32 @@ class CreateItem extends Component {
                         <h4><Link to={Paths.showAllItems}>Item List</Link></h4>
                         <Row>
                             <Col xs={6}>
-
-
                                 <form onSubmit={this.onSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="name">Name:</label>
                                         <input type="text" className="form-control" name="name" value={name}
-                                               onChange={this.onChange} placeholder="Name"/>
+                                            onChange={this.onChange} placeholder="Name"/>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="description">Description:</label>
                                         <input type="text" className="form-control" name="description"
-                                               value={description}
-                                               onChange={this.onChange} placeholder="description"/>
+                                            value={description}
+                                            onChange={this.onChange} placeholder="description"/>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="internalDescription">Internal Description:</label>
                                         <input type="text" className="form-control" name="internalDescription"
-                                               value={internalDescription} onChange={this.onChange}
-                                               placeholder="internalDescription"/>
+                                            value={internalDescription} onChange={this.onChange}
+                                            placeholder="internalDescription"/>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="price">price:</label>
+                                        <label htmlFor="price">Price:</label>
                                         <input type="number" className="form-control" name="price" value={price}
-                                               onChange={this.onChange} placeholder={0.00}/>
+                                            onChange={this.onChange} placeholder={0.00}/>
                                     </div>
 
                                     <div className="form-group">
-                                        <label htmlFor="options">options:</label>
+                                        <label htmlFor="options">Options:</label>
                                         <Multiselect
                                             options={formattedOptions}
                                             displayValue={'display'}
@@ -151,6 +192,25 @@ class CreateItem extends Component {
                                             key={this.state.loaded}>
                                         </SwapOrderComponent>
                                     </div>
+                                    <div className="form-group">
+                                        <label htmlFor="image">Item Image:</label>
+                                        <ImagePickerInp
+                                            onChange={(value) => this.updateImageData(value, false)}
+                                        />
+                                        <br/>
+                                        { 
+                                            (this.state.images.length !== 0) ? 
+                                                <Dropdown 
+                                                    options={this.state.imageListForDropdown} 
+                                                    onChange={(value) => this.updateImageData(value, true)} 
+                                                    value={null} 
+                                                    placeholder="Select a previously uploaded image" 
+                                                />
+                                                : ""
+                                        }
+                                        <br/>
+                                    </div>
+
                                     <button type="submit" className="btn btn-secondary">Submit</button>
                                 </form>
                             </Col>
@@ -161,6 +221,7 @@ class CreateItem extends Component {
                                 </div>
                             </Col>
                         </Row>
+                        <ReturnMenu/>
                     </div>
                 </div>
             </Container>

@@ -20,6 +20,7 @@ class EditMenu extends Component {
                 title: '',
                 description: '',
                 internalDescription: '',
+                img: { src: null },
                 imageId: null,
                 sections: [],
                 active: false,
@@ -32,10 +33,12 @@ class EditMenu extends Component {
     }
 
     componentDidMount() {
+        
         axios.get(interpolateWithId(APIPaths.menus, this.props.match.params.id))
             .then(res => {
                 this.setState({menu: res.data, initialActive: res.data.active,  loaded: this.state.loaded +1});
             });
+
         axios.get(APIPaths.sections)
             .then(res => {
                 this.setState({...this.state, sectionOptions: res.data, loaded: this.state.loaded +1});
@@ -103,9 +106,10 @@ class EditMenu extends Component {
     }
 
     render() {
-
+        
         const formattedSections = formatSection(this.state.sectionOptions);
         const selectedSections = formatSection(this.state.menu.sections);
+        
         return (
             <Container className="container">
                 <div className="panel panel-default">

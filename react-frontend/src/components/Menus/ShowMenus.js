@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 import './menus.css'
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
 import {Container} from "react-bootstrap";
@@ -55,6 +56,7 @@ class ShowMenus extends Component {
                             )}
                             </tbody>
                         </table>
+                        <ReturnMenu/>
                     </div>
                 </div>
             </Container>

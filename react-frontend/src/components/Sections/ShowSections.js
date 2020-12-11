@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
+import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 import {Container} from "react-bootstrap";
 
 class ShowSections extends Component {
@@ -52,6 +53,7 @@ class ShowSections extends Component {
                             </tbody>
                         </table>
                     </div>
+                    <ReturnMenu/>
                 </div>
             </Container>
         );

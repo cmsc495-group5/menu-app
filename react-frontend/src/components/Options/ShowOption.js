@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import './options.css'
 import {Col, Container, Row} from "react-bootstrap";
+import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
 
 class ShowOption extends Component {
@@ -63,6 +64,7 @@ class ShowOption extends Component {
                                 </button>
                             </Col>
                         </Row>
+                        <ReturnMenu/>
                     </div>
 
                 </div>

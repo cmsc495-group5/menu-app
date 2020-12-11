@@ -1,26 +1,53 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import DisplayImage from '../ReusableComponents/DisplayImage/DisplayImage';
+import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 import {Col, Container, Row} from "react-bootstrap";
 import MenuComponent from "../MenuComponent/Menu.component";
 import MenuService from "../../Services/Menu.service";
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
+import {setImgDataToState, convertImageArrToObj} from "../utils";
 
 class ShowMenu extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            menu: {sections:[]},
-            loaded: 0
+            images: {},
+            menu: {
+                id: "",
+                img: { src: null },
+                sections:[]
+            },
+            loaded: false
         };
     }
 
     componentDidMount() {
-        axios.get(interpolateWithId(APIPaths.menus, this.props.match.params.id))
+        let newState = {...this.state}
+        
+        newState.menu.id = window.location.href.split("/")[window.location.href.split("/").length - 1];
+
+        axios.get(APIPaths.sections)
             .then(res => {
-                this.setState({menu: res.data, loaded: this.state.loaded +1});
+                newState.optionSections = res.data;
             });
+
+        axios.get(APIPaths.images)
+            .then(res => {
+                newState.images = convertImageArrToObj(res.data);
+                setImgDataToState(newState, true);
+                this.setState(newState)
+            })
+
+        axios.get(interpolateWithId(APIPaths.menus, newState.menu.id))
+            .then(res => {
+                newState.menu = res.data
+                newState.loaded = true;
+                console.log(newState)
+                this.setState(newState);
+            })
     }
 
     delete(id) {
@@ -31,11 +58,16 @@ class ShowMenu extends Component {
     }
 
     render() {
+        if (!this.state.loaded) return <div/>
+      
         const sections = this.state.menu.sections.map(section => {
             return (<div>
                 Title: <b>{section.title}</b> <i>{section.internalDescription}</i>
             </div>)
-        })
+        })    
+        
+        console.log(this.state)
+
         return (
             <Container className="container">
                 <div className="panel panel-default">
@@ -48,6 +80,7 @@ class ShowMenu extends Component {
                         <h4><Link to={Paths.showAllMenus}> Menu List</Link></h4>
                         <Row>
                             <Col xs={6}>
+                                <h4><Link to={Paths.showAllMenus}> Menu List</Link></h4>
                                 <dl>
                                     <dt>Title:</dt>
                                     <dd>{this.state.menu.title}</dd>
@@ -61,31 +94,37 @@ class ShowMenu extends Component {
                                     <dd>{sections}</dd>
                                     <dt>Active:</dt>
                                     <dd>{this.state.menu.active ? 'true ' : 'false '}
-                                        {this.state.menu.active ? "(Active menu cannot be deleted)" : ""}
+                                    {this.state.menu.active ? "(Active menu cannot be deleted)" : ""}
                                     </dd>
                                 </dl>
+                                <DisplayImage imgSrc={this.state.menu.img.src || ''}/>
+                                <br/>
                                 <Link
                                     to={interpolateWithId(Paths.editMenu, this.state.menu.id)}
-                            className="btn btn-success">
-                            Edit
-                        </Link>&nbsp;
-                        <button
-                            disabled={this.state.menu.active}
-                            onClick={this.delete.bind(this, this.state.menu.id)}
-                            className="btn btn-danger">
-                            Delete
-                        </button>
+                                    className="btn btn-success">
+                                    Edit
+                                </Link>&nbsp;
+                                <button
+                                    disabled={this.state.menu.active}
+                                    onClick={this.delete.bind(this, this.state.menu.id)}
+                                    className="btn btn-danger">
+                                    Delete
+                                </button>
                             </Col>
                             <Col xs={6}>
                                 <div className='preview-container-menu'>
                                     <MenuComponent
                                         key={this.state.loaded}
-                                        menuService={new MenuService({menu: this.state.menu, demo: true})}>
+                                        menuService={new MenuService({menu: this.state.menu, demo: true})}
+                                        menuImg={this.state.menu.img.src || ''}
+                                        images={this.state.images}
+                                        >
                                     </MenuComponent>
                                 </div>
                             </Col>
                         </Row>
                     </div>
+                    <ReturnMenu/>
                 </div>
             </Container>
         );

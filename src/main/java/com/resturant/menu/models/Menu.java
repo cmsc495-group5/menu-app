@@ -6,6 +6,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import java.util.Arrays;
+import java.util.HashMap;
+
 @Document(collection= "menus")
 public class Menu {
     @Id
@@ -16,22 +19,31 @@ public class Menu {
     @BsonProperty(value="internal_description")
     String internalDescription;
     String updated;
-    
-    @DBRef
-    Image image;
-    
+    HashMap img;
+    String imgID;
+
     @DBRef
     Section[] sections;
 
-    public Menu(String title, String description, String internalDescription, Image image, Section[] sections) {
+    public Menu(String id, String title, String description, Boolean active, String internalDescription, String updated, HashMap img, String imgID, Section[] sections) {
+        this.id = id;
         this.title = title;
         this.description = description;
+        this.active = active;
         this.internalDescription = internalDescription;
-        this.active = false;
-        this.image = image;
+        this.updated = updated;
+        this.img = img;
+        this.imgID = imgID;
         this.sections = sections;
     }
 
+    public String getImgID() {
+        return imgID;
+    }
+
+    public void setImgID(String imgID) {
+        this.imgID = imgID;
+    }
 
     public String getId() {
         return id;
@@ -43,6 +55,14 @@ public class Menu {
 
     public String getTitle() {
         return title;
+    }
+
+    public HashMap getImg() {
+        return img;
+    }
+
+    public void setImg(HashMap img) {
+        this.img = img;
     }
 
     public void setTitle(String title) {
@@ -63,14 +83,6 @@ public class Menu {
 
     public void setInternalDescription(String internalDescription) {
         this.internalDescription = internalDescription;
-    }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
     }
 
     public Section[] getSections() {
@@ -97,4 +109,18 @@ public class Menu {
         this.updated = updated;
     }
 
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", active=" + active +
+                ", internalDescription='" + internalDescription + '\'' +
+                ", updated='" + updated + '\'' +
+                ", img=" + img +
+                ", imgID='" + imgID + '\'' +
+                ", sections=" + Arrays.toString(sections) +
+                '}';
+    }
 }

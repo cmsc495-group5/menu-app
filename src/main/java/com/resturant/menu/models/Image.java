@@ -10,12 +10,11 @@ public class Image {
     String id;
     String name;
     String image;
-    
-     public Image(String name, String image) {
+
+    public Image(String name, String image) {
         this.name = name;
         this.image = image;
     }
-
 
     public String getId() {
         return id;
@@ -39,5 +38,14 @@ public class Image {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "Image{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
+                '}';
     }
 }

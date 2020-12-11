@@ -20,6 +20,7 @@ class EditItem extends Component {
                 description: '',
                 internalDescription: '',
                 image: null,
+                img: { src: null },
                 price: 0,
                 updated: '',
                 options: [],
@@ -35,6 +36,7 @@ class EditItem extends Component {
             .then(res => {
                 this.setState({...this.state, item: res.data, loaded: this.state.loaded + 1});
             });
+
         axios.get(APIPaths.options)
             .then(res => {
                 this.setState({...this.state, optionItems: res.data});
@@ -98,6 +100,7 @@ class EditItem extends Component {
     render() {
         const formattedOptions = formatOptions(this.state.optionItems);
         const formattedSelectedOptions = formatOptions(this.state.item.options);
+        
         return (
             <Container className="container">
                 <div className="panel panel-default">
