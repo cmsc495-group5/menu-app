@@ -7,12 +7,13 @@ import {Paths} from "../../../paths";
 class CheckoutComponent extends Component {
     constructor(props) {
         super(props);
-        const {orderItems, total, isDemo} = props;
+        const {orderItems, total, isDemo, placeOrder} = props;
         this.state = {
             orderItems: orderItems || [],
             total: total || 0,
             table: getQueryVariable('table'),
             isDemo: isDemo,
+            placeOrder
         }
     }
 
@@ -29,10 +30,14 @@ class CheckoutComponent extends Component {
     }
 
     onSubmit = (e) => {
-        // TODO hit api
         e.preventDefault();
         if (!this.state.isDemo) {
-            this.props.history.push(Paths.orderComplete)
+            this.state.placeOrder(this.state.table).then(() => {
+                this.props.history.push(Paths.orderComplete);
+            }).catch((e) => {
+                console.log(e);
+                alert('error submitting order');
+            });
         }
     }
 

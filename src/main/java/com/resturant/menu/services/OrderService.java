@@ -10,4 +10,6 @@ public interface OrderService {
     Optional<Order> getOrderById(String id);
     Order updateOrder(String id, Order order);
     String deleteOrder(String id);
+
+    Iterable<Order> getActiveOrders();
 }
