@@ -35,17 +35,28 @@ public class OrderItemServiceImpl implements OrderItemService {
     public OrderItem updateOrder(String id, OrderItem order) {
         Optional<OrderItem> optSec = orderItemsRepository.findById(id);
         OrderItem s = optSec.get();
-        
+
+        if (order.getTotal() != null) {
+            s.setTotal(order.getTotal());
+        }
+
         if (order.getPrepNotes() != null) {
             s.setPrepNotes(order.getPrepNotes());
         }
-        
-        if (order.getItems() != null) {
-            s.setItems(order.getItems());
+
+        if (order.getCount() != null) {
+            s.setCount(order.getCount());
         }
-        
-        if (order.getTable() != null) {
-            s.setTable(order.getTable());
+
+        if (order.getItemName() != null) {
+            s.setItemName(order.getItemName());
+        }
+
+        if (order.getPrice() != null) {
+            s.setPrice(order.getPrice());
+        }
+        if (order.getOptions() != null) {
+            s.setOptions(order.getOptions());
         }
 
         s.setUpdated(new Date().toString());
@@ -59,4 +70,5 @@ public class OrderItemServiceImpl implements OrderItemService {
         orderItemsRepository.delete(sec);
         return "";
     }
+
 }

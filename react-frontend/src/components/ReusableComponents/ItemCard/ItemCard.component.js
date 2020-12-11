@@ -95,11 +95,16 @@ class ItemCardComponent extends Component {
     updateSelected = (selected) => {
         const newState = {...this.state, selectedOptions: selected};
         this.setState(newState);
-        this.itemUpdate(this.state.count ? this.getPropsToSubmit(newState) : {id: newState.id, count: newState.count});
+        this.itemUpdate(
+            this.state.count
+                ? this.getPropsToSubmit(newState)
+                : {id: newState.id, count: newState.count, prepNotes: newState.prepNotes}
+        );
     }
     
     updateNote = (note) => {
         const newState = {...this.state, prepNotes: note.prepNotes};
+        this.setState(newState);
         this.itemUpdate(this.getPropsToSubmit(newState));
     }
 
