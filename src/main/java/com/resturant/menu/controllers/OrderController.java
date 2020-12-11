@@ -13,23 +13,28 @@ public class OrderController {
     OrderService orderService;
 
     @Autowired
-    public OrderController(OrderService orderService){
+    public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
 
-    @RequestMapping(method= RequestMethod.GET, value="/orders")
-    public Iterable<Order> item(){
+    @RequestMapping(method = RequestMethod.GET, value = "/orders")
+    public Iterable<Order> item() {
         return orderService.getOrders();
     }
 
-    @RequestMapping(method=RequestMethod.POST, value="/orders")
-    public Order save(@RequestBody Order order){
+    @RequestMapping(method = RequestMethod.GET, value = "/orders/active")
+    public Iterable<Order> activeItems() {
+        return orderService.getActiveOrders();
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/orders")
+    public Order save(@RequestBody Order order) {
         order.setUpdated(new Date().toString());
         orderService.saveOrder(order);
         return order;
     }
 
-    @RequestMapping(method=RequestMethod.GET, value="/orders/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = "/orders/{id}")
     public Optional<Order> show(@PathVariable String id) {
         return orderService.getOrderById(id);
     }

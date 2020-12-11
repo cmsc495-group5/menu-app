@@ -20,7 +20,7 @@ class MenuComponent extends Component {
             loadedSection: this.HOME,
             currentTotal: 0
         }
-        if(props.menuService) {
+        if (props.menuService) {
             this.menuService = props.menuService;
         } else {
             this.menuService = new MenuService();
@@ -71,6 +71,7 @@ class MenuComponent extends Component {
                                      key={this.state.sections}></LandingMenu>);
             case this.CHECKOUT :
                 return (<CheckoutComponent {...this.props} isDemo={this.menuService.getIsDemo()}
+                                           placeOrder={this.menuService.placeOrder}
                                            orderItems={this.menuService.getOrderItemsAsArray()}
                                            total={this.menuService.getTotal()}></CheckoutComponent>);
             default:
