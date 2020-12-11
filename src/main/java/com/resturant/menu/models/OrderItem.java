@@ -41,11 +41,11 @@ public class OrderItem {
     public void setId(String id) {
         this.id = id;
     }
-    
+
     public String getPrepNotes() {
         return prepNotes;
     }
-    
+
     public void setPrepNotes(String prepNotes) {
         this.prepNotes = prepNotes;
     }
@@ -53,7 +53,7 @@ public class OrderItem {
     public Double getTotal() {
         return total;
     }
-    
+
     public void setTotal(Double total) {
         this.total = total;
     }
