@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,28 +35,34 @@ public class MenuServiceImpl implements MenuService {
 
     public Menu updateMenu(String id, Menu menu) {
         Optional<Menu> optMenu = menusRepository.findById(id);
-        Menu m = optMenu.get();
-        if(menu.getTitle() != null){
-            m.setTitle(menu.getTitle());
-        }
-        if(menu.getDescription() != null){
-            m.setDescription(menu.getDescription());
-        }
-        if(menu.getInternalDescription() != null){
-            m.setInternalDescription(menu.getInternalDescription());
-        }
-        if(menu.getSections() != null){
-            m.setSections(menu.getSections());
-        }
-        if(menu.getActive() != null){
-            if(menu.getActive()){
-                deactivateActiveMenu();
+
+        if (optMenu.isPresent()) {
+            Menu m = optMenu.get();
+
+            if (menu.getTitle() != null) {
+                m.setTitle(menu.getTitle());
             }
-            m.setActive(menu.getActive());
+            if (menu.getDescription() != null) {
+                m.setDescription(menu.getDescription());
+            }
+            if (menu.getInternalDescription() != null) {
+                m.setInternalDescription(menu.getInternalDescription());
+            }
+            if (menu.getSections() != null) {
+                m.setSections(menu.getSections());
+            }
+            if (menu.getActive() != null) {
+                if (menu.getActive()) {
+                    deactivateActiveMenu();
+                }
+                m.setActive(menu.getActive());
+            }
+            m.setUpdated(new Date().toString());
+            menusRepository.save(m);
+            return m;
+        } else {
+            return new Menu("no menu found", "", "", null, "", null, null, null, new Section[1]);
         }
-        m.setUpdated(new Date().toString());
-        menusRepository.save(m);
-        return m;
     }
 
     public String deleteMenu( String id) {
@@ -89,6 +94,6 @@ public class MenuServiceImpl implements MenuService {
             return menus.get(0);
         }
         // no record found return an empty menu to prevent errors; this could probably be handled better
-        return new Menu("no menu found", "", "", null, new HashMap());
+        return new Menu("no menu found", "", "", null, "", null, null, null, new Section[1]);
     }
 }

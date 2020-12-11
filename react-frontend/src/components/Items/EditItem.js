@@ -20,6 +20,7 @@ class EditItem extends Component {
                 description: '',
                 internalDescription: '',
                 image: null,
+                img: { src: null },
                 price: 0,
                 updated: '',
                 options: [],

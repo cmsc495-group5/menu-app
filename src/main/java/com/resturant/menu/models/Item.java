@@ -45,17 +45,17 @@ public class Item {
     @Override
     public String toString() {
         return "Item{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", sectionId='" + sectionId + '\'' +
-                ", internalDescription='" + internalDescription + '\'' +
-                ", price=" + price +
-                ", updated='" + updated + '\'' +
-                ", img=" + img +
-                ", imgID='" + imgID + '\'' +
-                ", options=" + Arrays.toString(options) +
-                '}';
+                "\nid='" + id + '\'' +
+                "\n, name='" + name + '\'' +
+                "\n, description='" + description + '\'' +
+                "\n, sectionId='" + sectionId + '\'' +
+                "\n, internalDescription='" + internalDescription + '\'' +
+                "\n, price=" + price +
+                "\n, updated='" + updated + '\'' +
+                "\n, img=" + img +
+                "\n, imgID='" + imgID + '\'' +
+                "\n, options=" + Arrays.toString(options) +
+                "\n}";
     }
 
     @DBRef

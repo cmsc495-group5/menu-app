@@ -11,6 +11,7 @@ import {Checkbox} from "semantic-ui-react";
 import {APIPaths, Paths} from "../../paths";
 import ImagePickerInp from '../ReusableComponents/ImagePickerInput/ImagePickerInp';
 import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
+import Dropdown from 'react-dropdown';
 
 class CreateMenu extends Component {
 
@@ -23,6 +24,9 @@ class CreateMenu extends Component {
             sections: [],
             active: false,
             updated: '',
+            images: [],
+            imageListForDropdown: [],
+            imgID: "0",
             img: {
                 src: ""
             },
@@ -32,10 +36,19 @@ class CreateMenu extends Component {
     }
 
     componentDidMount() {
+        let newState = {...this.state}
+
         axios.get(APIPaths.sections)
             .then(res => {
-                this.setState({...this.state, optionSections: res.data});
+                newState.optionSections = res.data;
             });
+
+        axios.get(APIPaths.images)
+            .then(res => {
+                newState.images = res.data;
+                res.data.map(e => this.state.imageListForDropdown.push(e[0]))
+                this.setState(newState)
+            })
     }
 
     onChange = (e) => {
@@ -63,8 +76,8 @@ class CreateMenu extends Component {
             internalDescription,
             sections,
             active,
-            updated,
-            img
+            img,
+            imgID,
         } = this.state;
 
         axios.post(APIPaths.menus, {
@@ -73,6 +86,7 @@ class CreateMenu extends Component {
             internalDescription,
             sections,
             img,
+            imgID,
             active
         })
             .then((result) => {
@@ -80,11 +94,18 @@ class CreateMenu extends Component {
             });
     }
 
-    updateImageData = (imgData) => {
+    updateImageData = (imgData, fromDropdown) => {
         let newState = this.state
+        if (fromDropdown) {
+            this.state.images.map(e => {
+                if (e[0] === imgData.value) newState.imgID = e[1];
+            })
+        } else {
+            newState.imgID = "1";
+            if (imgData != null) newState.img = imgData;
+        }
         
-        if (imgData != null) newState.img = imgData;
-        
+        console.log(newState)
         this.setState(newState);
     }
 
@@ -165,7 +186,18 @@ class CreateMenu extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="menuImage">Menu Image:</label>
-                                    <ImagePickerInp onChange={(value) => this.updateImageData(value)} />
+                                    <ImagePickerInp onChange={(value) => this.updateImageData(value, false)} />
+                                    <br/>
+                                    { 
+                                        (this.state.images.length !== 0) ? 
+                                            <Dropdown 
+                                                options={this.state.imageListForDropdown} 
+                                                onChange={(value) => this.updateImageData(value, true)} 
+                                                value={null} 
+                                                placeholder="Select a previously uploaded image" 
+                                            />
+                                            : ""
+                                    }
                                 </div>
                                     
                                     <button type="submit" className="btn btn-secondary">Submit</button>

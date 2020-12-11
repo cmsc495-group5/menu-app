@@ -7,25 +7,46 @@ import {Col, Container, Row} from "react-bootstrap";
 import MenuComponent from "../MenuComponent/Menu.component";
 import MenuService from "../../Services/Menu.service";
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
+import {setImgDataToState, convertImageArrToObj} from "../utils";
 
 class ShowMenu extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            images: {},
             menu: {
+                id: "",
                 img: { src: null },
                 sections:[]
             },
-            loaded: 0
+            loaded: false
         };
     }
 
     componentDidMount() {
-        axios.get(interpolateWithId(APIPaths.menus, this.props.match.params.id))
+        let newState = {...this.state}
+        
+        newState.menu.id = window.location.href.split("/")[window.location.href.split("/").length - 1];
+
+        axios.get(APIPaths.sections)
             .then(res => {
-                this.setState({menu: res.data, loaded: this.state.loaded +1});
+                newState.optionSections = res.data;
             });
+
+        axios.get(APIPaths.images)
+            .then(res => {
+                newState.images = convertImageArrToObj(res.data);
+                setImgDataToState(newState, true);
+                this.setState(newState)
+            })
+
+        axios.get(interpolateWithId(APIPaths.menus, newState.menu.id))
+            .then(res => {
+                newState.menu = res.data
+                newState.loaded = true;
+                this.setState(newState);
+            })
     }
 
     delete(id) {
@@ -36,11 +57,14 @@ class ShowMenu extends Component {
     }
 
     render() {
+        if (!this.state.loaded) return <div/>
+      
         const sections = this.state.menu.sections.map(section => {
             return (<div>
                 Title: <b>{section.title}</b> <i>{section.internalDescription}</i>
             </div>)
-        })
+        })    
+        // console.log({ShowMenuState: this.state})
         return (
             <Container className="container">
                 <div className="panel panel-default">
@@ -70,7 +94,7 @@ class ShowMenu extends Component {
                                     {this.state.menu.active ? "(Active menu cannot be deleted)" : ""}
                                     </dd>
                                 </dl>
-                                <DisplayImage imgSrc={this.state.menu.img && this.state.menu.img.src || ''}/>
+                                <DisplayImage imgSrc={this.state.menu.img.src || ''}/>
                                 <br/>
                                 <Link
                                     to={interpolateWithId(Paths.editMenu, this.state.menu.id)}
@@ -89,7 +113,8 @@ class ShowMenu extends Component {
                                     <MenuComponent
                                         key={this.state.loaded}
                                         menuService={new MenuService({menu: this.state.menu, demo: true})}
-                                        menuImg={this.state.menu.img && this.state.menu.img.src || ''}
+                                        menuImg={this.state.menu.img.src || ''}
+                                        images={this.state.images}
                                         >
                                     </MenuComponent>
                                 </div>

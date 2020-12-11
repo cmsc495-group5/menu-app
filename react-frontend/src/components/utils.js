@@ -79,3 +79,22 @@ export function getQueryVariable(variable) {
     }
     return false;
 }
+
+export function setImgDataToState(ns, isMenu) { 
+    if (isMenu) {
+        if (ns.menu.img.src === "") return ns.menu.img.src = ns.images[ns.menu.imgID];
+    } else {
+        ns.item.img = {src: ns.images[ns.item.imgID]}; 
+        return ns;
+    }
+}
+
+export function convertImageArrToObj(imageArr) {
+    let out = {};
+
+    imageArr.map((e,i) => {
+        out[imageArr[i][1]] = imageArr[i][2];
+    })
+
+    return out;
+}

@@ -30,22 +30,28 @@ public class ItemController {
     public Item save(@RequestBody Item item) {
         item.setUpdated(new Date().toString());
 
-        if (item.getImg().get("src") == null) {
-            itemService.saveItem(item);
-            return item;
-        } else if (item.getImgID() != null) {
-            item.setImgID(item.getImgID());
+        switch (item.getImgID()) {
+            case "0":
+                item.setImgID("");
+                itemService.saveItem(item);
+                System.out.println("No image was selected or uploaded");
+                return item;
+            case "1":
+                String n = item.getImg().get("name").toString();
 
-            itemService.saveItem(item);
-            return item;
-        } else {
-            String n = item.getImg().get("name").toString();
-
-            // Save the image and return the id to the item object
-            item.setImgID(imageService.saveImage(new Image(n, item.getImg().get("src").toString())).getId());
-
-            itemService.saveItem(item);
-            return item;
+                // Save the image and return the id to the item object
+                item.setImgID(imageService.saveImage(new Image(n, item.getImg().get("src").toString())).getId());
+                System.out.println("Image was uploaded");
+                System.out.println(item.getId());
+                item.setImg(null);
+                itemService.saveItem(item);
+                return item;
+            default:
+                item.setImgID(item.getImgID());
+                System.out.println("Image was selected");
+                item.setImg(null);
+                itemService.saveItem(item);
+                return item;
         }
     }
 

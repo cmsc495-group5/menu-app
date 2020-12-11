@@ -7,6 +7,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 import DisplayImage from '../ReusableComponents/DisplayImage/DisplayImage';
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
+import {setImgDataToState, convertImageArrToObj} from "../utils";
 
 class ShowItem extends Component {
 
@@ -20,7 +21,7 @@ class ShowItem extends Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         let newState = {...this.state}
 
         axios.get(interpolateWithId(APIPaths.items, this.props.match.params.id))
@@ -31,30 +32,13 @@ class ShowItem extends Component {
 
         axios.get(APIPaths.images)
             .then(res => {
-                newState.images = this.convertImageArrToObj(res.data);
+                newState.images = convertImageArrToObj(res.data);
+                newState.img = { src: "" };
                 newState.loaded = true;
-                // console.log(newState)
-                this.setImgDataToState(newState)
-                console.log(newState)
+                setImgDataToState(newState, false)
                 this.setState(newState)
             });
     }
-
-    componentDidMount() {
-        this.forceUpdate();
-    }
-
-    convertImageArrToObj(imageArr) {
-        let out = {};
-
-        imageArr.map((e,i) => {
-            out[imageArr[i][1]] = imageArr[i][2];
-        })
-
-        return out;
-    }
-
-    setImgDataToState(ns) { if (ns.item.img.src == "") return ns.item.img.src = ns.images[ns.item.imgID] }
 
     delete(id) {
         axios.delete(interpolateWithId(APIPaths.items, id))

@@ -7,7 +7,7 @@ import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component
 import ImagePickerInp from '../ReusableComponents/ImagePickerInput/ImagePickerInp';
 import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.component";
-import {formatOptions, formatImages, reorder} from "../utils";
+import {formatOptions, reorder} from "../utils";
 import {APIPaths, Paths} from "../../paths";
 import Dropdown from 'react-dropdown';
 
@@ -24,11 +24,11 @@ class CreateItem extends Component {
             price: 0,
             options: [],
             optionItems: [],
-            images: [],
-            imageListForDropdown: [],
-            imgID: "",
             updated: '',
             loaded: 0,
+            images: [],
+            imageListForDropdown: [],
+            imgID: "0",           // 0 = no image uploaded or selected, 1 = selected, 2 = uploaded
             img: {
                 src: ""
             },
@@ -47,7 +47,7 @@ class CreateItem extends Component {
         axios.get(APIPaths.images)
             .then(res => {
                 newState.images = res.data;
-                res.data.map((e) => { this.state.imageListForDropdown.push(e[0]) })
+                res.data.map(e => this.state.imageListForDropdown.push(e[0]))
                 this.setState(newState)
             });
     }
@@ -107,12 +107,12 @@ class CreateItem extends Component {
 
     updateImageData = (imgData, fromDropdown) => {
         let newState = this.state
-        
         if (fromDropdown) {
             this.state.images.map(e => {
-                if (e[0] == imgData.value) newState.imgID = e[1];
+                if (e[0] === imgData.value) newState.imgID = e[1];
             })
         } else {
+            newState.imgID = "1";
             if (imgData != null) newState.img = imgData;
         }
         
@@ -201,7 +201,7 @@ class CreateItem extends Component {
                                         />
                                         <br/>
                                         { 
-                                            (this.state.images.length != 0) ? 
+                                            (this.state.images.length !== 0) ? 
                                                 <Dropdown 
                                                     options={this.state.imageListForDropdown} 
                                                     onChange={(value) => this.updateImageData(value, true)} 

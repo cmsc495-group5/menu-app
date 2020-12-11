@@ -20,19 +20,30 @@ public class Menu {
     String internalDescription;
     String updated;
     HashMap img;
+    String imgID;
 
     @DBRef
     Section[] sections;
 
-    public Menu(String title, String description, String internalDescription, Section[] sections, HashMap img) {
+    public Menu(String id, String title, String description, Boolean active, String internalDescription, String updated, HashMap img, String imgID, Section[] sections) {
+        this.id = id;
         this.title = title;
         this.description = description;
+        this.active = active;
         this.internalDescription = internalDescription;
-        this.active = false;
-        this.sections = sections;
+        this.updated = updated;
         this.img = img;
+        this.imgID = imgID;
+        this.sections = sections;
     }
 
+    public String getImgID() {
+        return imgID;
+    }
+
+    public void setImgID(String imgID) {
+        this.imgID = imgID;
+    }
 
     public String getId() {
         return id;
@@ -52,20 +63,6 @@ public class Menu {
 
     public void setImg(HashMap img) {
         this.img = img;
-    }
-
-    @Override
-    public String toString() {
-        return "Menu{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", active=" + active +
-                ", internalDescription='" + internalDescription + '\'' +
-                ", updated='" + updated + '\'' +
-                ", img=" + img +
-                ", sections=" + Arrays.toString(sections) +
-                '}';
     }
 
     public void setTitle(String title) {
@@ -112,4 +109,18 @@ public class Menu {
         this.updated = updated;
     }
 
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", active=" + active +
+                ", internalDescription='" + internalDescription + '\'' +
+                ", updated='" + updated + '\'' +
+                ", img=" + img +
+                ", imgID='" + imgID + '\'' +
+                ", sections=" + Arrays.toString(sections) +
+                '}';
+    }
 }
