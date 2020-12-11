@@ -45,6 +45,7 @@ class ShowMenu extends Component {
             .then(res => {
                 newState.menu = res.data
                 newState.loaded = true;
+                console.log(newState)
                 this.setState(newState);
             })
     }
@@ -65,6 +66,8 @@ class ShowMenu extends Component {
             </div>)
         })    
         
+        console.log(this.state)
+
         return (
             <Container className="container">
                 <div className="panel panel-default">

@@ -105,7 +105,6 @@ class CreateMenu extends Component {
             if (imgData != null) newState.img = imgData;
         }
         
-        console.log(newState)
         this.setState(newState);
     }
 

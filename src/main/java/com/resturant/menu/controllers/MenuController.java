@@ -37,11 +37,9 @@ public class MenuController {
 
         switch(menu.getImgID()) {
             case "0":
-                System.out.println("No menu image up selected or uploaded");
                 menuService.saveMenu(menu);
                 return menu;
             case "1":
-                System.out.println("Image was uploaded");
                 String n = menu.getImg().get("name").toString();
 
                 // Save the image in image collection and return the id to save in menu object
@@ -50,7 +48,6 @@ public class MenuController {
                 menuService.saveMenu(menu);
                 return menu;
             default:
-                System.out.println("Image was selected");
                 menu.setImgID(menu.getImgID());
 
                 menuService.saveMenu(menu);

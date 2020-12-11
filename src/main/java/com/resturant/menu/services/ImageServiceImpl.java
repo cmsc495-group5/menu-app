@@ -19,7 +19,6 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Image saveImage(Image image) {
-        System.out.println("saving image!");
         imageRepository.save(image);
 
         return image;
