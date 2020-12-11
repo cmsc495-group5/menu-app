@@ -21,7 +21,6 @@ class MenuSection extends Component {
             };
         } 
         this.updateItem = updateItem;
-        // console.log({MenuSectionProps: this.props})
     }
 
     onChange = (e) => {
@@ -32,7 +31,6 @@ class MenuSection extends Component {
 
     componentDidMount = () => {
         if (this.state.images === undefined) {
-            // console.log("Axios call to get images")
             let newState = {...this.state};
 
             axios.get(APIPaths.images)
@@ -48,11 +46,7 @@ class MenuSection extends Component {
 
         // sort items before mapping to ensure they go on the menu in order using the ordinal
         if ("images" in this.state) {
-            // console.log("images is passed! ")
-            // console.log(this.state)
-
             items.map(e => {
-                console.log(e)
                 e.img = this.state.images[e.imgID]
             })
 
@@ -75,7 +69,6 @@ class MenuSection extends Component {
                 </div>
             );
         } else {
-            // console.log("images is not passed")
             return (<div/>)
         }
     }

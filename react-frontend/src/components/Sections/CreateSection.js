@@ -38,7 +38,6 @@ class CreateSection extends Component {
         axios.get(APIPaths.images)
             .then(res => {
                 newState.images = res.data;
-                console.log(newState)
                 this.setState(newState)
             });
     }

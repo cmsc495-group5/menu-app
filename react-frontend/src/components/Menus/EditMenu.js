@@ -33,11 +33,12 @@ class EditMenu extends Component {
     }
 
     componentDidMount() {
+        
         axios.get(interpolateWithId(APIPaths.menus, this.props.match.params.id))
             .then(res => {
-                console.log(res.data)
                 this.setState({menu: res.data, initialActive: res.data.active,  loaded: this.state.loaded +1});
             });
+
         axios.get(APIPaths.sections)
             .then(res => {
                 this.setState({...this.state, sectionOptions: res.data, loaded: this.state.loaded +1});

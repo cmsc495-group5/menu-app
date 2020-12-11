@@ -35,24 +35,6 @@ public class MenuController {
     public Menu save(@RequestBody Menu menu){
         menu.setUpdated(new Date().toString());
 
-//        if (menu.getImg().get("src") == null) {
-//            menuService.saveMenu(menu);
-//            return menu;
-//        } else if (menu.getImgID() != null) {
-//            menu.setImgID(menu.getImgID());
-//
-//            menuService.saveMenu(menu);
-//            return menu;
-//        } else {
-//            String n = menu.getImg().get("name").toString();
-//
-//            // Save the image in image collection and return the id to save in menu object
-//            menu.setImgID(imageService.saveImage(new Image(n, menu.getImg().get("src").toString())).getId());
-//
-//            menuService.saveMenu(menu);
-//            return menu;
-//        }
-
         switch(menu.getImgID()) {
             case "0":
                 System.out.println("No menu image up selected or uploaded");

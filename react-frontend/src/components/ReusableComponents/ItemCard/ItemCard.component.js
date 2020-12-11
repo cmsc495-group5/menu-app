@@ -38,12 +38,6 @@ class ItemCardComponent extends Component {
         let newState = {...this.state};
     
         if ("imgID" in this.props.data && "images" in this.props.data) {
-            // this.props.images.map((e) => {
-                //     if (e[1] == this.props.data.imgID) {
-                //         newState.image = e[2];
-                //     }
-                // })
-            console.log({ItemCardProps: this.props})
             newState.image = this.props.images[this.props.data.imgID]
         } else {
             newState.image = this.props.imageSrc
@@ -81,6 +75,7 @@ class ItemCardComponent extends Component {
         this.setState({...this.state, [event.target.name]: event.target.value});
         this.itemUpdate(this.getPropsToSubmit(newState));
     }
+
     increment = () => {
         const count = isNaN(this.state.count) || this.state.count === null ? 1 : parseInt(this.state.count) + 1;
         if (count <= 99) {
@@ -96,11 +91,13 @@ class ItemCardComponent extends Component {
         this.setState(newState);
         this.itemUpdate(this.getPropsToSubmit(newState));
     }
+
     updateSelected = (selected) => {
         const newState = {...this.state, selectedOptions: selected};
         this.setState(newState);
         this.itemUpdate(this.state.count ? this.getPropsToSubmit(newState) : {id: newState.id, count: newState.count});
     }
+    
     updateNote = (note) => {
         const newState = {...this.state, prepNotes: note.prepNotes};
         this.itemUpdate(this.getPropsToSubmit(newState));

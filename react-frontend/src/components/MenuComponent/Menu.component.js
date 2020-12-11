@@ -40,10 +40,9 @@ class MenuComponent extends Component {
             newState.menuImage = this.props.menuImg;
         }
         
+        // Setting up component if you are looking at full menu (From the main menu)
         const addr = window.location.href
-        if (addr.substring(addr.length - 5) === "/menu") {
-            console.log("on the menu page")
-            
+        if (addr.substring(addr.length - 5) === "/menu") {           
             let activeMenu = "";
             axios.get(APIPaths.activeMenu)
                 .then(res => {
@@ -64,8 +63,6 @@ class MenuComponent extends Component {
 
                     this.setState(newState)
                 })
-            
-
         }
         
         this.menuService.getMenu().then(menu => {
@@ -160,14 +157,11 @@ class MenuComponent extends Component {
         const section = this.sectionToLoad(loadedSection, sortedSections);
         
         if (!this.state.loaded) {
-            return(
+            return (
                 <div/>
             )
         } else {
-                
-            console.log({MenuComponentState: this.state})
             return (
-    
                 <div className='menu-container'>
                     <Menu attached='top' className='menu-top-navbar'>
                         <Dropdown item icon='bars' simple className='menu-nav-button'>

@@ -28,7 +28,7 @@ class CreateItem extends Component {
             loaded: 0,
             images: [],
             imageListForDropdown: [],
-            imgID: "0",           // 0 = no image uploaded or selected, 1 = selected, 2 = uploaded
+            imgID: "0",           // 0 = no image uploaded or selected, 1 = uploaded, [imgID] = uploaded
             img: {
                 src: ""
             },
@@ -147,8 +147,6 @@ class CreateItem extends Component {
                         <h4><Link to={Paths.showAllItems}>Item List</Link></h4>
                         <Row>
                             <Col xs={6}>
-
-
                                 <form onSubmit={this.onSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="name">Name:</label>

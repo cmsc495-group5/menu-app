@@ -64,7 +64,7 @@ class ShowMenu extends Component {
                 Title: <b>{section.title}</b> <i>{section.internalDescription}</i>
             </div>)
         })    
-        // console.log({ShowMenuState: this.state})
+        
         return (
             <Container className="container">
                 <div className="panel panel-default">
