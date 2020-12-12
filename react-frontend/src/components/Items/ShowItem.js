@@ -4,10 +4,7 @@ import {Link} from 'react-router-dom';
 import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component";
 import '../../SharedStyles/admin.css'
 import {Col, Container, Row} from "react-bootstrap";
-import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
-import DisplayImage from '../ReusableComponents/DisplayImage/DisplayImage';
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
-import {setImgDataToState, convertImageArrToObj} from "../utils";
 
 class ShowItem extends Component {
 
@@ -15,28 +12,15 @@ class ShowItem extends Component {
         super(props);
         this.state = {
             item: {},
-            images: {},
             optionItems: [],
             loaded: false,
         };
     }
 
     componentDidMount() {
-        let newState = {...this.state}
-
         axios.get(interpolateWithId(APIPaths.items, this.props.match.params.id))
             .then(res => {
-                newState.item = res.data; 
-                newState.loaded = true;
-            });
-
-        axios.get(APIPaths.images)
-            .then(res => {
-                newState.images = convertImageArrToObj(res.data);
-                newState.img = { src: "" };
-                newState.loaded = true;
-                setImgDataToState(newState, false)
-                this.setState(newState)
+                this.setState({...this.state, item: res.data, loaded: true});
             });
     }
 
@@ -48,8 +32,6 @@ class ShowItem extends Component {
     }
 
     render() {
-        if (!this.state.loaded) return <div/>
-
         return (
             <Container className="container">
 
@@ -75,7 +57,7 @@ class ShowItem extends Component {
                                     <dt>Updated:</dt>
                                     <dd>{this.state.item.updated}</dd>
                                     <dt>Image:</dt>
-                                    <dd><DisplayImage imgSrc={this.state.item.img.src || ''}/></dd>
+                                    <dd>{this.state.item.image}</dd>
                                 </dl>
                                 <Link to={interpolateWithId(Paths.editItem, this.state.item.id)}
                                       className="btn btn-success">Edit</Link>&nbsp;
@@ -90,9 +72,10 @@ class ShowItem extends Component {
                                 </div>
                             </Col>
                         </Row>
-                        <ReturnMenu/>
                     </div>
+
                 </div>
+
 
             </Container>
         );

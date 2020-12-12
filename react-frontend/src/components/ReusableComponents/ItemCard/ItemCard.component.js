@@ -12,12 +12,11 @@ import {formatOptions} from "../../utils";
 class ItemCardComponent extends Component {
     constructor(props) {
         super(props);
-        const {data, itemUpdate, currentValues, imageSrc} = props;
+        const {data, itemUpdate, currentValues} = props;
         const {count, prepNotes, selectedOptions} = currentValues || {};
         const {id, name, description, options, price, image} = data || {};
         const total = count && price && count * price;
         this.itemUpdate = itemUpdate ? itemUpdate : ((value) => console.warn('function not defined ', props, value));
-
         this.state = {
             id,
             name,
@@ -26,24 +25,11 @@ class ItemCardComponent extends Component {
             total: total || 0,
             prepNotes: prepNotes || '',
             options: options || [],
-            image: this.props.imgSrc || "",
-            images: this.props.images || '',
+            image,
             price,
             selectedOptions: selectedOptions || []
         };
         this.open = false;
-    }
-
-    componentDidMount = () => {
-        let newState = {...this.state};
-    
-        if ("imgID" in this.props.data && "images" in this.props.data) {
-            newState.image = this.props.images[this.props.data.imgID]
-        } else {
-            newState.image = this.props.imageSrc
-        }
-
-        this.setState(newState);
     }
 
     getPropsToSubmit = (state) => {
@@ -75,7 +61,6 @@ class ItemCardComponent extends Component {
         this.setState({...this.state, [event.target.name]: event.target.value});
         this.itemUpdate(this.getPropsToSubmit(newState));
     }
-
     increment = () => {
         const count = isNaN(this.state.count) || this.state.count === null ? 1 : parseInt(this.state.count) + 1;
         if (count <= 99) {
@@ -91,7 +76,6 @@ class ItemCardComponent extends Component {
         this.setState(newState);
         this.itemUpdate(this.getPropsToSubmit(newState));
     }
-
     updateSelected = (selected) => {
         const newState = {...this.state, selectedOptions: selected};
         this.setState(newState);
@@ -101,7 +85,7 @@ class ItemCardComponent extends Component {
                 : {id: newState.id, count: newState.count, prepNotes: newState.prepNotes}
         );
     }
-    
+
     updateNote = (note) => {
         const newState = {...this.state, prepNotes: note.prepNotes};
         this.setState(newState);
@@ -118,78 +102,73 @@ class ItemCardComponent extends Component {
         const formattedOptions = formatOptions(options);
 
         const imageElement = image
-            ? (<Col xs={5}><Card.Img as={Image} fluid={true} src={this.props.imageSrc} className='item-image'/></Col>)
+            ? (<Col xs={5}><Card.Img as={Image} fluid={true} src={image} className='item-image'/></Col>)
             : null;
-        
-        if (this.props.imageSrc === undefined) { 
-            return(
-                <div/>
-             )
-        } else {
-            return (
-                <div className='container item-card-container'>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>{name}</Card.Title>
 
+        return (
+            <div className='container item-card-container'>
+                <Card>
+                    <Card.Body>
+                        <Card.Title>{name}</Card.Title>
+
+                        <Row>
+                            <Col xs={image ? 7 : 12}>
+                                {description}
+                            </Col>
+                            {imageElement}
+                        </Row>
+                        <Row className='card-input-row'>
+                            <div className='card-price'>Price: ${price ? price.toFixed(2) : 0.00}</div>
+                            <PopupTextFieldComponent
+                                title={`Preparation notes for ${name}`}
+                                updateNote={this.updateNote}
+                                value={prepNotes}
+                            ></PopupTextFieldComponent>
+
+                            <div className='count-input-container'>
+                                <IconButton className={'decrement-button'} onClick={this.decrement}><Icon
+                                    name="caret down"/></IconButton>
+                                <Form>
+                                    <input
+                                        className={'count-field'}
+                                        type='number'
+                                        name='count'
+                                        placeholder={0}
+                                        max={99}
+                                        min={0}
+                                        onChange={this.onChange}
+                                        value={this.state.count}
+                                    />
+                                </Form>
+                                <IconButton className={'increment-button'} onClick={this.increment}><Icon
+                                    name='caret up'/></IconButton>
+                            </div>
+                        </Row>
+                        {/* this will conditionally show options selector*/}
+                        {options && options.length > 0 ? (
                             <Row>
-                                <Col xs={image ? 7 : 12}>
-                                    {description}
+                                <Col>
+                                    <Card.Subtitle>Options</Card.Subtitle>
+                                    <Multiselect
+                                        options={formattedOptions}
+                                        displayValue={'display'}
+                                        emptyRecordMessage={'select options'}
+                                        selectedValues={selectedOptions}
+                                        onSelect={this.updateSelected}
+                                        onRemove={this.updateSelected}
+                                        showCheckbox={true}
+                                        closeOnSelect={false}
+                                    >
+                                    </Multiselect>
                                 </Col>
-                                {imageElement}
                             </Row>
-                            <Row className='card-input-row'>
-                                <div className='card-price'>Price: ${price ? price.toFixed(2) : 0.00}</div>
-                                <PopupTextFieldComponent
-                                    title={`Preparation notes for ${name}`}
-                                    updateNote={this.updateNote}
-                                    value={prepNotes}
-                                ></PopupTextFieldComponent>
-
-                                <div className='count-input-container'>
-                                    <IconButton className={'decrement-button'} onClick={this.decrement}><Icon
-                                        name="caret down"/></IconButton>
-                                    <Form>
-                                        <input
-                                            className={'count-field'}
-                                            type='number'
-                                            name='count'
-                                            placeholder={0}
-                                            max={99}
-                                            min={0}
-                                            onChange={this.onChange}
-                                            value={this.state.count}
-                                        />
-                                    </Form>
-                                    <IconButton className={'increment-button'} onClick={this.increment}><Icon
-                                        name='caret up'/></IconButton>
-                                </div>
-                            </Row>
-                            {/* this will conditionally show options selector*/}
-                            {options && options.length > 0 ? (
-                                <Row>
-                                    <Col>
-                                        <Card.Subtitle>Options</Card.Subtitle>
-                                        <Multiselect
-                                            options={formattedOptions}
-                                            displayValue={'display'}
-                                            emptyRecordMessage={'select options'}
-                                            selectedValues={selectedOptions}
-                                            onSelect={this.updateSelected}
-                                            onRemove={this.updateSelected}
-                                            showCheckbox={true}
-                                            closeOnSelect={false}
-                                        >
-                                        </Multiselect>
-                                    </Col>
-                                </Row>
-                            ) : null}
-                        </Card.Body>
-                    </Card>
-                </div>
-            );
-        }
+                        ) : null}
+                    </Card.Body>
+                </Card>
+            </div>
+        );
     }
+
 }
 
 export default ItemCardComponent;

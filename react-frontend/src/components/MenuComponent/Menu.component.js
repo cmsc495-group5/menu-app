@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import './Menu.css'
 import Menu from "semantic-ui-react/dist/commonjs/collections/Menu";
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
@@ -7,8 +6,6 @@ import MenuSection from "../ReusableComponents/MenuSection/MenuSection.component
 import MenuService from "../../Services/Menu.service";
 import LandingMenu from "./LandingMenu/LandingMenu.component";
 import CheckoutComponent from "./Checkout/Checkout.component";
-import {APIPaths, interpolateWithId} from "../../paths";
-import {setImgDataToState, convertImageArrToObj} from "../utils";
 
 class MenuComponent extends Component {
     HOME = 'home';
@@ -21,10 +18,7 @@ class MenuComponent extends Component {
             sections: [],
             loadedSections: {},
             loadedSection: this.HOME,
-            currentTotal: 0,
-            images: {},
-            menuImage: props.menuImg || '',
-            loaded: false
+            currentTotal: 0
         }
         if (props.menuService) {
             this.menuService = props.menuService;
@@ -34,41 +28,9 @@ class MenuComponent extends Component {
     }
 
     componentDidMount() {
-        let newState = {...this.state}
-
-        if (this.props.menuImg !== null) {
-            newState.menuImage = this.props.menuImg;
-        }
-        
-        // Setting up component if you are looking at full menu (From the main menu)
-        const addr = window.location.href
-        if (addr.substring(addr.length - 5) === "/menu") {           
-            let activeMenu = "";
-            axios.get(APIPaths.activeMenu)
-                .then(res => {
-                    activeMenu = res.data.id
-                    axios.get(interpolateWithId(APIPaths.menus, activeMenu))
-                        .then(res => {
-                            console.log(newState)
-                            console.log(res.data)
-                            newState.loaded = true;
-                        })        
-                })
-
-            axios.get(APIPaths.images)
-                .then(res => {
-                    newState.images = convertImageArrToObj(res.data);
-                    
-                    if (newState.imgID) newState.menuImage = newState.images[newState.imgID]
-
-                    this.setState(newState)
-                })
-        }
-        
         this.menuService.getMenu().then(menu => {
-            newState = menu;
+            const newState = {...this.state, menu};
             newState.sections = menu.sections || [];
-            newState.loaded = true;
             this.setState(newState);
         });
     }
@@ -145,60 +107,52 @@ class MenuComponent extends Component {
     }
 
     render() {
-        
         const {sections, loadedSection, total} = this.state;
         const sortedSections = sections
-        .sort((sectionA, sectionB) => sectionA.ordinal - sectionB.ordinal);
+            .sort((sectionA, sectionB) => sectionA.ordinal - sectionB.ordinal);
         const sectionsMenuNav = [
             (this.getSectionDropdownItem({id: this.HOME, title: 'Home'})),
             ...sortedSections.map(this.getSectionDropdownItem),
             (this.getSectionDropdownItem({id: this.CHECKOUT, title: 'Checkout'}))
         ];
-        
+
         const section = this.sectionToLoad(loadedSection, sortedSections);
-        
-        if (!this.state.loaded) {
-            return (
-                <div/>
-            )
-        } else {
-            return (
-                <div className='menu-container'>
-                    <Menu attached='top' className='menu-top-navbar'>
-                        <Dropdown item icon='bars' simple className='menu-nav-button'>
-                            <Dropdown.Menu>
-                                {sectionsMenuNav}
-                            </Dropdown.Menu>
-                        </Dropdown>
-                        <Menu.Menu id={this.HOME} className='menu-header-title' onClick={() => this.onNavClick(this.HOME)}>
-                            {this.state.menuImage ?  <img src={this.state.menuImage} style={{"height" : "25px", "marginRight": "7px"}} alt="menu logo"></img> : ''}
-                            {this.getTitleContents(loadedSection) || this.state.title}
-                        </Menu.Menu>
-                    </Menu>
-    
-                    <div className='menu-panel-body'>
-                        {section}
-                        <div className='spacer'></div>
-                    </div>
-                    {
-                        loadedSection !== this.CHECKOUT ? 
-                            (
-                                <div className='menu-footer'>
-                                    <Menu attached='bottom' className='menu-bottom-navbar'>
-                                        <Menu.Menu
-                                            className='menu-footer-title'
-                                            position='right'
-                                            onClick={() => this.onNavClick(this.CHECKOUT)}>
-                                            Total ${total || 0}
-                                        </Menu.Menu>
-                                    </Menu>
-                                </div>
-                            )
-                        : null
-                    }
+        return (
+
+            <div className='menu-container'>
+                <Menu attached='top' className='menu-top-navbar'>
+                    <Dropdown item icon='bars' simple className='menu-nav-button'>
+                        <Dropdown.Menu>
+                            {sectionsMenuNav}
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    <Menu.Menu id={this.HOME} className='menu-header-title' onClick={() => this.onNavClick(this.HOME)}>
+                        {this.getTitleContents(loadedSection)}
+                    </Menu.Menu>
+                </Menu>
+
+                <div className='menu-panel-body'>
+                    {section}
+                    <div className='spacer'></div>
                 </div>
-            );
-        }
+                {
+                    loadedSection !== this.CHECKOUT
+                        ? (
+                            <div className='menu-footer'>
+                                <Menu attached='bottom' className='menu-bottom-navbar'>
+                                    <Menu.Menu
+                                        className='menu-footer-title'
+                                        position='right'
+                                        onClick={() => this.onNavClick(this.CHECKOUT)}>
+                                        Total ${total || 0}
+                                    </Menu.Menu>
+                                </Menu>
+                            </div>
+                        )
+                        : null
+                }
+            </div>
+        );
     }
 }
 

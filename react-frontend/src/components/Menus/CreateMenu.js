@@ -9,9 +9,6 @@ import MenuComponent from "../MenuComponent/Menu.component";
 import MenuService from "../../Services/Menu.service";
 import {Checkbox} from "semantic-ui-react";
 import {APIPaths, Paths} from "../../paths";
-import ImagePickerInp from '../ReusableComponents/ImagePickerInput/ImagePickerInp';
-import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
-import Dropdown from 'react-dropdown';
 
 class CreateMenu extends Component {
 
@@ -21,34 +18,20 @@ class CreateMenu extends Component {
             title: '',
             description: '',
             internalDescription: '',
+            imageId: null,
             sections: [],
             active: false,
             updated: '',
-            images: [],
-            imageListForDropdown: [],
-            imgID: "0",
-            img: {
-                src: ""
-            },
             optionSections: [],
             loaded: 0,
         };
     }
 
     componentDidMount() {
-        let newState = {...this.state}
-
         axios.get(APIPaths.sections)
             .then(res => {
-                newState.optionSections = res.data;
+                this.setState({...this.state, optionSections: res.data});
             });
-
-        axios.get(APIPaths.images)
-            .then(res => {
-                newState.images = res.data;
-                res.data.map(e => this.state.imageListForDropdown.push(e[0]))
-                this.setState(newState)
-            })
     }
 
     onChange = (e) => {
@@ -74,19 +57,17 @@ class CreateMenu extends Component {
             title,
             description,
             internalDescription,
+            imageId,
             sections,
-            active,
-            img,
-            imgID,
+            active
         } = this.state;
 
         axios.post(APIPaths.menus, {
             title,
             description,
             internalDescription,
+            imageId,
             sections,
-            img,
-            imgID,
             active
         })
             .then((result) => {
@@ -94,33 +75,18 @@ class CreateMenu extends Component {
             });
     }
 
-    updateImageData = (imgData, fromDropdown) => {
-        let newState = this.state
-        if (fromDropdown) {
-            this.state.images.map(e => {
-                if (e[0] === imgData.value) newState.imgID = e[1];
-            })
-        } else {
-            newState.imgID = "1";
-            if (imgData != null) newState.img = imgData;
-        }
-        
-        this.setState(newState);
-    }
-
     render() {
         const {
             title,
             description,
             internalDescription,
+            imageId,
             sections,
             active,
             optionSections
         } = this.state;
-
         const formattedSections = formatSection(optionSections);
         const selectedSections = formatSection(sections);
-
         return (
             <Container className="container">
                 <div className="panel panel-default">
@@ -132,6 +98,7 @@ class CreateMenu extends Component {
                         <h4><Link to={Paths.showAllMenus}>Menu List</Link></h4>
                         <Row>
                             <Col xs={6}>
+
                                 <form onSubmit={this.onSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="title">Title:</label>
@@ -150,8 +117,9 @@ class CreateMenu extends Component {
                                                value={internalDescription} onChange={this.onChange}
                                                placeholder="internalDescription"/>
                                     </div>
-                               <div className="form-group ">
-                                    <label htmlFor="active">Active:</label>
+                            <div className="form-group ">
+                                <label htmlFor="active">Active:</label>
+                                <div>
                                     <Checkbox
                                         id='active'
                                         toggle
@@ -162,43 +130,28 @@ class CreateMenu extends Component {
                                     >
                                     </Checkbox>
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="options">options:</label>
-                                    <Multiselect
-                                        options={formattedSections}
-                                        displayValue={'display'}
-                                        emptyRecordMessage={'select options'}
-                                        selectedValues={selectedSections}
-                                        onSelect={this.updateSelected}
-                                        onRemove={this.updateSelected}
-                                        showCheckbox={true}
-                                        closeOnSelect={false}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="swap">Position:</label>
-                                    <SwapOrderComponent
-                                        options={this.state.sections}
-                                        swapOptions={this.updateOrder}
-                                        key={this.state.loaded}>
-                                    </SwapOrderComponent>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="menuImage">Menu Image:</label>
-                                    <ImagePickerInp onChange={(value) => this.updateImageData(value, false)} />
-                                    <br/>
-                                    { 
-                                        (this.state.images.length !== 0) ? 
-                                            <Dropdown 
-                                                options={this.state.imageListForDropdown} 
-                                                onChange={(value) => this.updateImageData(value, true)} 
-                                                value={null} 
-                                                placeholder="Select a previously uploaded image" 
-                                            />
-                                            : ""
-                                    }
-                                </div>
-                                    
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="options">options:</label>
+                                <Multiselect
+                                    options={formattedSections}
+                                    displayValue={'display'}
+                                    emptyRecordMessage={'select options'}
+                                    selectedValues={selectedSections}
+                                    onSelect={this.updateSelected}
+                                    onRemove={this.updateSelected}
+                                    showCheckbox={true}
+                                    closeOnSelect={false}
+                                />
+                            </div>
+                                    <div className="form-group">
+                                        <label htmlFor="swap">Position:</label>
+                                        <SwapOrderComponent
+                                            options={this.state.sections}
+                                            swapOptions={this.updateOrder}
+                                            key={this.state.loaded}>
+                                        </SwapOrderComponent>
+                                    </div>
                                     <button type="submit" className="btn btn-secondary">Submit</button>
                                 </form>
                             </Col>
@@ -212,7 +165,6 @@ class CreateMenu extends Component {
                             </Col>
                         </Row>
                     </div>
-                    <ReturnMenu/>
                 </div>
             </Container>
         );

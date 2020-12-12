@@ -5,71 +5,36 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-import java.util.Arrays;
-import java.util.HashMap;
-
 @Document(collection= "items")
 public class Item {
     @Id
     String id;
     String name;
     String description;
-
+    
     @BsonProperty(value="section_id")
     String sectionId;
-
+    
     @BsonProperty(value="internal_description")
     String internalDescription;
     Double price;
     String updated;
-
-    HashMap img;
-    String imgID;
-
-    public String getImgID() {
-        return imgID;
-    }
-
-    public void setImgID(String imgID) {
-        this.imgID = imgID;
-    }
-
-    public HashMap getImg() {
-        return img;
-    }
-
-    public void setImg(HashMap img) {
-        this.img = img;
-    }
-
-    @Override
-    public String toString() {
-        return "Item{" +
-                "\nid='" + id + '\'' +
-                "\n, name='" + name + '\'' +
-                "\n, description='" + description + '\'' +
-                "\n, sectionId='" + sectionId + '\'' +
-                "\n, internalDescription='" + internalDescription + '\'' +
-                "\n, price=" + price +
-                "\n, updated='" + updated + '\'' +
-                "\n, img=" + img +
-                "\n, imgID='" + imgID + '\'' +
-                "\n, options=" + Arrays.toString(options) +
-                "\n}";
-    }
-
+    
+    @DBRef
+    Image image;
+    
     @DBRef
     Option[] options;
 
-
-     public Item(String name, String description, String internalDescription, String sectionId, Double price, Option[] options, HashMap img) {
+    
+     public Item(String name, String description, String internalDescription, String sectionId, Double price, Image image, Option[] options) {
         this.name = name;
         this.description = description;
         this.internalDescription = internalDescription;
         this.sectionId = sectionId;
         this.price = price;
+        this.image = image;
         this.options = options;
-        this.img = img;
     }
 
 
@@ -96,7 +61,7 @@ public class Item {
     public void setDescription(String description) {
         this.description = description;
     }
-
+    
     public String getInternalDescription() {
         return internalDescription;
     }
@@ -104,15 +69,15 @@ public class Item {
     public void setInternalDescription(String internalDescription) {
         this.internalDescription = internalDescription;
     }
-
+    
     public String getSectionId() {
         return sectionId;
     }
-
+    
     public void setSectionId(String sectionId) {
         this.sectionId = sectionId;
     }
-
+    
     public Double getPrice() {
         return price;
     }
@@ -121,7 +86,15 @@ public class Item {
         this.price = price;
     }
 
-    public Option[] getOptions() {
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+    
+     public Option[] getOptions() {
         return options;
     }
 
