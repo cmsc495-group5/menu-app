@@ -38,7 +38,7 @@ export const APIPaths = {
     menus: '/menus',
     activeMenu: '/menus/active',
     orders: "/orders",
-    activeOrders: "/orders/active"
+    activeOrders: "/orders/active",
 }
 
 export function interpolateWithId (basePath, id){
