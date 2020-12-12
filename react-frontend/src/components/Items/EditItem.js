@@ -131,7 +131,7 @@ class EditItem extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="price">price:</label>
-                                        <input type="number" className="form-control" name="price"
+                                        <input type="number" step="0.01" className="form-control" name="price"
                                                value={this.state.item.price} onChange={this.onChange}
                                                placeholder={0.00}/>
                                     </div>

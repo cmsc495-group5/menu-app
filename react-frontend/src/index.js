@@ -25,6 +25,7 @@ import CreateSection from "./components/Sections/CreateSection";
 import ShowSection from "./components/Sections/ShowSection";
 import EditSection from "./components/Sections/EditSection";
 import {Paths} from './paths'
+import EmployeeComponent from "./components/Employee/Employee.component";
 
 ReactDOM.render(
     <Router>
@@ -52,6 +53,8 @@ ReactDOM.render(
             <Route path={Paths.createOption} component={CreateOption}/>
             <Route path={`${Paths.showOption}/:id`} component={ShowOption}/>
             <Route path={Paths.showAllOptions} component={ShowOptions}/>
+
+            <Route path={Paths.employee} component={EmployeeComponent}/>
 
             <Route path={Paths.demo} component={Demo}/>
         </div>

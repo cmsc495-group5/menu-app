@@ -3,29 +3,36 @@ package com.resturant.menu.models;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
-@Document(collection= "order_items")
+@Document(collection = "order_items")
 public class OrderItem {
     @Id
     String id;
-    @BsonProperty(value="prep_notes")
     Double total;
+    @BsonProperty(value = "prep_notes")
     String prepNotes;
     String updated;
-    
-    @DBRef
-    Item[] items;
-    
-    @DBRef
-    Table table;
-    
-     public OrderItem(String prepNotes, Item[] items, Table table) {
-        this.prepNotes = prepNotes;
-        this.items = items;
-        this.table = table;
-    }
+    Integer count;
 
+
+    @BsonProperty(value = "item_id")
+    String itemId;
+    @BsonProperty(value = "item_name")
+    String itemName;
+    Double price;
+    String[] options;
+
+    public OrderItem(String id, Double total, String prepNotes, String updated, Integer count, String itemId, String itemName, Double price, String[] options) {
+        this.id = id;
+        this.total = total;
+        this.prepNotes = prepNotes;
+        this.updated = updated;
+        this.count = count;
+        this.itemId = itemId;
+        this.itemName = itemName;
+        this.price = price;
+        this.options = options;
+    }
 
     public String getId() {
         return id;
@@ -42,27 +49,7 @@ public class OrderItem {
     public void setPrepNotes(String prepNotes) {
         this.prepNotes = prepNotes;
     }
-    
-    public Item[] getItems() {
-        return items;
-    }
-    
-    public void setItems(Item[] items) {
-        this.items = items;
-        
-        Double price = 0.0;
-        
-        for (Item item : items) {
-            price += item.getPrice();
-            
-            for (Option option : item.getOptions()) {
-                price += option.getPrice();
-            }
-        }
-        
-        setTotal(price);
-    }
-    
+
     public Double getTotal() {
         return total;
     }
@@ -70,15 +57,6 @@ public class OrderItem {
     public void setTotal(Double total) {
         this.total = total;
     }
-    
-    public Table getTable() {
-        return table;
-    }
-    
-    public void setTable(Table table) {
-        this.table = table;
-    }
-    
 
     public String getUpdated() {
         return updated;
@@ -86,5 +64,45 @@ public class OrderItem {
 
     public void setUpdated(String updated) {
         this.updated = updated;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public String[] getOptions() {
+        return options;
+    }
+
+    public void setOptions(String[] options) {
+        this.options = options;
     }
 }
