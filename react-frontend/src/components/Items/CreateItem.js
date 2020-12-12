@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import {Multiselect} from "multiselect-react-dropdown";
-import {Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Row} from "react-bootstrap";
 import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component";
 import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.component";
 import {formatOptions, reorder} from "../utils";
 import {APIPaths, Paths} from "../../paths";
+import DisplayImage from "../ReusableComponents/DisplayImage/DisplayImage";
 
 class CreateItem extends Component {
 
@@ -22,7 +23,6 @@ class CreateItem extends Component {
             optionItems: [],
             updated: '',
             loaded: 0,
-            ordinal: null,
         };
     }
 
@@ -30,6 +30,10 @@ class CreateItem extends Component {
         axios.get(APIPaths.options)
             .then(res => {
                 this.setState({...this.state, optionItems: res.data});
+            });
+        axios.get(APIPaths.images)
+            .then(res => {
+                this.setState({...this.state, imageOptions: res.data});
             });
     }
 
@@ -55,7 +59,6 @@ class CreateItem extends Component {
             image,
             price,
             options,
-            ordinal
         } = this.state;
 
         axios.post(APIPaths.items, {
@@ -65,7 +68,6 @@ class CreateItem extends Component {
             image,
             price,
             options,
-            ordinal,
         })
             .then((result) => {
                 this.props.history.push(Paths.showAllItems)
@@ -78,6 +80,13 @@ class CreateItem extends Component {
     updateOrder = (option, change) => {
         let reordered = reorder(option, change, this.state.options)
         this.setState({...this.state, options: reordered, loaded: this.state.loaded + 1});
+    }
+    updateImage = (selections) => {
+        if (selections && selections.length) {
+            this.setState({...this.state, image: selections[0], loaded: this.state.loaded + 1});
+        } else {
+            this.setState({...this.state, image: null, loaded: this.state.loaded + 1});
+        }
     }
 
     render() {
@@ -129,7 +138,20 @@ class CreateItem extends Component {
                                         <input type="number" className="form-control" name="price" value={price}
                                                onChange={this.onChange} placeholder={0.00}/>
                                     </div>
-
+                                    <div className="form-group">
+                                        <label htmlFor="images">Image:</label>
+                                        <Multiselect key={this.state.image}
+                                                     options={this.state.imageOptions}
+                                                     singleSelect={true}
+                                                     displayValue={'name'}
+                                                     emptyRecordMessage={'select Image'}
+                                                     onSelect={this.updateImage}
+                                                     onRemove={this.updateImage}
+                                                     closeOnSelect={true}
+                                                     hidePlacehoder={false}
+                                        /><Button onClick={this.updateImage}>Remove</Button>
+                                    </div>
+                                    <DisplayImage key={image} imgSrc={image?.image || ''}/>
                                     <div className="form-group">
                                         <label htmlFor="options">options:</label>
                                         <Multiselect
@@ -143,6 +165,7 @@ class CreateItem extends Component {
                                             closeOnSelect={false}
                                         />
                                     </div>
+
                                     <div className="form-group">
                                         <label htmlFor="swap">Position:</label>
                                         <SwapOrderComponent

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import DisplayImage from '../ReusableComponents/DisplayImage/DisplayImage';
 import {Col, Container, Row} from "react-bootstrap";
 import MenuComponent from "../MenuComponent/Menu.component";
 import MenuService from "../../Services/Menu.service";
@@ -11,7 +12,10 @@ class ShowMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            menu: {sections:[]},
+            menu: {
+                img: {src: null},
+                sections: []
+            },
             loaded: 0
         };
     }
@@ -64,17 +68,19 @@ class ShowMenu extends Component {
                                         {this.state.menu.active ? "(Active menu cannot be deleted)" : ""}
                                     </dd>
                                 </dl>
+                                <DisplayImage imgSrc={this.state.menu.img && this.state.menu.img.src || ''}/>
+                                <br/>
                                 <Link
                                     to={interpolateWithId(Paths.editMenu, this.state.menu.id)}
-                            className="btn btn-success">
-                            Edit
-                        </Link>&nbsp;
-                        <button
-                            disabled={this.state.menu.active}
-                            onClick={this.delete.bind(this, this.state.menu.id)}
-                            className="btn btn-danger">
-                            Delete
-                        </button>
+                                    className="btn btn-success">
+                                    Edit
+                                </Link>&nbsp;
+                                <button
+                                    disabled={this.state.menu.active}
+                                    onClick={this.delete.bind(this, this.state.menu.id)}
+                                    className="btn btn-danger">
+                                    Delete
+                                </button>
                             </Col>
                             <Col xs={6}>
                                 <div className='preview-container-menu'>

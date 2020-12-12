@@ -5,6 +5,7 @@ import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component
 import '../../SharedStyles/admin.css'
 import {Col, Container, Row} from "react-bootstrap";
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
+import DisplayImage from "../ReusableComponents/DisplayImage/DisplayImage";
 
 class ShowItem extends Component {
 
@@ -20,7 +21,11 @@ class ShowItem extends Component {
     componentDidMount() {
         axios.get(interpolateWithId(APIPaths.items, this.props.match.params.id))
             .then(res => {
-                this.setState({...this.state, item: res.data, loaded: true});
+                this.setState({
+                    ...this.state,
+                    item: {...res.data},
+                    loaded: true
+                });
             });
     }
 
@@ -57,7 +62,7 @@ class ShowItem extends Component {
                                     <dt>Updated:</dt>
                                     <dd>{this.state.item.updated}</dd>
                                     <dt>Image:</dt>
-                                    <dd>{this.state.item.image}</dd>
+                                    <dd><DisplayImage imgSrc={this.state.item?.image?.image}/></dd>
                                 </dl>
                                 <Link to={interpolateWithId(Paths.editItem, this.state.item.id)}
                                       className="btn btn-success">Edit</Link>&nbsp;

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import {Paths} from "./paths";
 
 class App extends Component {
 
@@ -27,6 +28,9 @@ class App extends Component {
                         </Link></h4>
                         <h4><Link to="/admin/options/">
                             Options
+                        </Link></h4>
+                        <h4><Link to={Paths.showAllImages}>
+                            Images
                         </Link></h4>
                         <h4><Link to="/menu">
                             Full Menu

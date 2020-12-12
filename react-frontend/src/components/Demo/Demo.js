@@ -1,33 +1,18 @@
 import React, {Component} from "react";
-import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component";
 import Row from "react-bootstrap/Row";
 import "./Demo.css"
-import {getMockItem, getMockOption} from "./MockData";
+import {getMockMenu} from "./MockData";
 import {Container} from "react-bootstrap";
+import MenuComponent from "../MenuComponent/Menu.component";
+import MenuService from "../../Services/Menu.service";
 
 class Demo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: {}
+            menu: getMockMenu(4)
         };
-        // hardcoded image will cause linting errors
-        // noinspection SpellCheckingInspection
 
-
-        this.items = [
-            getMockItem(1),
-            {
-                ...getMockItem(3),
-                options: [
-                    getMockOption(1),
-                    getMockOption(2),
-                    getMockOption(3)
-                ]
-            },
-            getMockItem(2),
-            getMockItem(4),
-        ]
     }
 
     onChange = (e) => {
@@ -45,17 +30,15 @@ class Demo extends Component {
 
     render() {
         // we can sort items before mapping to ensure they go on the menu in order using the ordinal
-        const items = this.items
-            .map((item) =>
-                <ItemCardComponent data={item} itemUpdate={this.itemUpdate} key={item.id}/>
-            )
         return (
             <Container>
-                <Row>
+                <Row className="demo-row">
                     <div className="demoHeightLimit">
-                        {items}
+                        <MenuComponent
+                            key={this.state.loaded}
+                            menuService={new MenuService({menu: this.state.menu, demo: true})}>
+                        </MenuComponent>
                     </div>
-                    Items from state: {JSON.stringify(this.state.items)}
                 </Row>
             </Container>
         );

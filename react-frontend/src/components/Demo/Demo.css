@@ -6,3 +6,14 @@
         overflow-y: scroll
     }
 }
+
+.very.wide.popup {
+    margin-left: 50px;
+    width: 300px;
+}
+
+.demo-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

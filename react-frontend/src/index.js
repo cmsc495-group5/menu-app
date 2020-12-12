@@ -25,6 +25,10 @@ import CreateSection from "./components/Sections/CreateSection";
 import ShowSection from "./components/Sections/ShowSection";
 import EditSection from "./components/Sections/EditSection";
 import {Paths} from './paths'
+import ShowImages from "./components/Images/ShowImages";
+import ShowImage from "./components/Images/ShowImage";
+import CreateImage from "./components/Images/CreateImage";
+import EditImage from "./components/Images/EditImage";
 
 ReactDOM.render(
     <Router>
@@ -52,6 +56,11 @@ ReactDOM.render(
             <Route path={Paths.createOption} component={CreateOption}/>
             <Route path={`${Paths.showOption}/:id`} component={ShowOption}/>
             <Route path={Paths.showAllOptions} component={ShowOptions}/>
+
+            <Route path={`${Paths.editImage}/:id`} component={EditImage}/>
+            <Route path={Paths.createImage} component={CreateImage}/>
+            <Route path={`${Paths.showImage}/:id`} component={ShowImage}/>
+            <Route path={Paths.showAllImages} component={ShowImages}/>
 
             <Route path={Paths.demo} component={Demo}/>
         </div>

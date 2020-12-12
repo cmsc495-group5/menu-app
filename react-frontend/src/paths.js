@@ -25,6 +25,11 @@ export const Paths = {
     createOption: `/${admin}/createOption`,
     showOption: `/${admin}/showOption`,
     showAllOptions: `/${admin}/options`,
+    // Image paths
+    editImage: `/${admin}/editImage`,
+    createImage: `/${admin}/createImage`,
+    showImage: `/${admin}/showImage`,
+    showAllImages: `/${admin}/images`,
     // Demo this may be removed
     demo: `/${admin}/demo`,
 }
@@ -37,6 +42,7 @@ export const APIPaths = {
     activeMenu: '/menus/active',
     orders: '/orders',
     activeOrders: '/orders/active',
+    images: '/images'
 }
 
 export function interpolateWithId (basePath, id){
