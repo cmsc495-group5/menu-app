@@ -8,7 +8,6 @@ import SectionCardComponent from "../ReusableComponents/SectionCard/SectionCard.
 import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.component";
 import {formatItemOptions, reorder} from "../utils";
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
-import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 
 class EditSection extends Component {
 
@@ -167,7 +166,9 @@ class EditSection extends Component {
                                 </Row>
                             </Col>
                         </Row>
-                        <ReturnMenu/>
+                        <Row>
+
+                        </Row>
                     </div>
                 </div>
             </Container>

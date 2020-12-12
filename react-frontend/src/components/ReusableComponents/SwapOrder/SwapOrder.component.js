@@ -13,7 +13,9 @@ class SwapOrderComponent extends Component {
             options: props.options || [],
             swapOptions: props.swapOptions || ((item, positionChange) => console.log('item', item, 'change', positionChange)),
         }
+
     }
+
 
     render() {
         let position = 1;
@@ -42,7 +44,7 @@ class SwapOrderComponent extends Component {
         })
 
         return (<Container className={'swap-order-container'}>{options}</Container>);
+
     }
 }
-
 export default SwapOrderComponent;

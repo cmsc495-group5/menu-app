@@ -15,12 +15,17 @@ public class Option {
     String internalDescription;
     Double price;
     String updated;
+    
+    @DBRef
+    Image image;
 
-     public Option(String name, String description, String internalDescription, Double price) {
+    
+     public Option(String name, String description, String internalDescription, Double price, Image image) {
         this.name = name;
         this.description = description;
         this.internalDescription = internalDescription;
         this.price = price;
+        this.image = image;
     }
 
 
@@ -62,6 +67,14 @@ public class Option {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     public String getUpdated() {

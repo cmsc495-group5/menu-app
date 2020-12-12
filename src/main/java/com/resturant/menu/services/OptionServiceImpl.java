@@ -51,6 +51,10 @@ public class OptionServiceImpl implements OptionService {
         if(option.getPrice() != null) {
             s.setPrice(option.getPrice());
         }
+        
+        if (option.getImage() != null) {
+            s.setImage(option.getImage());
+        }
 
         s.setUpdated(new Date().toString());
         optionsRepository.save(s);

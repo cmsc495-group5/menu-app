@@ -1,8 +1,6 @@
 package com.resturant.menu.controllers;
 
-import com.resturant.menu.models.Image;
 import com.resturant.menu.models.Menu;
-import com.resturant.menu.services.ImageService;
 import com.resturant.menu.services.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +11,10 @@ import java.util.Optional;
 @RestController
 public class MenuController {
     MenuService menuService;
-    ImageService imageService;
 
     @Autowired
-    public MenuController(MenuService menuService, ImageService imageService){
+    public MenuController(MenuService menuService){
         this.menuService = menuService;
-        this.imageService = imageService;
     }
 
     @RequestMapping(method= RequestMethod.GET, value="api/test")
@@ -34,26 +30,8 @@ public class MenuController {
     @RequestMapping(method=RequestMethod.POST, value="/menus")
     public Menu save(@RequestBody Menu menu){
         menu.setUpdated(new Date().toString());
-
-        switch(menu.getImgID()) {
-            case "0":
-                menuService.saveMenu(menu);
-                return menu;
-            case "1":
-                String n = menu.getImg().get("name").toString();
-
-                // Save the image in image collection and return the id to save in menu object
-                menu.setImgID(imageService.saveImage(new Image(n, menu.getImg().get("src").toString())).getId());
-
-                menuService.saveMenu(menu);
-                return menu;
-            default:
-                menu.setImgID(menu.getImgID());
-
-                menuService.saveMenu(menu);
-                return menu;
-        }
-
+        menuService.saveMenu(menu);
+        return menu;
     }
 
     @RequestMapping(method=RequestMethod.GET, value="/menus/{id}")

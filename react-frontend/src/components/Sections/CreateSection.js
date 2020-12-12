@@ -9,7 +9,6 @@ import '../../SharedStyles/admin.css'
 import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.component";
 import {formatItemOptions, reorder} from "../utils";
 import {APIPaths, Paths} from "../../paths";
-import ReturnMenu from '../ReusableComponents/ReturnMenu/ReturnMenu';
 
 class CreateSection extends Component {
 
@@ -28,17 +27,9 @@ class CreateSection extends Component {
     }
 
     componentDidMount() {
-        let newState = {...this.state};
-
         axios.get(APIPaths.items)
             .then(res => {
-                newState.optionItems = res.data;
-            });
-
-        axios.get(APIPaths.images)
-            .then(res => {
-                newState.images = res.data;
-                this.setState(newState)
+                this.setState({...this.state, optionItems: res.data});
             });
     }
 
@@ -156,13 +147,12 @@ class CreateSection extends Component {
                                 <Row>
                                     <h4 className={'section-title'}>Section</h4>
                                     <div className='preview-container'>
-                                        <MenuSection items={this.state.items} key={this.state.loaded} images={this.state.images}></MenuSection>
+                                        <MenuSection items={this.state.items} key={this.state.loaded}></MenuSection>
                                     </div>
                                 </Row>
                             </Col>
                         </Row>
                     </div>
-                    <ReturnMenu/>
                 </div>
             </Container>
         );

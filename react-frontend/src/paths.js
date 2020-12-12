@@ -35,7 +35,6 @@ export const APIPaths = {
     sections: '/sections',
     menus: '/menus',
     activeMenu: '/menus/active',
-    images: '/image',
     orders: '/orders',
     activeOrders: '/orders/active',
 }
