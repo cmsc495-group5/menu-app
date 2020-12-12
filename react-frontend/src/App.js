@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import {Paths} from "./paths";
 
 class App extends Component {
 
@@ -16,23 +17,11 @@ class App extends Component {
                         </h3>
                     </div>
                     <div className="panel-body">
-                        <h4><Link to="/admin/menus/">
-                            Menus
-                        </Link></h4>
-                        <h4><Link to="/admin/sections/">
-                            Sections
-                        </Link></h4>
-                        <h4><Link to="/admin/items/">
-                            Items
-                        </Link></h4>
-                        <h4><Link to="/admin/options/">
-                            Options
-                        </Link></h4>
-                        <h4><Link to="/menu">
+                        <h4><Link to={Paths.menu}>
                             Full Menu
                         </Link></h4>
-                        <h4><Link to="/admin/demo/">
-                            Demo
+                        <h4><Link to={Paths.admin}>
+                            Admin
                         </Link></h4>
                     </div>
                 </div>

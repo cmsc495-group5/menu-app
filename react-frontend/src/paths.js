@@ -25,6 +25,9 @@ export const Paths = {
     createOption: `/${admin}/createOption`,
     showOption: `/${admin}/showOption`,
     showAllOptions: `/${admin}/options`,
+    // Qr Code
+    qrCode: `/${admin}/qrCodes`,
+
     // Demo this may be removed
     demo: `/${admin}/demo`,
 }
@@ -37,6 +40,7 @@ export const APIPaths = {
     activeMenu: '/menus/active',
     orders: '/orders',
     activeOrders: '/orders/active',
+    qrCode: '/QrCodes',
 }
 
 export function interpolateWithId (basePath, id){

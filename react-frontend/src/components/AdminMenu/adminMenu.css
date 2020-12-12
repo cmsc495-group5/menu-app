@@ -1,0 +1,9 @@
+.header-admin-menu {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+
+.admin-nav-header {
+    padding: 25px;
+}
