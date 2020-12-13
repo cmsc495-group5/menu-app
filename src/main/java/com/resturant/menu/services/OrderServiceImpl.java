@@ -12,8 +12,8 @@ import java.util.Optional;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    private OrdersRepository ordersRepository;
-    private OrderItemService orderItemService;
+    private final OrdersRepository ordersRepository;
+    private final OrderItemService orderItemService;
 
     @Autowired
     public OrderServiceImpl(OrdersRepository ordersRepository, OrderItemService orderItemService) {
@@ -21,12 +21,14 @@ public class OrderServiceImpl implements OrderService {
         this.orderItemService = orderItemService;
     }
 
-    public Iterable<Order> getOrders(){
+    public Iterable<Order> getOrders() {
         return ordersRepository.findAll();
     }
 
     public Order saveOrder(Order order) {
-        order.setUpdated(new Date().toString());
+        String placed = new Date().toString();
+        order.setUpdated(placed);
+        order.setPlaced(placed);
         OrderItem[] orderItems = new OrderItem[order.getOrderItems().length];
 
         for (int i = 0; i < order.getOrderItems().length; i++) {
@@ -55,6 +57,9 @@ public class OrderServiceImpl implements OrderService {
 
         if (order.getTable() != null) {
             s.setTable(order.getTable());
+        }
+        if (order.getCanceled() != null) {
+            s.setCanceled(order.getCanceled());
         }
 
         s.setUpdated(new Date().toString());

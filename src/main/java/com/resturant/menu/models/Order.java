@@ -17,6 +17,8 @@ public class Order {
     String updated;
     String table;
     Double total;
+    Boolean canceled;
+    String placed;
 
     @DBRef
     OrderItem[] orderItems;
@@ -80,4 +82,21 @@ public class Order {
     public void setTotal(Double total) {
         this.total = total;
     }
+
+    public String getPlaced() {
+        return placed;
+    }
+
+    public void setPlaced(String placed) {
+        this.placed = placed;
+    }
+
+    public Boolean getCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(Boolean cancled) {
+        this.canceled = cancled;
+    }
+
 }

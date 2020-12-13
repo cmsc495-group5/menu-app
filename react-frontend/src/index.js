@@ -27,6 +27,7 @@ import EditSection from "./components/Sections/EditSection";
 import {Paths} from './paths'
 import QrCodeComponent from "./components/QrCode/QrCodeComponent";
 import AdminMenuComponent from "./components/AdminMenu/AdminMenuComponent";
+import EmployeeComponent from "./components/Employee/Employee.component";
 
 ReactDOM.render(
     <Router>
@@ -56,6 +57,8 @@ ReactDOM.render(
             <Route path={Paths.createOption} component={CreateOption}/>
             <Route path={`${Paths.showOption}/:id`} component={ShowOption}/>
             <Route path={Paths.showAllOptions} component={ShowOptions}/>
+
+            <Route path={Paths.employee} component={EmployeeComponent}/>
 
             <Route path={Paths.qrCode} component={QrCodeComponent}/>
 

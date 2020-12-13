@@ -11,18 +11,18 @@ import java.util.Optional;
 @Service
 public class OrderItemServiceImpl implements OrderItemService {
 
-    private OrderItemsRepository orderItemsRepository;
+    private final OrderItemsRepository orderItemsRepository;
 
     @Autowired
-    public OrderItemServiceImpl(OrderItemsRepository orderItemsRepository){
+    public OrderItemServiceImpl(OrderItemsRepository orderItemsRepository) {
         this.orderItemsRepository = orderItemsRepository;
     }
 
-    public Iterable<OrderItem> getOrders(){
+    public Iterable<OrderItem> getOrders() {
         return orderItemsRepository.findAll();
     }
 
-    public OrderItem saveOrder(OrderItem order){
+    public OrderItem saveOrder(OrderItem order) {
         order.setUpdated(new Date().toString());
         orderItemsRepository.save(order);
         return order;
@@ -70,5 +70,4 @@ public class OrderItemServiceImpl implements OrderItemService {
         orderItemsRepository.delete(sec);
         return "";
     }
-
 }

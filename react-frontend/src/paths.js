@@ -30,6 +30,8 @@ export const Paths = {
 
     // Demo this may be removed
     demo: `/${admin}/demo`,
+    // Employee
+    employee: "/employee/orders"
 }
 
 export const APIPaths = {
@@ -38,8 +40,8 @@ export const APIPaths = {
     sections: '/sections',
     menus: '/menus',
     activeMenu: '/menus/active',
-    orders: '/orders',
-    activeOrders: '/orders/active',
+    orders: "/orders",
+    activeOrders: "/orders/active",
     qrCode: '/QrCodes',
 }
 
