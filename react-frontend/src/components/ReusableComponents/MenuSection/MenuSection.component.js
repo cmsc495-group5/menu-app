@@ -21,7 +21,7 @@ class MenuSection extends Component {
     render() {
         const {items, currentValues} = this.state;
         // sort items before mapping to ensure they go on the menu in order using the ordinal
-        const itemsLoaded = items
+        const itemsLoaded = (items || [])
             .sort((itemA, itemB) => itemA.ordinal - itemB.ordinal)
             .map((item) =>
                 <ItemCardComponent data={item} currentValues={currentValues[item.id]} itemUpdate={this.updateItem}

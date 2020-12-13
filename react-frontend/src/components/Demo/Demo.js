@@ -45,7 +45,7 @@ class Demo extends Component {
 
     render() {
         // we can sort items before mapping to ensure they go on the menu in order using the ordinal
-        const items = this.items
+        const items = (this.items || [])
             .map((item) =>
                 <ItemCardComponent data={item} itemUpdate={this.itemUpdate} key={item.id}/>
             )

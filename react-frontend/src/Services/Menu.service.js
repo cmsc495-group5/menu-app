@@ -70,7 +70,7 @@ class MenuService {
                 itemId: item.id,
                 itemName: item.name,
                 price: item.price,
-                options: item.selectedOptions ? item.selectedOptions.map(item => item.name) : []
+                options: (item.selectedOptions && item.selectedOptions.length) ? item.selectedOptions.map(item => item.name) : []
 
             }
         })

@@ -25,6 +25,8 @@ import CreateSection from "./components/Sections/CreateSection";
 import ShowSection from "./components/Sections/ShowSection";
 import EditSection from "./components/Sections/EditSection";
 import {Paths} from './paths'
+import QrCodeComponent from "./components/QrCode/QrCodeComponent";
+import AdminMenuComponent from "./components/AdminMenu/AdminMenuComponent";
 import EmployeeComponent from "./components/Employee/Employee.component";
 
 ReactDOM.render(
@@ -33,6 +35,8 @@ ReactDOM.render(
             <Route exact path='/' component={App}/>
             <Route path={Paths.menu} component={MenuComponent}/>
             <Route path={Paths.orderComplete} component={OrderCompleteComponent}/>
+
+            <Route path={Paths.admin} component={AdminMenuComponent}/>
 
             <Route path={`${Paths.editMenu}/:id`} component={EditMenu}/>
             <Route path={Paths.createMenu} component={CreateMenu}/>
@@ -55,6 +59,8 @@ ReactDOM.render(
             <Route path={Paths.showAllOptions} component={ShowOptions}/>
 
             <Route path={Paths.employee} component={EmployeeComponent}/>
+
+            <Route path={Paths.qrCode} component={QrCodeComponent}/>
 
             <Route path={Paths.demo} component={Demo}/>
         </div>

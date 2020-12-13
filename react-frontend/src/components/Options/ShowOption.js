@@ -53,8 +53,6 @@ class ShowOption extends Component {
                                     <dd>{this.state.optionItem.price}</dd>
                                     <dt>Updated:</dt>
                                     <dd>{this.state.optionItem.updated}</dd>
-                                    <dt>Image:</dt>
-                                    <dd>{this.state.optionItem.image}</dd>
                                 </dl>
                                 <Link to={interpolateWithId(Paths.editOption, this.state.optionItem.id)}
                                       className="btn btn-success">Edit</Link>&nbsp;

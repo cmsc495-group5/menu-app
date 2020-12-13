@@ -36,7 +36,7 @@ class ShowSection extends Component {
             id,
             items,
         } = this.state.section;
-        const itemsFormatted = items.map(item => {
+        const itemsFormatted = (items || []).map(item => {
             return (<div key={item.id}>
                 <span className={'item-details item-name'}>Name: {item.name}</span>
                 <span className={'item-details item-description'}> {item.internalDescription}</span>
@@ -66,8 +66,6 @@ class ShowSection extends Component {
                                     <dd>{this.state.section.internalDescription}</dd>
                                     <dt>Updated:</dt>
                                     <dd>{this.state.section.updated}</dd>
-                                    <dt>Image:</dt>
-                                    <dd>{this.state.section.image}</dd>
                                     <dt>Items:</dt>
                                     <dd>{itemsFormatted}</dd>
                                 </dl>

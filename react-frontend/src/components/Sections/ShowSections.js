@@ -39,7 +39,7 @@ class ShowSections extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {this.state.sections.map(item =>
+                            {(this.state.sections || []).map(item =>
                                 <tr key={item.id}>
                                     <td><Link
                                         to={interpolateWithId(Paths.showSection, item.id)}>

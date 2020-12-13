@@ -45,7 +45,7 @@ class CheckoutComponent extends Component {
 
         const orderItems = (this.state.orderItems || []).map(item => {
             const {name, count, total, prepNotes, selectedOptions, price} = item;
-            const selectedOptionsFormatted = selectedOptions.map(option => this.formatOptionForCheckout(option, count));
+            const selectedOptionsFormatted = (selectedOptions || []).map(option => this.formatOptionForCheckout(option, count));
             return (
                 <Container key={item.id}>
                     <Row>
