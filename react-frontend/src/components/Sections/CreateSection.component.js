@@ -1,3 +1,10 @@
+/**
+ * file Name: CreateSection.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for creating a new section entity
+ */
+
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
@@ -10,7 +17,7 @@ import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.compon
 import {formatItemOptions, reorder} from "../utils";
 import {APIPaths, Paths} from "../../paths";
 
-class CreateSection extends Component {
+class CreateSectionComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -33,12 +40,20 @@ class CreateSection extends Component {
             });
     }
 
+    /**
+     * Updates state with form changes
+     * @param e (Event} - triggering element change event
+     */
     onChange = (e) => {
         const state = this.state
         state[e.target.name] = e.target.value;
         this.setState({...state, loaded: state.loaded + 1});
     }
 
+    /**
+     * Submits section to the API, triggers a redirect to the section list
+     * @param e  (Event} - triggering element change event, summit pressed
+     */
     onSubmit = (e) => {
         e.preventDefault();
 
@@ -61,14 +76,22 @@ class CreateSection extends Component {
                 this.props.history.push(Paths.showAllSections)
             });
     }
+    /**
+     * Updates state with selected Items
+     * @param selected {Object[]} - selected items
+     */
     updateSelected = (selected) => {
         const newState = {...this.state, items: selected, loaded: this.state.loaded + 1};
         this.setState(newState);
     }
-
+    /**
+     * Updates state with selected Item order
+     * @param option {Object} Option
+     * @param change {int} index
+     */
     updateOrder = (option, change) => {
         const reordered = reorder(option, change, this.state.items);
-        this.setState({...this.state,  items: reordered, loaded: this.state.loaded +1});
+        this.setState({...this.state, items: reordered, loaded: this.state.loaded + 1});
     }
 
     render() {
@@ -76,7 +99,6 @@ class CreateSection extends Component {
             name,
             description,
             internalDescription,
-            image,
             options,
             optionItems,
         } = this.state;
@@ -129,7 +151,7 @@ class CreateSection extends Component {
                                         <label htmlFor="swap">Position:</label>
                                         <SwapOrderComponent
                                             options={this.state.items}
-                                            swapOptions={this.updateOrder }
+                                            swapOptions={this.updateOrder}
                                             key={this.state.loaded}>
                                         </SwapOrderComponent>
                                     </div>
@@ -159,4 +181,4 @@ class CreateSection extends Component {
     }
 }
 
-export default CreateSection;
+export default CreateSectionComponent;

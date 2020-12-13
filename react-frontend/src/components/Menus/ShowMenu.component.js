@@ -1,13 +1,20 @@
+/**
+ * file Name: ShowMenu.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for viewing an menu entity
+ */
+
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import DisplayImage from '../ReusableComponents/DisplayImage/DisplayImage';
+import DisplayImageComponent from '../ReusableComponents/DisplayImage/DisplayImage.component';
 import {Col, Container, Row} from "react-bootstrap";
 import MenuComponent from "../MenuComponent/Menu.component";
 import MenuService from "../../Services/Menu.service";
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
 
-class ShowMenu extends Component {
+class ShowMenuComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -21,12 +28,17 @@ class ShowMenu extends Component {
     }
 
     componentDidMount() {
+        // get menu to view
         axios.get(interpolateWithId(APIPaths.menus, this.props.match.params.id))
             .then(res => {
-                this.setState({menu: res.data, loaded: this.state.loaded +1});
+                this.setState({menu: res.data, loaded: this.state.loaded + 1});
             });
     }
 
+    /**
+     * Deletes the menu entity
+     * @param id {string} - id of the menu
+     */
     delete(id) {
         axios.delete(interpolateWithId(APIPaths.menus, id))
             .then((result) => {
@@ -36,7 +48,7 @@ class ShowMenu extends Component {
 
     render() {
         const sections = (this.state.menu.sections || []).map(section => {
-            return (<div>
+            return (<div key={section.id}>
                 Title: <b>{section.title}</b> <i>{section.internalDescription}</i>
             </div>)
         })
@@ -68,7 +80,8 @@ class ShowMenu extends Component {
                                         {this.state.menu.active ? "(Active menu cannot be deleted)" : ""}
                                     </dd>
                                 </dl>
-                                <DisplayImage imgSrc={this.state.menu.img && this.state.menu.img.src || ''}/>
+                                <DisplayImageComponent
+                                    imgSrc={this.state.menu.img && this.state.menu.img.src ? this.state.menu.img.src : ''}/>
                                 <br/>
                                 <Link
                                     to={interpolateWithId(Paths.editMenu, this.state.menu.id)}
@@ -98,4 +111,4 @@ class ShowMenu extends Component {
     }
 }
 
-export default ShowMenu;
+export default ShowMenuComponent;

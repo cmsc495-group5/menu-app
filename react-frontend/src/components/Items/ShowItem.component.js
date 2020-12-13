@@ -1,3 +1,10 @@
+/**
+ * file Name: ShowItem.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for viewing an item entity
+ */
+
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
@@ -5,9 +12,10 @@ import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component
 import '../../SharedStyles/admin.css'
 import {Col, Container, Row} from "react-bootstrap";
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
-import DisplayImage from "../ReusableComponents/DisplayImage/DisplayImage";
+import DisplayImageComponent from "../ReusableComponents/DisplayImage/DisplayImage.component";
+import {formatPrice} from "../utils";
 
-class ShowItem extends Component {
+class ShowItemComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -29,6 +37,10 @@ class ShowItem extends Component {
             });
     }
 
+    /**
+     * Deletes the item entity
+     * @param id {string} - id of the item
+     */
     delete(id) {
         axios.delete(interpolateWithId(APIPaths.items, id))
             .then((result) => {
@@ -61,8 +73,16 @@ class ShowItem extends Component {
                                     <dd>{this.state.item.price}</dd>
                                     <dt>Updated:</dt>
                                     <dd>{this.state.item.updated}</dd>
+                                    <dt>Options:</dt>
+                                    <dd>{this.state.item.options && this.state.item.options.length > 0 ?
+                                        this.state.item.options.map(opt => (
+                                            <div key={opt.id}><b>Name:</b> {opt.name}
+                                                <b>Price:</b>{formatPrice(opt.price)}</div>)
+                                        )
+                                        : "None"}
+                                    </dd>
                                     <dt>Image:</dt>
-                                    <dd><DisplayImage imgSrc={this.state.item?.image?.image}/></dd>
+                                    <dd><DisplayImageComponent imgSrc={this.state.item?.image?.image}/></dd>
                                 </dl>
                                 <Link to={interpolateWithId(Paths.editItem, this.state.item.id)}
                                       className="btn btn-success">Edit</Link>&nbsp;
@@ -87,4 +107,4 @@ class ShowItem extends Component {
     }
 }
 
-export default ShowItem;
+export default ShowItemComponent;

@@ -1,11 +1,18 @@
+/**
+ * file Name: CreateImage.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for creating a new image entity
+ */
+
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import {APIPaths, Paths} from "../../paths";
-import DisplayImage from "../ReusableComponents/DisplayImage/DisplayImage";
+import DisplayImageComponent from "../ReusableComponents/DisplayImage/DisplayImage.component";
 
 
-class CreateImage extends Component {
+class CreateImageComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -15,12 +22,20 @@ class CreateImage extends Component {
         };
     }
 
+    /**
+     * Updates state with form changes
+     * @param e (Event} - triggering element change event
+     */
     onChange = (e) => {
         const state = this.state
         state[e.target.name] = e.target.value;
         this.setState(state);
     }
 
+    /**
+     * Submits image to the API, triggers a redirect to the image list
+     * @param e  (Event} - triggering element change event, summit pressed
+     */
     onSubmit = (e) => {
         e.preventDefault();
 
@@ -38,6 +53,10 @@ class CreateImage extends Component {
             });
     }
 
+    /**
+     * Updates image data in state
+     * @param imgData {string} - 64bit encoded image
+     */
     updateImageData = (imgData) => {
         let newState = {...this.state};
 
@@ -46,6 +65,10 @@ class CreateImage extends Component {
         this.setState(newState);
     }
 
+    /**
+     * Processes the first selected file to a 64 bit encoded image, triggers state update in callback
+     * @param element {EventTarget & HTMLInputElement} - files selected
+     */
     encodeImageFileAsURL = (element) => {
         const file = element.files[0];
         const reader = new FileReader();
@@ -82,7 +105,7 @@ class CreateImage extends Component {
                                        onChange={(value) => this.encodeImageFileAsURL(value.target)}
                                 />
                             </div>
-                            <DisplayImage key={this.state.image} imgSrc={this.state.image || ''}/>
+                            <DisplayImageComponent key={image} imgSrc={image || ''}/>
                             <button type="submit" className="btn btn-secondary">Submit</button>
                         </form>
                     </div>
@@ -92,4 +115,4 @@ class CreateImage extends Component {
     }
 }
 
-export default CreateImage;
+export default CreateImageComponent;

@@ -1,3 +1,10 @@
+/*
+ * file Name: OrderServiceImpl.java
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Implementation of the Order service interface
+ */
+
 package com.resturant.menu.services;
 
 import com.resturant.menu.models.Order;
@@ -30,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
         order.setUpdated(placed);
         order.setPlaced(placed);
         OrderItem[] orderItems = new OrderItem[order.getOrderItems().length];
-
+        // save order items so they can be attached to the order
         for (int i = 0; i < order.getOrderItems().length; i++) {
             orderItems[i] = orderItemService.saveOrder(order.getOrderItems()[i]);
         }
@@ -44,33 +51,33 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public Order updateOrder(String id, Order order) {
-        Optional<Order> optSec = ordersRepository.findById(id);
-        Order s = optSec.get();
+        Optional<Order> optOrder = ordersRepository.findById(id);
+        Order orderToUpdate = optOrder.get();
 
         if (order.getStatus() != null) {
-            s.setStatus(order.getStatus());
+            orderToUpdate.setStatus(order.getStatus());
         }
 
         if (order.getOrderItems() != null) {
-            s.setOrderItems(order.getOrderItems());
+            orderToUpdate.setOrderItems(order.getOrderItems());
         }
 
         if (order.getTable() != null) {
-            s.setTable(order.getTable());
+            orderToUpdate.setTable(order.getTable());
         }
         if (order.getCanceled() != null) {
-            s.setCanceled(order.getCanceled());
+            orderToUpdate.setCanceled(order.getCanceled());
         }
 
-        s.setUpdated(new Date().toString());
-        ordersRepository.save(s);
-        return s;
+        orderToUpdate.setUpdated(new Date().toString());
+        ordersRepository.save(orderToUpdate);
+        return orderToUpdate;
     }
 
     public String deleteOrder(String id) {
         Optional<Order> optItem = ordersRepository.findById(id);
-        Order sec = optItem.get();
-        ordersRepository.delete(sec);
+        Order order = optItem.get();
+        ordersRepository.delete(order);
         return "";
     }
 

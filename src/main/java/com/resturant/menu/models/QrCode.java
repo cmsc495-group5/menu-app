@@ -1,3 +1,10 @@
+/*
+ * file Name: QrCode.java
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Model for QrCodes
+ */
+
 package com.resturant.menu.models;
 
 public class QrCode {

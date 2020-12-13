@@ -1,26 +1,33 @@
+/*
+ * file Name: Option.java
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Model for Options
+ */
+
 package com.resturant.menu.models;
 
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection= "options")
+@Document(collection = "options")
 public class Option {
     @Id
     String id;
     String name;
     String description;
-    @BsonProperty(value="internal_description")
+    @BsonProperty(value = "internal_description")
     String internalDescription;
     Double price;
     String updated;
-    
+
     @DBRef
     Image image;
 
-    
-     public Option(String name, String description, String internalDescription, Double price, Image image) {
+
+    public Option(String name, String description, String internalDescription, Double price, Image image) {
         this.name = name;
         this.description = description;
         this.internalDescription = internalDescription;
@@ -52,7 +59,7 @@ public class Option {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public String getInternalDescription() {
         return internalDescription;
     }
@@ -60,7 +67,7 @@ public class Option {
     public void setInternalDescription(String internalDescription) {
         this.internalDescription = internalDescription;
     }
-    
+
     public Double getPrice() {
         return price;
     }

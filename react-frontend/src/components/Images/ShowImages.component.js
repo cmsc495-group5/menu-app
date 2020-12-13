@@ -1,9 +1,16 @@
+/**
+ * file Name: ShowImagesComponent.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for viewing a list of image entities
+ */
+
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
 
-class ShowImages extends Component {
+class ShowImagesComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -13,6 +20,7 @@ class ShowImages extends Component {
     }
 
     componentDidMount() {
+        // get all images
         axios.get(APIPaths.images)
             .then(res => {
                 this.setState({images: res.data});
@@ -56,4 +64,4 @@ class ShowImages extends Component {
     }
 }
 
-export default ShowImages;
+export default ShowImagesComponent;

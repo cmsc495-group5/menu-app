@@ -1,3 +1,10 @@
+/**
+ * file Name: MockData.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Mock data for demo component
+ */
+
 // hardcoded image will cause linting errors
 // noinspection SpellCheckingInspection
 const image = {
@@ -29,7 +36,7 @@ export function getMockOption(int) {
         description: 'description' + int,
         internalDescription: 'test' + int,
         price: 0.50 + int,
-    }
+    };
 }
 
 export function getMockSection(index, itemCount) {
@@ -53,15 +60,11 @@ export function getMockSection(index, itemCount) {
         items,
         ordinal: index,
     }
-    if (random % 2 === 1) {
-        section.image = image;
-    }
     return section;
 }
 
 export function getMockMenu(sectionCount) {
-
-    const sections = []
+    const sections = [];
 
     for (let i = 0; i < sectionCount; i++) {
         sections.push(getMockSection(i, 5));
@@ -73,5 +76,5 @@ export function getMockMenu(sectionCount) {
         title: "Welcome to Here",
         image,
         sections
-    }
+    };
 }

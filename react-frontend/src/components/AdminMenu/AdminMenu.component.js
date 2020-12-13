@@ -1,3 +1,10 @@
+/**
+ * file Name: AdminMenu.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Admin menu for header navigation on admin pages
+ */
+
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import {Paths} from "../../paths";

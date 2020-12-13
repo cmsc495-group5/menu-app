@@ -1,4 +1,12 @@
+/*
+ * file Name: MenuServiceImpl.java
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Implementation of the Menu service interface
+ */
+
 package com.resturant.menu.services;
+
 import com.resturant.menu.models.Menu;
 import com.resturant.menu.models.Section;
 import com.resturant.menu.repositories.MenusRepository;
@@ -12,82 +20,81 @@ import java.util.Optional;
 @Service
 public class MenuServiceImpl implements MenuService {
 
-    private MenusRepository menusRepository;
+    private final MenusRepository menusRepository;
 
     @Autowired
-    public MenuServiceImpl(MenusRepository menusRepository){
+    public MenuServiceImpl(MenusRepository menusRepository) {
         this.menusRepository = menusRepository;
     }
 
-    public Iterable<Menu> getMenus(){
+    public Iterable<Menu> getMenus() {
         return menusRepository.findAll();
     }
 
-    public Menu saveMenu(Menu menu){
+    public Menu saveMenu(Menu menu) {
         menu.setUpdated(new Date().toString());
+        if (menu.getActive()) {
+            deactivateActiveMenu();
+        }
         menusRepository.save(menu);
         return menu;
     }
 
-    public Optional<Menu> getMenuById( String id) {
+    public Optional<Menu> getMenuById(String id) {
         return menusRepository.findById(id);
     }
 
     public Menu updateMenu(String id, Menu menu) {
         Optional<Menu> optMenu = menusRepository.findById(id);
-        Menu m = optMenu.get();
-        if(menu.getTitle() != null){
-            m.setTitle(menu.getTitle());
+        Menu menuToUpdate = optMenu.get();
+        if (menu.getTitle() != null) {
+            menuToUpdate.setTitle(menu.getTitle());
         }
-        if(menu.getDescription() != null){
-            m.setDescription(menu.getDescription());
+        if (menu.getDescription() != null) {
+            menuToUpdate.setDescription(menu.getDescription());
         }
-        if(menu.getInternalDescription() != null){
-            m.setInternalDescription(menu.getInternalDescription());
+        if (menu.getInternalDescription() != null) {
+            menuToUpdate.setInternalDescription(menu.getInternalDescription());
         }
-        if(menu.getImage() != null){
-            m.setImage(menu.getImage());
+        if (menu.getImage() != null) {
+            menuToUpdate.setImage(menu.getImage());
         }
-        if(menu.getSections() != null){
-            m.setSections(menu.getSections());
+        if (menu.getSections() != null) {
+            menuToUpdate.setSections(menu.getSections());
         }
-        if(menu.getActive() != null){
-            if(menu.getActive()){
+        if (menu.getActive() != null) {
+            if (menu.getActive()) {
                 deactivateActiveMenu();
             }
-            m.setActive(menu.getActive());
+            menuToUpdate.setActive(menu.getActive());
         }
-        m.setUpdated(new Date().toString());
-        menusRepository.save(m);
-        return m;
+        menuToUpdate.setUpdated(new Date().toString());
+        menusRepository.save(menuToUpdate);
+        return menuToUpdate;
     }
 
-    public String deleteMenu( String id) {
+    public String deleteMenu(String id) {
         Optional<Menu> optMenu = menusRepository.findById(id);
         Menu menu = optMenu.get();
         menusRepository.delete(menu);
         return "";
     }
 
-    private void deactivateActiveMenu(){
-        Menu menu = getActiveMenu();
-        menu.setActive(false);
-        updateMenu(menu.getId(), menu);
-    }
-
-    public void activateMenu(String id) {
-        Optional<Menu> menuOpt = getMenuById(id);
-        if(menuOpt.isPresent()){
-            Menu menu = menuOpt.get();
-            deactivateActiveMenu();
-            menu.setActive(true);
-            updateMenu(id, menu);
+    private void deactivateActiveMenu() {
+        List<Menu> menus = menusRepository.findByActive(true);
+        // this is over cautious but will correct any state errors if more than one is active on update
+        if (menus.size() > 0) {
+            for (int i = 0; i < menus.size(); i++) {
+                Menu menuToDisable = menus.get(i);
+                menuToDisable.setActive(false);
+                updateMenu(menuToDisable.getId(), menuToDisable);
+            }
         }
     }
 
     public Menu getActiveMenu() {
-        List<Menu> menus =  menusRepository.findByActive(true);
-        if(menus.size() >=1){
+        List<Menu> menus = menusRepository.findByActive(true);
+        if (menus.size() == 1) {
             return menus.get(0);
         }
         // no record found return an empty menu to prevent errors; this could probably be handled better

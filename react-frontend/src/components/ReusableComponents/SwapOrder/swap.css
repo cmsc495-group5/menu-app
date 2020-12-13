@@ -1,6 +1,15 @@
+/**
+ * file Name: swap.css
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Swap component styling
+ */
+
+
 .swap-hidden {
     visibility: hidden;
 }
+
 .swap-order-container {
     border: 1px solid #cccccc;
     border-radius: 4px;

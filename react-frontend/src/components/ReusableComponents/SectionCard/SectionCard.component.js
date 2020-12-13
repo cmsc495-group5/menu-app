@@ -1,3 +1,10 @@
+/**
+ * file Name: SectionCard.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for displaying an section entity in the menu
+ */
+
 import {Col, Row} from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";

@@ -1,3 +1,10 @@
+/**
+ * file Name: image.css
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Image component styling
+ */
+
 .item-card-container {
     min-width: 350px;
     max-width: 600px;
@@ -16,8 +23,4 @@
 
 .menu-panel-body {
     overflow: auto;
-}
-
-.menu-container {
-
 }

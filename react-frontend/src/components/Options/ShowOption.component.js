@@ -1,3 +1,10 @@
+/**
+ * file Name: ShowOption.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for viewing an option entity
+ */
+
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
@@ -5,7 +12,7 @@ import './options.css'
 import {Col, Container, Row} from "react-bootstrap";
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
 
-class ShowOption extends Component {
+class ShowOptionComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -16,14 +23,18 @@ class ShowOption extends Component {
     }
 
     componentDidMount() {
-        axios.get(interpolateWithId(APIPaths.options , this.props.match.params.id))
+        axios.get(interpolateWithId(APIPaths.options, this.props.match.params.id))
             .then(res => {
                 this.setState({optionItem: res.data, loaded: true});
             });
     }
 
+    /**
+     * Deletes the option entity
+     * @param id {string} - id of the option
+     */
     delete(id) {
-        axios.delete(interpolateWithId(APIPaths.options , id))
+        axios.delete(interpolateWithId(APIPaths.options, id))
             .then((result) => {
                 this.props.history.push(Paths.showAllOptions)
             });
@@ -71,4 +82,4 @@ class ShowOption extends Component {
     }
 }
 
-export default ShowOption;
+export default ShowOptionComponent;

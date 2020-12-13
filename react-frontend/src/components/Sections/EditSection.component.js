@@ -1,3 +1,10 @@
+/**
+ * file Name: EditSection.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for editing an section entity
+ */
+
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
@@ -9,7 +16,7 @@ import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.compon
 import {formatItemOptions, reorder} from "../utils";
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
 
-class EditSection extends Component {
+class EditSectionComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -29,22 +36,32 @@ class EditSection extends Component {
     }
 
     componentDidMount() {
+        // get section to edit
         axios.get(interpolateWithId(APIPaths.sections, this.props.match.params.id))
             .then(res => {
                 this.setState({...this.state, section: res.data, loaded: this.state.loaded + 1});
             });
+        // get item options
         axios.get(APIPaths.items)
             .then(res => {
                 this.setState({...this.state, optionItems: res.data});
             });
     }
 
+    /**
+     * Updates state with form changes
+     * @param e (Event} - triggering element change event
+     */
     onChange = (e) => {
         const state = this.state.section
         state[e.target.name] = e.target.value;
         this.setState({section: state, loaded: this.state.loaded + 1});
     }
 
+    /**
+     * Updates state with selected Items
+     * @param selected {Object[]} - selected items
+     */
     updateSelected = (selected) => {
         const newState = {
             ...this.state,
@@ -53,12 +70,25 @@ class EditSection extends Component {
         };
         this.setState(newState);
     }
-
+    /**
+     * Updates state with selected Items order
+     * @param option {Object} Option
+     * @param change {int} index
+     */
     updateOrder = (option, change) => {
         const orderedOptions = reorder(option, change, this.state.section.items);
-        this.setState({...this.state, section: {...this.state.section, items: orderedOptions}, loaded: this.state.loaded +1});
+        this.setState({
+            ...this.state,
+            section: {...this.state.section, items: orderedOptions},
+            loaded: this.state.loaded + 1
+        });
     }
 
+
+    /**
+     * Submits section to the API, triggers a redirect to the section list
+     * @param e  (Event} - triggering element change event, summit pressed
+     */
     onSubmit = (e) => {
         e.preventDefault();
 
@@ -81,7 +111,11 @@ class EditSection extends Component {
                 this.props.history.push(interpolateWithId(Paths.showSection, this.props.match.params.id))
             });
     }
-    onCancel =(e) => {
+    /**
+     * Triggers a redirect to the section view
+     * @param e  (Event} - triggering element change event, cancel pressed
+     */
+    onCancel = (e) => {
         e.preventDefault();
         this.props.history.push(interpolateWithId(Paths.showSection, this.props.match.params.id))
     }
@@ -123,7 +157,7 @@ class EditSection extends Component {
                                     </div>
 
                                     <div className="form-group">
-                                        <label htmlFor="options">options:</label>
+                                        <label htmlFor="options">Items:</label>
                                         <Multiselect
                                             options={formattedOptions}
                                             displayValue={'display'}
@@ -140,7 +174,7 @@ class EditSection extends Component {
                                         <label htmlFor="swap">Position:</label>
                                         <SwapOrderComponent
                                             options={this.state.section.items}
-                                            swapOptions={this.updateOrder }
+                                            swapOptions={this.updateOrder}
                                             key={this.state.loaded}>
                                         </SwapOrderComponent>
                                     </div>
@@ -177,4 +211,4 @@ class EditSection extends Component {
 
 }
 
-export default EditSection;
+export default EditSectionComponent;

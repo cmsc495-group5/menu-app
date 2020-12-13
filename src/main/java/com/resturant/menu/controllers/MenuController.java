@@ -1,3 +1,10 @@
+/*
+ * file Name: MenuController.java
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Controller for Menu related functions
+ */
+
 package com.resturant.menu.controllers;
 
 import com.resturant.menu.models.Menu;
@@ -13,51 +20,40 @@ public class MenuController {
     MenuService menuService;
 
     @Autowired
-    public MenuController(MenuService menuService){
+    public MenuController(MenuService menuService) {
         this.menuService = menuService;
     }
 
-    @RequestMapping(method= RequestMethod.GET, value="api/test")
-    public String test() {
-        return "test";
-    }
-
-    @RequestMapping(method= RequestMethod.GET, value="/menus")
-    public Iterable<Menu> menu(){
+    @RequestMapping(method = RequestMethod.GET, value = "/menus")
+    public Iterable<Menu> getMenus() {
         return menuService.getMenus();
     }
 
-    @RequestMapping(method=RequestMethod.POST, value="/menus")
-    public Menu save(@RequestBody Menu menu){
+    @RequestMapping(method = RequestMethod.POST, value = "/menus")
+    public Menu saveMenu(@RequestBody Menu menu) {
         menu.setUpdated(new Date().toString());
         menuService.saveMenu(menu);
         return menu;
     }
 
-    @RequestMapping(method=RequestMethod.GET, value="/menus/{id}")
-    public Optional<Menu> show(@PathVariable String id) {
+    @RequestMapping(method = RequestMethod.GET, value = "/menus/{id}")
+    public Optional<Menu> getMenu(@PathVariable String id) {
         return menuService.getMenuById(id);
     }
 
-    @RequestMapping(method=RequestMethod.PUT, value="/menus/{id}")
-    public Menu update(@PathVariable String id, @RequestBody Menu menu) {
+    @RequestMapping(method = RequestMethod.PUT, value = "/menus/{id}")
+    public Menu updateMenu(@PathVariable String id, @RequestBody Menu menu) {
         return menuService.updateMenu(id, menu);
     }
 
-    @RequestMapping(method=RequestMethod.DELETE, value="/menus/{id}")
-    public String delete(@PathVariable String id) {
+    @RequestMapping(method = RequestMethod.DELETE, value = "/menus/{id}")
+    public String deleteMenu(@PathVariable String id) {
         menuService.deleteMenu(id);
         return "";
     }
 
-    @RequestMapping(method=RequestMethod.PUT, value="/menus/{id}/activate")
-    public String activateMenu(@PathVariable String id){
-        menuService.activateMenu(id);
-        return "";
-    }
-
-    @RequestMapping(method=RequestMethod.GET, value="/menus/active")
-    public Menu show(){
+    @RequestMapping(method = RequestMethod.GET, value = "/menus/active")
+    public Menu getActiveMenu() {
         return menuService.getActiveMenu();
     }
 }

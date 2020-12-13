@@ -1,22 +1,30 @@
+/**
+ * file Name: ShowOptionsComponent.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for viewing a list of option entities
+ */
+
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
 import {Container} from "react-bootstrap";
 
-class ShowItems extends Component {
+class ShowOptionsComponent extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            items: []
+            options: []
         };
     }
 
     componentDidMount() {
-        axios.get(APIPaths.items)
+        // load list of options
+        axios.get(APIPaths.options)
             .then(res => {
-                this.setState({items: res.data});
+                this.setState({options: res.data});
             });
     }
 
@@ -26,11 +34,11 @@ class ShowItems extends Component {
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">
-                            ITEMS LIST
+                            OPTIONS LIST
                         </h3>
                     </div>
                     <div className="panel-body">
-                        <h4><Link to={Paths.createItem}>Add Item</Link></h4>
+                        <h4><Link to={Paths.createOption}>Add option</Link></h4>
                         <table className="table table-stripe">
                             <thead>
                             <tr>
@@ -39,14 +47,13 @@ class ShowItems extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {(this.state.items || []).map(item =>
-                                <tr key={item.id}>
+                            {(this.state.options || []).map(option =>
+                                <tr key={option.id}>
                                     <td><Link
-                                        to={interpolateWithId(Paths.showItem, item.id)}>
-                                        {item.name || 'undefined'}
-                                    </Link>
-                                    </td>
-                                    <td>{item.description}</td>
+                                        to={interpolateWithId(Paths.showOption, option.id)}>
+                                        {option.name || 'Undefined'}
+                                    </Link></td>
+                                    <td>{option.description || 'Undefined'}</td>
                                 </tr>
                             )}
                             </tbody>
@@ -58,4 +65,4 @@ class ShowItems extends Component {
     }
 }
 
-export default ShowItems;
+export default ShowOptionsComponent;

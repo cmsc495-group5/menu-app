@@ -1,25 +1,31 @@
-package com.resturant.menu.models;
+/*
+ * file Name: Menu.java
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Model for Menus
+ */
 
+package com.resturant.menu.models;
 
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection= "menus")
+@Document(collection = "menus")
 public class Menu {
     @Id
     String id;
     String title;
     String description;
     Boolean active;
-    @BsonProperty(value="internal_description")
+    @BsonProperty(value = "internal_description")
     String internalDescription;
     String updated;
-    
+
     @DBRef
     Image image;
-    
+
     @DBRef
     Section[] sections;
 

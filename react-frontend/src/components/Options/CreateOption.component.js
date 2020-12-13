@@ -1,10 +1,17 @@
+/**
+ * file Name: CreateOption.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for creating a new option entity
+ */
+
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import {APIPaths, Paths} from "../../paths";
 import {Container} from "react-bootstrap";
 
-class CreateOption extends Component {
+class CreateOptionComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -18,12 +25,20 @@ class CreateOption extends Component {
         };
     }
 
+    /**
+     * Updates state with form changes
+     * @param e (Event} - triggering element change event
+     */
     onChange = (e) => {
         const state = this.state
         state[e.target.name] = e.target.value;
         this.setState(state);
     }
 
+    /**
+     * Submits option to the API, triggers a redirect to the option list
+     * @param e  (Event} - triggering element change event, summit pressed
+     */
     onSubmit = (e) => {
         e.preventDefault();
 
@@ -52,7 +67,6 @@ class CreateOption extends Component {
             name,
             description,
             internalDescription,
-            image,
             price,
             updated
         } = this.state;
@@ -85,7 +99,7 @@ class CreateOption extends Component {
                                        placeholder="internalDescription"/>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="price">price:</label>
+                                <label htmlFor="price">Price:</label>
                                 <input type="number" step="0.01" className="form-control" name="price" value={price}
                                        onChange={this.onChange} placeholder={0.00}/>
                             </div>
@@ -98,4 +112,4 @@ class CreateOption extends Component {
     }
 }
 
-export default CreateOption;
+export default CreateOptionComponent;

@@ -1,3 +1,10 @@
+/**
+ * file Name: CreateItem.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for creating a new item entity
+ */
+
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
@@ -7,9 +14,9 @@ import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component
 import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.component";
 import {formatOptions, reorder} from "../utils";
 import {APIPaths, Paths} from "../../paths";
-import DisplayImage from "../ReusableComponents/DisplayImage/DisplayImage";
+import DisplayImageComponent from "../ReusableComponents/DisplayImage/DisplayImage.component";
 
-class CreateItem extends Component {
+class CreateItemComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -27,16 +34,22 @@ class CreateItem extends Component {
     }
 
     componentDidMount() {
+        // get item options
         axios.get(APIPaths.options)
             .then(res => {
                 this.setState({...this.state, optionItems: res.data});
             });
+        // get image options
         axios.get(APIPaths.images)
             .then(res => {
                 this.setState({...this.state, imageOptions: res.data});
             });
     }
 
+    /**
+     * Updates state with form changes
+     * @param e (Event} - triggering element change event
+     */
     onChange = (e) => {
         const state = this.state
         if (e.target.name === 'price') {
@@ -49,6 +62,10 @@ class CreateItem extends Component {
         this.setState({...state, loaded: state.loaded + 1});
     }
 
+    /**
+     * Submits item to the API, triggers a redirect to the item list
+     * @param e  (Event} - triggering element change event, summit pressed
+     */
     onSubmit = (e) => {
         e.preventDefault();
 
@@ -73,14 +90,28 @@ class CreateItem extends Component {
                 this.props.history.push(Paths.showAllItems)
             });
     }
+
+    /**
+     * Updates state with selected Options
+     * @param selected {Object[]} - selected options
+     */
     updateSelected = (selected) => {
         const newState = {...this.state, options: selected, loaded: this.state.loaded + 1};
         this.setState(newState);
     }
-    updateOrder = (option, change) => {
+    /**
+     * Updates state with selected Options order
+     * @param option {Object} Option
+     * @param change {int} index
+     */
+    updateOptionOrder = (option, change) => {
         let reordered = reorder(option, change, this.state.options)
         this.setState({...this.state, options: reordered, loaded: this.state.loaded + 1});
     }
+    /**
+     * Updates state with selected Image
+     * @param selections {Object[]} - single selected image
+     */
     updateImage = (selections) => {
         if (selections && selections.length) {
             this.setState({...this.state, image: selections[0], loaded: this.state.loaded + 1});
@@ -134,7 +165,7 @@ class CreateItem extends Component {
                                                placeholder="internalDescription"/>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="price">price:</label>
+                                        <label htmlFor="price">Price:</label>
                                         <input type="number" step="0.01" className="form-control" name="price"
                                                value={price}
                                                onChange={this.onChange} placeholder={0.00}/>
@@ -152,9 +183,9 @@ class CreateItem extends Component {
                                                      hidePlacehoder={false}
                                         /><Button onClick={this.updateImage}>Remove</Button>
                                     </div>
-                                    <DisplayImage key={image} imgSrc={image?.image || ''}/>
+                                    <DisplayImageComponent key={image} imgSrc={image?.image || ''}/>
                                     <div className="form-group">
-                                        <label htmlFor="options">options:</label>
+                                        <label htmlFor="options">Options:</label>
                                         <Multiselect
                                             options={formattedOptions}
                                             displayValue={'display'}
@@ -171,7 +202,7 @@ class CreateItem extends Component {
                                         <label htmlFor="swap">Position:</label>
                                         <SwapOrderComponent
                                             options={this.state.options}
-                                            swapOptions={this.updateOrder}
+                                            swapOptions={this.updateOptionOrder}
                                             key={this.state.loaded}>
                                         </SwapOrderComponent>
                                     </div>
@@ -192,4 +223,4 @@ class CreateItem extends Component {
     }
 }
 
-export default CreateItem;
+export default CreateItemComponent;

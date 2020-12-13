@@ -1,3 +1,10 @@
+/**
+ * file Name: ShowSection.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for viewing an section entity
+ */
+
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
@@ -6,8 +13,9 @@ import MenuSection from "../ReusableComponents/MenuSection/MenuSection.component
 import SectionCardComponent from "../ReusableComponents/SectionCard/SectionCard.component";
 import '../../SharedStyles/admin.css'
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
+import {formatPrice} from "../utils";
 
-class ShowSection extends Component {
+class ShowSectionComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -18,12 +26,17 @@ class ShowSection extends Component {
     }
 
     componentDidMount() {
+        // get section to view
         axios.get(interpolateWithId(APIPaths.sections, this.props.match.params.id))
             .then(res => {
                 this.setState({...this.state, section: res.data, loaded: true});
             });
     }
 
+    /**
+     * Deletes the section entity
+     * @param id {string} - id of the section
+     */
     delete(id) {
         axios.delete(interpolateWithId(APIPaths.sections, id))
             .then((result) => {
@@ -36,13 +49,15 @@ class ShowSection extends Component {
             id,
             items,
         } = this.state.section;
-        const itemsFormatted = (items || []).map(item => {
-            return (<div key={item.id}>
-                <span className={'item-details item-name'}>Name: {item.name}</span>
-                <span className={'item-details item-description'}> {item.internalDescription}</span>
-                <span className={'item-details item-price'}>{item.price}</span>
-            </div>)
-        })
+        const itemsFormatted = items && items.length
+            ? items.map(item => {
+                return (
+                    <div key={item.id}>
+                        <span className={'item-details item-name'}><b> Name:</b> {item.name}</span>
+                        <span className={'item-details item-price'}><b> Price:</b> {formatPrice(item.price)}</span>
+                    </div>)
+            })
+            : 'None'
 
         return (
             <Container className="container">
@@ -102,4 +117,4 @@ class ShowSection extends Component {
     }
 }
 
-export default ShowSection;
+export default ShowSectionComponent;
