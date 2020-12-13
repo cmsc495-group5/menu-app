@@ -1,0 +1,49 @@
+.employee-container {
+    max-width: 100%;
+    height: 100%;
+}
+
+.employee-page {
+    height: 95vh;
+}
+
+.employee-row {
+    height: 100%
+}
+
+.employee-card {
+    margin-bottom: 10px;
+}
+
+.employee-card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.employee-right {
+    float: right
+}
+
+.employee-order-button {
+    width: 30%;
+}
+
+.employee-column {
+    border: solid 2px black;
+    padding: 5px;
+    min-height: 100%;
+    background-color: slategrey;
+}
+
+.employee-column-content {
+    height: 100%;
+
+}
+
+.modal {
+    height: unset;
+}
+
+.ui.modal {
+    position: unset;
+}

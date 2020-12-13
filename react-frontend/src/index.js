@@ -29,6 +29,7 @@ import ShowImages from "./components/Images/ShowImages";
 import ShowImage from "./components/Images/ShowImage";
 import CreateImage from "./components/Images/CreateImage";
 import EditImage from "./components/Images/EditImage";
+import EmployeeComponent from "./components/Employee/Employee.component";
 
 ReactDOM.render(
     <Router>
@@ -61,6 +62,8 @@ ReactDOM.render(
             <Route path={Paths.createImage} component={CreateImage}/>
             <Route path={`${Paths.showImage}/:id`} component={ShowImage}/>
             <Route path={Paths.showAllImages} component={ShowImages}/>
+
+            <Route path={Paths.employee} component={EmployeeComponent}/>
 
             <Route path={Paths.demo} component={Demo}/>
         </div>
