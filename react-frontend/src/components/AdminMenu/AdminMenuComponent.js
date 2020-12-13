@@ -22,6 +22,7 @@ class AdminMenuComponent extends Component {
                     <div><h4><Link to={Paths.showAllSections}>Section Operations</Link></h4></div>
                     <div><h4><Link to={Paths.showAllItems}>Item Operations</Link></h4></div>
                     <div><h4><Link to={Paths.showAllOptions}>Item Options Operations</Link></h4></div>
+                    <div><h4><Link to={Paths.showAllImages}>Image Operations</Link></h4></div>
                     <div><h4><Link to={Paths.qrCode}>Generate Table QrCodes</Link></h4></div>
                     <div><h4><Link to={Paths.demo}>Demo</Link></h4></div>
                 </div>

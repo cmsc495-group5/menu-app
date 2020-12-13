@@ -50,7 +50,6 @@ class CreateImage extends Component {
         const file = element.files[0];
         const reader = new FileReader();
         reader.onloadend = () => {
-            console.log('RESULT', reader.result)
             this.updateImageData(reader.result);
         }
         reader.readAsDataURL(file);

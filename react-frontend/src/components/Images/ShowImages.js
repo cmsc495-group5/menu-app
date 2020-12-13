@@ -20,6 +20,15 @@ class ShowImages extends Component {
     }
 
     render() {
+        const imageRows = (this.state.images || []).map(image =>
+            (image && image.id) ? (
+                <tr key={image.id}>
+                    <td><Link
+                        to={interpolateWithId(Paths.showImage, image.id)}>
+                        {image.name || 'Undefined'}
+                    </Link></td>
+                </tr>) : null
+        );
         return (
             <div className="container">
                 <div className="panel panel-default">
@@ -37,14 +46,7 @@ class ShowImages extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {this.state.images.map(image =>
-                                <tr key={image.id}>
-                                    <td><Link
-                                        to={interpolateWithId(Paths.showImage, image.id)}>
-                                        {image.name || 'Undefined'}
-                                    </Link></td>
-                                </tr>
-                            )}
+                            {imageRows}
                             </tbody>
                         </table>
                     </div>

@@ -47,7 +47,6 @@ class ShowImage extends Component {
                                 <dl>
                                     <dt>Name:</dt>
                                     <dd>{this.state.name}</dd>
-                                    <dt>Internal description:</dt>
                                     <dt>Image:</dt>
                                     <dd><DisplayImage key={this.state.loaded} imgSrc={this.state.image || ''}/></dd>
                                 </dl>

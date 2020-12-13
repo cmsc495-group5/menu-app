@@ -11,11 +11,7 @@ class EditImage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            image: {
-                id: null,
-                name: null,
-                image: null,
-            },
+            image: {},
             loaded: 0
         };
     }
@@ -28,25 +24,21 @@ class EditImage extends Component {
     }
 
     onChange = (e) => {
-        const state = this.state.image;
+        const state = {...this.state.image};
         state[e.target.name] = e.target.value;
         this.setState({image: state, loaded: this.state.loaded + 1});
     }
 
 
     updateImageData = (imgData) => {
-        let newState = {...this.state};
-
-        if (imgData != null) newState.image = imgData;
-
+        let newState = {...this.state, image: {...this.state.image, image: imgData}, loaded: this.state.loaded + 1};
         this.setState(newState);
     }
 
-    encodeImageFileAsURL = (element) => {
+    encodeImageFileAsURL = async (element) => {
         const file = element.files[0];
         const reader = new FileReader();
         reader.onloadend = () => {
-            console.log('RESULT', reader.result)
             this.updateImageData(reader.result);
         }
         reader.readAsDataURL(file);
@@ -86,12 +78,12 @@ class EditImage extends Component {
                     <div className="panel-body">
                         <Row>
                             <Col xs={6}>
-                                <h4><Link to={Paths.showAllOptions}> Image List</Link></h4>
+                                <h4><Link to={Paths.showAllImages}> Image List</Link></h4>
                                 <form onSubmit={this.onSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="name">Name:</label>
                                         <input type="text" className="form-control" name="name"
-                                               value={this.state.image?.name} onChange={this.onChange}
+                                               value={this.state.image.name} onChange={this.onChange}
                                                placeholder="Name"/>
                                     </div>
                                     <div className="form-group">
@@ -100,7 +92,8 @@ class EditImage extends Component {
                                                onChange={(value) => this.encodeImageFileAsURL(value.target)}
                                         />
                                     </div>
-                                    <DisplayImage key={this.state.image} imgSrc={this.state.image?.image || ''}/>
+                                    <DisplayImage key={this.state.loaded}
+                                                  imgSrc={this.state.image && this.state.image.image ? this.state.image.image : ''}/>
 
                                     <button type="submit" className="btn btn-secondary">Update</button>
                                     <button onClick={this.onCancel} className="btn btn-secondary">cancel</button>
