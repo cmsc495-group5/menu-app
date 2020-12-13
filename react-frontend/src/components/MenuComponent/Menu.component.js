@@ -108,7 +108,7 @@ class MenuComponent extends Component {
 
     render() {
         const {sections, loadedSection, total} = this.state;
-        const sortedSections = sections
+        const sortedSections = (sections || [])
             .sort((sectionA, sectionB) => sectionA.ordinal - sectionB.ordinal);
         const sectionsMenuNav = [
             (this.getSectionDropdownItem({id: this.HOME, title: 'Home'})),

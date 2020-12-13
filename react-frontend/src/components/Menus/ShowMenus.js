@@ -42,10 +42,10 @@ class ShowMenus extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {this.state.menus.sort((a, b) => b.active -a.active).map(c =>
-                                <tr key={c.id} className={c.active ? 'table-highlight-green' :''}>
+                            {(this.state.menus || []).sort((a, b) => b.active - a.active).map(c =>
+                                <tr key={c.id} className={c.active ? 'table-highlight-green' : ''}>
                                     <td><Link
-                                        to={interpolateWithId(Paths.showMenu,c.id)}>
+                                        to={interpolateWithId(Paths.showMenu, c.id)}>
                                         {c.title || 'Undefined'}
                                     </Link></td>
                                     <td>{c.internalDescription || 'Undefined'}</td>

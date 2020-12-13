@@ -23,6 +23,9 @@ class App extends Component {
                         <h4><Link to={Paths.admin}>
                             Admin
                         </Link></h4>
+                        <h4><Link to={Paths.employee}>
+                            Employee
+                        </Link></h4>
                     </div>
                 </div>
             </div>
