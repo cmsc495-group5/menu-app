@@ -29,6 +29,8 @@ import ShowImages from "./components/Images/ShowImages";
 import ShowImage from "./components/Images/ShowImage";
 import CreateImage from "./components/Images/CreateImage";
 import EditImage from "./components/Images/EditImage";
+import QrCodeComponent from "./components/QrCode/QrCodeComponent";
+import AdminMenuComponent from "./components/AdminMenu/AdminMenuComponent";
 import EmployeeComponent from "./components/Employee/Employee.component";
 
 ReactDOM.render(
@@ -37,6 +39,8 @@ ReactDOM.render(
             <Route exact path='/' component={App}/>
             <Route path={Paths.menu} component={MenuComponent}/>
             <Route path={Paths.orderComplete} component={OrderCompleteComponent}/>
+
+            <Route path={Paths.admin} component={AdminMenuComponent}/>
 
             <Route path={`${Paths.editMenu}/:id`} component={EditMenu}/>
             <Route path={Paths.createMenu} component={CreateMenu}/>
@@ -64,6 +68,8 @@ ReactDOM.render(
             <Route path={Paths.showAllImages} component={ShowImages}/>
 
             <Route path={Paths.employee} component={EmployeeComponent}/>
+
+            <Route path={Paths.qrCode} component={QrCodeComponent}/>
 
             <Route path={Paths.demo} component={Demo}/>
         </div>

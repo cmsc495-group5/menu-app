@@ -19,17 +19,17 @@ class SwapOrderComponent extends Component {
 
     render() {
         let position = 1;
-        const options= this.state.options.map(option => {
+        const options = (this.state.options || []).map(option => {
             const lastRow = position === this.state.options.length;
             const firstRow = position === 1;
             const construct = (
-                <Row key={option.id} className={'order-option'} >
+                <Row key={option.id} className={'order-option'}>
                     <Col xs={8}><b>{option.name || option.title}</b> : <i>{option.internalDescription} </i></Col>
                     <Col xs={4} className={'order-buttons' + (lastRow ? 'swap-align-right' : '')}>
-                       <IconButton
-                           className={'up-swap-icon ' + (lastRow ? 'swap-hidden' :'')}
-                           onClick={() =>this.state.swapOptions(option, +1)}>
-                           <Icon name="angle down"></Icon>
+                        <IconButton
+                            className={'up-swap-icon ' + (lastRow ? 'swap-hidden' : '')}
+                            onClick={() => this.state.swapOptions(option, +1)}>
+                            <Icon name="angle down"></Icon>
                        </IconButton>
                        <IconButton
                            className={'down-swap-icon ' + (firstRow ? 'swap-hidden' :'')}

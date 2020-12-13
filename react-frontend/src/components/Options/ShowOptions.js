@@ -39,7 +39,7 @@ class ShowOptions extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {this.state.options.map(option =>
+                            {(this.state.options || []).map(option =>
                                 <tr key={option.id}>
                                     <td><Link
                                         to={interpolateWithId(Paths.showOption, option.id)}>

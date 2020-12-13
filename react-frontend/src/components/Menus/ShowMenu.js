@@ -35,7 +35,7 @@ class ShowMenu extends Component {
     }
 
     render() {
-        const sections = this.state.menu.sections.map(section => {
+        const sections = (this.state.menu.sections || []).map(section => {
             return (<div>
                 Title: <b>{section.title}</b> <i>{section.internalDescription}</i>
             </div>)

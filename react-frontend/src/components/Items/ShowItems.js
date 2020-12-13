@@ -39,7 +39,7 @@ class ShowItems extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {this.state.items.map(item =>
+                            {(this.state.items || []).map(item =>
                                 <tr key={item.id}>
                                     <td><Link
                                         to={interpolateWithId(Paths.showItem, item.id)}>

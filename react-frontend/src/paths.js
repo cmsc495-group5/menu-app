@@ -30,6 +30,9 @@ export const Paths = {
     createImage: `/${admin}/createImage`,
     showImage: `/${admin}/showImage`,
     showAllImages: `/${admin}/images`,
+    // Qr Code
+    qrCode: `/${admin}/qrCodes`,
+
     // Demo this may be removed
     demo: `/${admin}/demo`,
     // Employee
@@ -44,7 +47,8 @@ export const APIPaths = {
     activeMenu: '/menus/active',
     orders: "/orders",
     activeOrders: "/orders/active",
-    images: '/images'
+    images: '/images',
+    qrCode: '/QrCodes',
 }
 
 export function interpolateWithId (basePath, id){

@@ -103,9 +103,10 @@ class EmployeeComponent extends Component {
                         </h4>
                     </Card.Header>
                     <Card.Body>
-
-                        {this.getCancelButton(items, id)}
-                        <div><h5>Order time: {new Date(placed).toLocaleTimeString()}</h5></div>
+                        <div>
+                            {this.getCancelButton(items, id)}
+                            <div><h5>Order time: {new Date(placed).toLocaleTimeString()}</h5></div>
+                        </div>
                         Items:
                         {items}
                     </Card.Body>
@@ -155,7 +156,7 @@ class EmployeeComponent extends Component {
         return (
             <div><IconButton
                 variant="warning"
-                className='employee-right'
+                className='employee-right delete-button'
                 onClick={() => this.openConfirmation(id)}>
                 <Icon color='orange' name='exclamation triangle'/>
             </IconButton>
