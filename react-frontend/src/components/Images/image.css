@@ -1,0 +1,23 @@
+.item-card-container {
+    min-width: 350px;
+    max-width: 600px;
+}
+
+.preview-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.panel-body {
+    min-width: 1000px;
+}
+
+.menu-panel-body {
+    overflow: auto;
+}
+
+.menu-container {
+
+}

@@ -102,7 +102,7 @@ class ItemCardComponent extends Component {
         const formattedOptions = formatOptions(options);
 
         const imageElement = image
-            ? (<Col xs={5}><Card.Img as={Image} fluid={true} src={image} className='item-image'/></Col>)
+            ? (<Col xs={5}><Card.Img as={Image} fluid={true} src={image?.image} className='item-image'/></Col>)
             : null;
 
         return (

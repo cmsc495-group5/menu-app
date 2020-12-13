@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class ItemServiceImpl implements ItemService {
 
-    private ItemsRepository itemsRepository;
+    private final ItemsRepository itemsRepository;
 
     @Autowired
     public ItemServiceImpl(ItemsRepository itemsRepository){
@@ -47,23 +47,21 @@ public class ItemServiceImpl implements ItemService {
         if(item.getDescription() != null){
             s.setDescription(item.getDescription());
         }
-        
-        if(item.getInternalDescription() != null){
+
+        if (item.getInternalDescription() != null) {
             s.setInternalDescription(item.getInternalDescription());
         }
-        
-        if(item.getPrice() != null) {
+
+        if (item.getPrice() != null) {
             s.setPrice(item.getPrice());
         }
-        
-        if (item.getImage() != null) {
-            s.setImage(item.getImage());
-        }
-        
+        // we want to be able to remove images so no null check
+        s.setImage(item.getImage());
+
         if (item.getOptions() != null) {
             s.setOptions(item.getOptions());
         }
-        
+
         if (item.getSectionId() != null) {
             s.setSectionId(item.getSectionId());
         }

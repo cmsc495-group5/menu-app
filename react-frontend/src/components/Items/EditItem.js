@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import {Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Row} from "react-bootstrap";
 import ItemCardComponent from "../ReusableComponents/ItemCard/ItemCard.component";
 import '../../SharedStyles/admin.css'
 import {Multiselect} from "multiselect-react-dropdown";
 import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.component";
 import {formatOptions, reorder} from "../utils";
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
+import DisplayImage from "../ReusableComponents/DisplayImage/DisplayImage";
 
 class EditItem extends Component {
 
@@ -37,7 +38,11 @@ class EditItem extends Component {
             });
         axios.get(APIPaths.options)
             .then(res => {
-                this.setState({...this.state, optionItems: res.data});
+                this.setState({...this.state, optionItems: res.data, loaded: this.state.loaded + 1});
+            });
+        axios.get(APIPaths.images)
+            .then(res => {
+                this.setState({...this.state, imageOptions: res.data, loaded: this.state.loaded + 1});
             });
     }
 
@@ -61,7 +66,19 @@ class EditItem extends Component {
 
     updateOrder = (option, change) => {
         let reordered = reorder(option, change, this.state.item.options)
-        this.setState({...this.state, item: {...this.state.item, options: reordered}, loaded: this.state.loaded +1});
+        this.setState({...this.state, item: {...this.state.item, options: reordered}, loaded: this.state.loaded + 1});
+    }
+
+    updateImage = (selections) => {
+        if (selections && selections.length) {
+            this.setState({
+                ...this.state,
+                item: {...this.state.item, image: selections[0]},
+                loaded: this.state.loaded + 1
+            });
+        } else {
+            this.setState({...this.state, item: {...this.state.item, image: null}, loaded: this.state.loaded + 1});
+        }
     }
 
     onSubmit = (e) => {
@@ -135,6 +152,21 @@ class EditItem extends Component {
                                                value={this.state.item.price} onChange={this.onChange}
                                                placeholder={0.00}/>
                                     </div>
+                                    <div className="form-group">
+                                        <label htmlFor="images">Image:</label>
+                                        <Multiselect key={this.state.item?.image}
+                                                     options={this.state.imageOptions}
+                                                     singleSelect={true}
+                                                     displayValue={'name'}
+                                                     emptyRecordMessage={'select Image'}
+                                                     onSelect={this.updateImage}
+                                                     onRemove={this.updateImage}
+                                                     closeOnSelect={true}
+                                                     hidePlacehoder={false}
+                                        /><Button onClick={this.updateImage}>Remove</Button>
+                                    </div>
+                                    <DisplayImage key={this.state.item?.image}
+                                                  imgSrc={this.state.item?.image?.image || ''}/>
                                     <div className="form-group">
                                         <label htmlFor="options">options:</label>
                                         <Multiselect

@@ -14,11 +14,10 @@ class SectionCardComponent extends Component {
         };
     }
 
-
     render() {
         const {id, image, title, description} = this.state.section;
         const imageElement = image
-            ? (<Col xs={5}><Card.Img as={Image} fluid={true} src={image} className='item-image'/></Col>)
+            ? (<Col xs={5}><Card.Img as={Image} fluid={true} src={image?.image} className='item-image'/></Col>)
             : null;
         return (
             <Card className={'main-menu-options'} onClick={() => this.state.navigateTo(id)} key={id} id={id}>

@@ -25,6 +25,11 @@ export const Paths = {
     createOption: `/${admin}/createOption`,
     showOption: `/${admin}/showOption`,
     showAllOptions: `/${admin}/options`,
+    // Image paths
+    editImage: `/${admin}/editImage`,
+    createImage: `/${admin}/createImage`,
+    showImage: `/${admin}/showImage`,
+    showAllImages: `/${admin}/images`,
     // Qr Code
     qrCode: `/${admin}/qrCodes`,
 
@@ -42,6 +47,7 @@ export const APIPaths = {
     activeMenu: '/menus/active',
     orders: "/orders",
     activeOrders: "/orders/active",
+    images: '/images',
     qrCode: '/QrCodes',
 }
 
