@@ -1,3 +1,10 @@
+/*
+ * file Name: Order.java
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Model for Orders
+ */
+
 package com.resturant.menu.models;
 
 import org.springframework.data.annotation.Id;
@@ -6,9 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "orders")
 public class Order {
-    public static String PLACED = "pending";
-    public static String PREPARING = "preparing";
-    public static String FILLED = "filled";
     public static String COMPLETE = "complete";
 
     @Id
@@ -95,8 +99,7 @@ public class Order {
         return canceled;
     }
 
-    public void setCanceled(Boolean cancled) {
-        this.canceled = cancled;
+    public void setCanceled(Boolean canceled) {
+        this.canceled = canceled;
     }
-
 }

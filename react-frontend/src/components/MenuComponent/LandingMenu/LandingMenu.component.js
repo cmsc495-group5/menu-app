@@ -1,3 +1,10 @@
+/**
+ * file Name: LandingMenu.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for displaying menu information and sections, landing page for the menu
+ */
+
 import React, {Component} from "react";
 import './LandingMenu.css'
 import SectionCardComponent from "../../ReusableComponents/SectionCard/SectionCard.component";

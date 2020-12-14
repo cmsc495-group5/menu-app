@@ -1,12 +1,19 @@
+/**
+ * file Name: ShowImage.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for viewing an image entity
+ */
+
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import './image.css'
 import {Col, Row} from "react-bootstrap";
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
-import DisplayImage from "../ReusableComponents/DisplayImage/DisplayImage";
+import DisplayImageComponent from "../ReusableComponents/DisplayImage/DisplayImage.component";
 
-class ShowImage extends Component {
+class ShowImageComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -17,12 +24,17 @@ class ShowImage extends Component {
     }
 
     componentDidMount() {
+        // get image entity
         axios.get(interpolateWithId(APIPaths.images, this.props.match.params.id))
             .then(res => {
                 this.setState({...res.data, loaded: true});
             });
     }
 
+    /**
+     * Deletes the image entity
+     * @param id {string} - id of the image
+     */
     delete(id) {
         axios.delete(interpolateWithId(APIPaths.images, id))
             .then((result) => {
@@ -48,7 +60,8 @@ class ShowImage extends Component {
                                     <dt>Name:</dt>
                                     <dd>{this.state.name}</dd>
                                     <dt>Image:</dt>
-                                    <dd><DisplayImage key={this.state.loaded} imgSrc={this.state.image || ''}/></dd>
+                                    <dd><DisplayImageComponent key={this.state.loaded} imgSrc={this.state.image || ''}/>
+                                    </dd>
                                 </dl>
                                 <Link to={interpolateWithId(Paths.editImage, this.state.id)}
                                       className="btn btn-success">Edit</Link>&nbsp;
@@ -66,4 +79,4 @@ class ShowImage extends Component {
     }
 }
 
-export default ShowImage;
+export default ShowImageComponent;

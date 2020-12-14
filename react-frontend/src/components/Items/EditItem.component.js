@@ -1,3 +1,10 @@
+/**
+ * file Name: EditItem.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for editing an item entity
+ */
+
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
@@ -8,9 +15,9 @@ import {Multiselect} from "multiselect-react-dropdown";
 import SwapOrderComponent from "../ReusableComponents/SwapOrder/SwapOrder.component";
 import {formatOptions, reorder} from "../utils";
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
-import DisplayImage from "../ReusableComponents/DisplayImage/DisplayImage";
+import DisplayImageComponent from "../ReusableComponents/DisplayImage/DisplayImage.component";
 
-class EditItem extends Component {
+class EditItemComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -32,20 +39,27 @@ class EditItem extends Component {
     }
 
     componentDidMount() {
+        // get the item to be edited
         axios.get(interpolateWithId(APIPaths.items, this.props.match.params.id))
             .then(res => {
                 this.setState({...this.state, item: res.data, loaded: this.state.loaded + 1});
             });
+        // get the options for dropdown
         axios.get(APIPaths.options)
             .then(res => {
                 this.setState({...this.state, optionItems: res.data, loaded: this.state.loaded + 1});
             });
+        // get the images for the image select dropdown
         axios.get(APIPaths.images)
             .then(res => {
                 this.setState({...this.state, imageOptions: res.data, loaded: this.state.loaded + 1});
             });
     }
 
+    /**
+     * Updates state with form changes
+     * @param e (Event} - triggering element change event
+     */
     onChange = (e) => {
         const state = this.state.item
         if (e.target.name === 'price') {
@@ -59,16 +73,29 @@ class EditItem extends Component {
         this.setState({item: state, loaded: this.state.loaded + 1});
     }
 
+    /**
+     * Updates state with selected Options
+     * @param selected {Object[]} - selected options
+     */
     updateSelected = (selected) => {
         const newState = {...this.state, item: {...this.state.item, options: selected}, loaded: this.state.loaded + 1};
         this.setState(newState);
     }
 
-    updateOrder = (option, change) => {
+    /**
+     * Updates state with selected Options order
+     * @param option {Object} Option
+     * @param change {int} index
+     */
+    updateOptionOrder = (option, change) => {
         let reordered = reorder(option, change, this.state.item.options)
         this.setState({...this.state, item: {...this.state.item, options: reordered}, loaded: this.state.loaded + 1});
     }
 
+    /**
+     * Updates state with selected Image
+     * @param selections {Object[]}
+     */
     updateImage = (selections) => {
         if (selections && selections.length) {
             this.setState({
@@ -81,6 +108,10 @@ class EditItem extends Component {
         }
     }
 
+    /**
+     * Submits item to the API, triggers a redirect to the item list
+     * @param e  (Event} - triggering element change event, summit pressed
+     */
     onSubmit = (e) => {
         e.preventDefault();
 
@@ -107,7 +138,12 @@ class EditItem extends Component {
                 this.props.history.push(interpolateWithId(Paths.showItem, this.props.match.params.id));
             });
     }
-    onCancel =(e) => {
+
+    /**
+     * Triggers a redirect to the item view
+     * @param e  (Event} - triggering element change event, cancel pressed
+     */
+    onCancel = (e) => {
         e.preventDefault();
         this.props.history.push(interpolateWithId(Paths.showItem, this.props.match.params.id));
     }
@@ -147,7 +183,7 @@ class EditItem extends Component {
                                                placeholder="Internal Description"/>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="price">price:</label>
+                                        <label htmlFor="price">Price:</label>
                                         <input type="number" step="0.01" className="form-control" name="price"
                                                value={this.state.item.price} onChange={this.onChange}
                                                placeholder={0.00}/>
@@ -165,10 +201,10 @@ class EditItem extends Component {
                                                      hidePlacehoder={false}
                                         /><Button onClick={this.updateImage}>Remove</Button>
                                     </div>
-                                    <DisplayImage key={this.state.item?.image}
-                                                  imgSrc={this.state.item?.image?.image || ''}/>
+                                    <DisplayImageComponent key={this.state.item?.image}
+                                                           imgSrc={this.state.item?.image?.image || ''}/>
                                     <div className="form-group">
-                                        <label htmlFor="options">options:</label>
+                                        <label htmlFor="options">Options:</label>
                                         <Multiselect
                                             options={formattedOptions}
                                             displayValue={'display'}
@@ -185,7 +221,7 @@ class EditItem extends Component {
                                         <label htmlFor="swap">Position:</label>
                                         <SwapOrderComponent
                                             options={this.state.item.options}
-                                            swapOptions={this.updateOrder}
+                                            swapOptions={this.updateOptionOrder}
                                             key={this.state.loaded}>
                                         </SwapOrderComponent>
                                     </div>
@@ -209,4 +245,4 @@ class EditItem extends Component {
 
 }
 
-export default EditItem;
+export default EditItemComponent;

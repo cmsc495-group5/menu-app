@@ -1,22 +1,31 @@
+/**
+ * file Name: ShowMenus.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for viewing a list of menu entities
+ */
+
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import './menus.css'
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
 import {Container} from "react-bootstrap";
 
-class ShowOptions extends Component {
+class ShowMenusComponent extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            options: []
+            menus: []
         };
     }
 
     componentDidMount() {
-        axios.get(APIPaths.options)
+        // get list of menus
+        axios.get(APIPaths.menus)
             .then(res => {
-                this.setState({options: res.data});
+                this.setState({menus: res.data});
             });
     }
 
@@ -26,26 +35,30 @@ class ShowOptions extends Component {
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <h3 className="panel-title">
-                            OPTIONS LIST
+                            MENUS LIST
                         </h3>
                     </div>
                     <div className="panel-body">
-                        <h4><Link to={Paths.createOption}>Add option</Link></h4>
+                        <h4><Link to={Paths.createMenu}>Add Menu</Link></h4>
                         <table className="table table-stripe">
                             <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Title</th>
                                 <th>Description</th>
+                                <th>Active</th>
+                                <th>Updated</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {(this.state.options || []).map(option =>
-                                <tr key={option.id}>
+                            {(this.state.menus || []).sort((a, b) => b.active - a.active).map(c =>
+                                <tr key={c.id} className={c.active ? 'table-highlight-green' : ''}>
                                     <td><Link
-                                        to={interpolateWithId(Paths.showOption, option.id)}>
-                                        {option.name || 'Undefined'}
+                                        to={interpolateWithId(Paths.showMenu, c.id)}>
+                                        {c.title || 'Undefined'}
                                     </Link></td>
-                                    <td>{option.description || 'Undefined'}</td>
+                                    <td>{c.internalDescription || 'Undefined'}</td>
+                                    <td>{c.active ? 'true' : 'false'}</td>
+                                    <td>{c.updated}</td>
                                 </tr>
                             )}
                             </tbody>
@@ -57,4 +70,4 @@ class ShowOptions extends Component {
     }
 }
 
-export default ShowOptions;
+export default ShowMenusComponent;

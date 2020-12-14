@@ -1,3 +1,10 @@
+/**
+ * file Name: Paths.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Centralized location for paths in the application both app and API
+ */
+
 const menu = 'menu';
 const admin = 'admin';
 
@@ -33,7 +40,7 @@ export const Paths = {
     // Qr Code
     qrCode: `/${admin}/qrCodes`,
 
-    // Demo this may be removed
+    // DemoComponent this may be removed
     demo: `/${admin}/demo`,
     // Employee
     employee: "/employee/orders"
@@ -51,6 +58,6 @@ export const APIPaths = {
     qrCode: '/QrCodes',
 }
 
-export function interpolateWithId (basePath, id){
+export function interpolateWithId(basePath, id) {
     return `${basePath}/${id}`;
 }

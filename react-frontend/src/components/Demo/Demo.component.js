@@ -1,12 +1,19 @@
+/**
+ * file Name: Demo.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Demo component for displaying a menu with mock data as an example
+ */
+
 import React, {Component} from "react";
 import Row from "react-bootstrap/Row";
-import "./Demo.css"
+import "./demo.css"
 import {getMockMenu} from "./MockData";
 import {Container} from "react-bootstrap";
 import MenuComponent from "../MenuComponent/Menu.component";
 import MenuService from "../../Services/Menu.service";
 
-class Demo extends Component {
+class DemoComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,21 +22,7 @@ class Demo extends Component {
 
     }
 
-    onChange = (e) => {
-        const state = this.state
-        state[e.target.name] = e.target.value;
-        this.setState(state);
-    }
-    // we can use a service that can keep track of this and maintain its own state between
-    // sections for the demo I'm just sticking it into state to display on the dom
-    itemUpdate = (itemUpdate) => {
-        const state = {...this.state}
-        state.items[itemUpdate.id] = {...itemUpdate};
-        this.setState(state);
-    }
-
     render() {
-        // we can sort items before mapping to ensure they go on the menu in order using the ordinal
         return (
             <Container>
                 <Row className="demo-row">
@@ -45,4 +38,4 @@ class Demo extends Component {
     }
 }
 
-export default Demo;
+export default DemoComponent;

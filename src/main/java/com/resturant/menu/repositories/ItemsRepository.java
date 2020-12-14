@@ -1,14 +1,15 @@
-package com.resturant.menu.repositories;
+/*
+ * file Name: ItemsRepository.java
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Interface for Mongo db interactions for Items
+ */
 
-import org.springframework.data.repository.query.Param;
+package com.resturant.menu.repositories;
 
 import com.resturant.menu.models.Item;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.Optional;
-
 public interface ItemsRepository extends CrudRepository<Item, String> {
     void delete(Item deleted);
-    
-    Optional<Item> findAllBySectionId(@Param("sectionId") String sectionId);
 }

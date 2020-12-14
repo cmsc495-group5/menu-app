@@ -1,3 +1,10 @@
+/**
+ * file Name: SwapOrder.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for rearranging the order of options as a form control
+ */
+
 import {Component} from "react";
 import Row from "react-bootstrap/Row";
 import {Col, Container} from "react-bootstrap";
@@ -16,7 +23,6 @@ class SwapOrderComponent extends Component {
 
     }
 
-
     render() {
         let position = 1;
         const options = (this.state.options || []).map(option => {
@@ -30,16 +36,16 @@ class SwapOrderComponent extends Component {
                             className={'up-swap-icon ' + (lastRow ? 'swap-hidden' : '')}
                             onClick={() => this.state.swapOptions(option, +1)}>
                             <Icon name="angle down"></Icon>
-                       </IconButton>
-                       <IconButton
-                           className={'down-swap-icon ' + (firstRow ? 'swap-hidden' :'')}
-                           onClick={() => this.state.swapOptions(option, -1)}>
-                           <Icon name="angle up"></Icon>
-                       </IconButton>
+                        </IconButton>
+                        <IconButton
+                            className={'down-swap-icon ' + (firstRow ? 'swap-hidden' : '')}
+                            onClick={() => this.state.swapOptions(option, -1)}>
+                            <Icon name="angle up"></Icon>
+                        </IconButton>
                     </Col>
                 </Row>
             )
-            position = position +1;
+            position = position + 1;
             return construct;
         })
 
@@ -47,4 +53,5 @@ class SwapOrderComponent extends Component {
 
     }
 }
+
 export default SwapOrderComponent;

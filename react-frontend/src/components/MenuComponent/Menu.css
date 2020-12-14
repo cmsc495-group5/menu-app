@@ -1,3 +1,10 @@
+/**
+ * file Name: image.css
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Menu component styling
+ */
+
 #root {
     width: 100%;
 }
@@ -21,14 +28,14 @@ body {
 }
 
 .menu-header-title {
-    margin:auto;
-    width:100%;
+    margin: auto;
+    width: 100%;
     padding-right: 50px;
     justify-content: center;
     font-size: large;
 }
 
-.menu-footer-title{
+.menu-footer-title {
     padding: 10px;
     font-size: 18px;
 }
@@ -43,6 +50,7 @@ body {
 .menu-nav-button {
     margin-right: auto;
 }
+
 @media only screen and (max-width: 400px) {
     .nav-menu-dropdown-option {
         font-size: medium;
@@ -66,11 +74,13 @@ body {
     z-index: 10;
     height: 40px;
 }
+
 .menu-footer-title {
-    margin:5px;
-    width:100%;
+    margin: 5px;
+    width: 100%;
     justify-content: center;
 }
+
 .spacer {
     height: 50px;
 }

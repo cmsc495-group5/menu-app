@@ -1,3 +1,11 @@
+/**
+ * file Name: MenuSection.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for displaying a menu section in the menu and admin functions
+ */
+
+
 import React, {Component} from "react";
 import ItemCardComponent from "../ItemCard/ItemCard.component";
 
@@ -12,6 +20,10 @@ class MenuSection extends Component {
         this.updateItem = updateItem;
     }
 
+    /**
+     * Updates state with form changes
+     * @param e (Event} - triggering element change event
+     */
     onChange = (e) => {
         const state = this.state
         state[e.target.name] = e.target.value;

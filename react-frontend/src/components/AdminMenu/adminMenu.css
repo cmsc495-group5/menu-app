@@ -1,3 +1,10 @@
+/**
+ * file Name: adminMenu.css
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Styling for admin menu
+ */
+
 .header-admin-menu {
     display: flex;
     justify-content: space-between;

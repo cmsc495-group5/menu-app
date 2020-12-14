@@ -1,3 +1,10 @@
+/**
+ * file Name: QrCode.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for generating a QR code for display on a table
+ */
+
 import React, {Component} from "react";
 import axios from "axios";
 import {APIPaths} from "../../paths";
@@ -17,10 +24,15 @@ class QrCodeComponent extends Component {
     componentDidMount() {
     }
 
+    /**
+     * Gets the QR Code to display
+     * @param e
+     */
     getQrCode = (e) => {
         e.preventDefault();
         axios.post(APIPaths.qrCode,
             {
+                // this is in admin so should be accurate if we are using the deployed location
                 baseUrl: window.location.origin.toString(),
                 tableId: encodeURIComponent(this.state.table),
             })
@@ -28,6 +40,11 @@ class QrCodeComponent extends Component {
                 this.setState({...this.state, qrCode: res.data});
             });
     }
+
+    /**
+     * Updates state with form changes
+     * @param e (Event} - triggering element change event
+     */
     onChange = (e) => {
         const state = this.state
         state[e.target.name] = e.target.value;
@@ -54,7 +71,7 @@ class QrCodeComponent extends Component {
                                 <h1>Table: {this.state.qrCode.tableId}</h1>
                             </div>
                             <div>
-                                <img src={this.state.qrCode.image}></img>
+                                <img src={this.state.qrCode.image} alt="qrCode"></img>
                             </div>
                             <div>
                                 <a href={this.state.qrCode.url}>{this.state.qrCode.url}</a>

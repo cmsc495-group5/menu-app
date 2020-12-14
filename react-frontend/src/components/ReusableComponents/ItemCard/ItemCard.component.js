@@ -1,9 +1,16 @@
+/**
+ * file Name: ItemCard.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for displaying an item entity in the menu
+ */
+
 import React, {Component} from "react";
 import Card from "react-bootstrap/Card";
 import {Multiselect} from 'multiselect-react-dropdown';
 import {Col, Row} from "react-bootstrap";
 import Image from "react-bootstrap/Image";
-import "./ItemCard.css"
+import "./itemCard.css"
 import PopupTextFieldComponent from "../PopupTextfield/PopupTextField.component";
 import {IconButton} from "@material-ui/core";
 import {Form, Icon} from "semantic-ui-react";
@@ -32,6 +39,12 @@ class ItemCardComponent extends Component {
         this.open = false;
     }
 
+    /**
+     * Gets the props to submit to propagate the changes to the parent component
+     * also used to restore current state after navigation
+     * @Param state {Object} - current state of the component
+     * @Returns orderItem {Object} - state of the order item
+     */
     getPropsToSubmit = (state) => {
         const {id, prepNotes, count, price, selectedOptions, name} = state;
         let optionCost = 0;
@@ -47,6 +60,10 @@ class ItemCardComponent extends Component {
         };
     }
 
+    /**
+     * Updates state with form changes of the item card
+     * @param event (Event} - triggering element change event
+     */
     onChange = (event) => {
         // protects against deleting the value or manually entering greater than max values
         if (event.target && event.target.value === '') {
@@ -61,6 +78,11 @@ class ItemCardComponent extends Component {
         this.setState({...this.state, [event.target.name]: event.target.value});
         this.itemUpdate(this.getPropsToSubmit(newState));
     }
+
+    /**
+     * Updates the item state, increasing the count of the item (max 99)
+     * @Return void
+     */
     increment = () => {
         const count = isNaN(this.state.count) || this.state.count === null ? 1 : parseInt(this.state.count) + 1;
         if (count <= 99) {
@@ -70,12 +92,21 @@ class ItemCardComponent extends Component {
         }
     }
 
+    /**
+     * Updates the item state, decreasing the count of the item (min 0)
+     * @Return void
+     */
     decrement = () => {
         const count = (this.state.count - 1) >= 0 ? this.state.count - 1 : 0;
         const newState = {...this.state, count};
         this.setState(newState);
         this.itemUpdate(this.getPropsToSubmit(newState));
     }
+
+    /**
+     * Updates state with selected Options
+     * @param selected {Object[]} - selected options
+     */
     updateSelected = (selected) => {
         const newState = {...this.state, selectedOptions: selected};
         this.setState(newState);
@@ -86,6 +117,10 @@ class ItemCardComponent extends Component {
         );
     }
 
+    /**
+     * Updates state with the entered prep notes
+     * @param note {{prepNotes: string}} - selected options
+     */
     updateNote = (note) => {
         const newState = {...this.state, prepNotes: note.prepNotes};
         this.setState(newState);

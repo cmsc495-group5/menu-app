@@ -1,3 +1,10 @@
+/*
+ * file Name: OrderItem.java
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Model for OrderItems
+ */
+
 package com.resturant.menu.models;
 
 import org.bson.codecs.pojo.annotations.BsonProperty;

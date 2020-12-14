@@ -1,37 +1,40 @@
+/*
+ * file Name: Item.java
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Model for Items
+ */
+
 package com.resturant.menu.models;
 
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection= "items")
+@Document(collection = "items")
 public class Item {
     @Id
     String id;
     String name;
     String description;
-    
-    @BsonProperty(value="section_id")
-    String sectionId;
-    
-    @BsonProperty(value="internal_description")
+
+    @BsonProperty(value = "internal_description")
     String internalDescription;
     Double price;
     String updated;
-    
+
     @DBRef
     Image image;
-    
+
     @DBRef
     Option[] options;
 
-    
-     public Item(String name, String description, String internalDescription, String sectionId, Double price, Image image, Option[] options) {
+
+    public Item(String name, String description, String internalDescription, Double price, Image image, Option[] options) {
         this.name = name;
         this.description = description;
         this.internalDescription = internalDescription;
-        this.sectionId = sectionId;
         this.price = price;
         this.image = image;
         this.options = options;
@@ -61,7 +64,7 @@ public class Item {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public String getInternalDescription() {
         return internalDescription;
     }
@@ -69,15 +72,7 @@ public class Item {
     public void setInternalDescription(String internalDescription) {
         this.internalDescription = internalDescription;
     }
-    
-    public String getSectionId() {
-        return sectionId;
-    }
-    
-    public void setSectionId(String sectionId) {
-        this.sectionId = sectionId;
-    }
-    
+
     public Double getPrice() {
         return price;
     }
@@ -93,8 +88,8 @@ public class Item {
     public void setImage(Image image) {
         this.image = image;
     }
-    
-     public Option[] getOptions() {
+
+    public Option[] getOptions() {
         return options;
     }
 

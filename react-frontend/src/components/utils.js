@@ -1,5 +1,21 @@
+/**
+ * file Name: utils.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Shared utilities
+ */
+
+
+// string length for reformatting strings
 const stringLength = 20;
 
+/**
+ * Rearranges the order of elements in an array
+ * @param array {Object[]} - array to rearrange
+ * @param originalPosition {int} - index
+ * @param newPosition {int} - index
+ * @returns {Object[]} - rearranged array
+ */
 export function changeOrder(array, originalPosition, newPosition) {
     const newArray = [...array]
     if (newPosition >= 0 && newPosition < array.length) {
@@ -10,6 +26,13 @@ export function changeOrder(array, originalPosition, newPosition) {
     return newArray;
 }
 
+/**
+ * Shifts an element of an array by one position
+ * @param option {Object} - element to be shifted
+ * @param change {int} - position change (1 or -1)
+ * @param array {Object[]} - array to be changed
+ * @returns {Object[]} - reordered array
+ */
 export function reorder(option, change, array) {
     let options = [...array] || [];
     const positionOfOption = options.findIndex(opt => opt.id === option.id);
@@ -19,6 +42,12 @@ export function reorder(option, change, array) {
     return options
 }
 
+/**
+ * Formats options to include a display property including
+ * a name and price as a string for dropdowns
+ * @param optionsArray {Object} - array of options
+ * @returns {{display: string}[]} - array of objects with a display property
+ */
 export function formatOptions(optionsArray) {
     const formattedOptions = (optionsArray || []).map(option => ({
         ...option,
@@ -27,6 +56,11 @@ export function formatOptions(optionsArray) {
     return formattedOptions;
 }
 
+/**
+ * Adds a display property to sections for use in a dropdown
+ * @param optionsArray {Object[]} - options
+ * @returns {{display: string}[]} - array of objects with the display property
+ */
 export function formatSection(optionsArray) {
     const formattedSections = (optionsArray || []).map(option => {
         const {title} = option;
@@ -39,6 +73,12 @@ export function formatSection(optionsArray) {
     return formattedSections;
 }
 
+/**
+ *
+ * Adds a display property to Options for use in a dropdown
+ * @param optionsArray {Object[]} - options
+ * @returns {{display: string}[]} - array of objects with the display property
+ */
 export function formatItemOptions(optionsArray) {
     const formattedItemsOptions = (optionsArray || []).map(option => {
         const {name, price} = option;
@@ -53,6 +93,11 @@ export function formatItemOptions(optionsArray) {
     return formattedItemsOptions;
 }
 
+/**
+ * Formats price for display
+ * @param price {string|number} - price
+ * @returns {string|number} - formatted price
+ */
 export function formatPrice(price) {
     if (isNaN(price)) {
         return 0.00;
@@ -60,6 +105,11 @@ export function formatPrice(price) {
     return `$${price ? parseFloat(price).toFixed(2) : 0.00}`
 }
 
+/**
+ * Gets query param from url
+ * @param variable {string} - param to get
+ * @returns {string|boolean} - param value
+ */
 export function getQueryVariable(variable) {
     const query = window.location.search.substring(1);
     const vars = query.split("&");

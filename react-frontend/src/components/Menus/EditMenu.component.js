@@ -1,3 +1,10 @@
+/**
+ * file Name: EditMenu.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for editing an menu entity
+ */
+
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
@@ -11,7 +18,7 @@ import "./menus.css"
 import {Checkbox} from "semantic-ui-react";
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
 
-class EditMenu extends Component {
+class EditMenuComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -32,22 +39,32 @@ class EditMenu extends Component {
     }
 
     componentDidMount() {
+        // get menu to edit
         axios.get(interpolateWithId(APIPaths.menus, this.props.match.params.id))
             .then(res => {
-                this.setState({menu: res.data, initialActive: res.data.active,  loaded: this.state.loaded +1});
+                this.setState({menu: res.data, initialActive: res.data.active, loaded: this.state.loaded + 1});
             });
+        // get section options
         axios.get(APIPaths.sections)
             .then(res => {
-                this.setState({...this.state, sectionOptions: res.data, loaded: this.state.loaded +1});
+                this.setState({...this.state, sectionOptions: res.data, loaded: this.state.loaded + 1});
             });
     }
 
+    /**
+     * Updates state with form changes
+     * @param e (Event} - triggering element change event
+     */
     onChange = (e) => {
         const state = this.state.menu
         state[e.target.name] = e.target.value;
         this.setState({menu: state, loaded: this.state.loaded + 1});
     }
 
+    /**
+     * Updates state with selected Sections
+     * @param selected {Object[]} - selected sections
+     */
     updateSelected = (selected) => {
         const newState = {
             ...this.state,
@@ -59,7 +76,13 @@ class EditMenu extends Component {
         };
         this.setState(newState);
     }
-    updateOrder = (option, change) => {
+
+    /**
+     * Updates state with selected Section order
+     * @param option {Object} Option
+     * @param change {int} index
+     */
+    updateSectionOrder = (option, change) => {
         let reordered = reorder(option, change, this.state.menu.sections)
         this.setState({
             ...this.state,
@@ -67,10 +90,14 @@ class EditMenu extends Component {
                 ...this.state.menu,
                 sections: reordered
             },
-            loaded: this.state.loaded +1
+            loaded: this.state.loaded + 1
         });
     }
 
+    /**
+     * Submits menu to the API, triggers a redirect to the menu view
+     * @param e  (Event} - triggering element change event, summit pressed
+     */
     onSubmit = (e) => {
         e.preventDefault();
 
@@ -97,15 +124,20 @@ class EditMenu extends Component {
                 this.props.history.push(interpolateWithId(Paths.showMenu, this.props.match.params.id))
             });
     }
-    onCancel =(e) => {
+
+    /**
+     * Triggers a redirect to the menu view
+     * @param e  (Event} - triggering element change event, cancel pressed
+     */
+    onCancel = (e) => {
         e.preventDefault();
         this.props.history.push(interpolateWithId(Paths.showMenu, this.props.match.params.id))
     }
 
     render() {
-
         const formattedSections = formatSection(this.state.sectionOptions);
         const selectedSections = formatSection(this.state.menu.sections);
+
         return (
             <Container className="container">
                 <div className="panel panel-default">
@@ -140,40 +172,41 @@ class EditMenu extends Component {
                                         <input type="text" className="form-control" name="internalDescription"
                                                value={this.state.menu.internalDescription} onChange={this.onChange}
                                                placeholder="Internal Description"/>
-                            </div>
-                            <div className="form-group ">
-                                <label htmlFor="active">Active: {this.state.initialActive ? '(to disable this menu activate another menu)' : ''}</label>
-                                <div>
-                                    <Checkbox
-                                        id='active'
-                                        toggle
-                                        name='active'
-                                        onChange={(e, d) => this.onChange({ target: {...d, value:d.checked}})}
-                                        checked={this.state.menu.active}
-                                        disabled={this.state.initialActive}
-                                        key={this.state.menu.active}
-                                    >
-                                    </Checkbox>
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="options">options:</label>
-                                <Multiselect
-                                    options={formattedSections}
-                                    displayValue={'display'}
-                                    emptyRecordMessage={'select options'}
-                                    selectedValues={selectedSections}
-                                    onSelect={this.updateSelected}
-                                    onRemove={this.updateSelected}
-                                    showCheckbox={true}
-                                    closeOnSelect={false}
-                                />
-                            </div>
+                                    </div>
+                                    <div className="form-group ">
+                                        <label
+                                            htmlFor="active">Active: {this.state.initialActive ? '(to disable this menu activate another menu)' : ''}</label>
+                                        <div>
+                                            <Checkbox
+                                                id='active'
+                                                toggle
+                                                name='active'
+                                                onChange={(e, d) => this.onChange({target: {...d, value: d.checked}})}
+                                                checked={this.state.menu.active}
+                                                disabled={this.state.initialActive}
+                                                key={this.state.menu.active}
+                                            >
+                                            </Checkbox>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="options">options:</label>
+                                        <Multiselect
+                                            options={formattedSections}
+                                            displayValue={'display'}
+                                            emptyRecordMessage={'select options'}
+                                            selectedValues={selectedSections}
+                                            onSelect={this.updateSelected}
+                                            onRemove={this.updateSelected}
+                                            showCheckbox={true}
+                                            closeOnSelect={false}
+                                        />
+                                    </div>
                                     <div className="form-group">
                                         <label htmlFor="swap">Position:</label>
                                         <SwapOrderComponent
                                             options={this.state.menu.sections}
-                                            swapOptions={this.updateOrder}
+                                            swapOptions={this.updateSectionOrder}
                                             key={this.state.loaded}>
                                         </SwapOrderComponent>
                                     </div>
@@ -197,4 +230,4 @@ class EditMenu extends Component {
     }
 }
 
-export default EditMenu;
+export default EditMenuComponent;

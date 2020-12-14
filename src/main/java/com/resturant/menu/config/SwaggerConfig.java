@@ -1,3 +1,10 @@
+/*
+ * file Name: SwaggerConfig.java
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Api documentation
+ */
+
 package com.resturant.menu.config;
 
 import org.springframework.context.annotation.Bean;

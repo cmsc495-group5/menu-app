@@ -1,3 +1,10 @@
+/*
+ * file Name: QrController.java
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Controller for creating QR codes
+ */
+
 package com.resturant.menu.controllers;
 
 import com.resturant.menu.models.QrCode;

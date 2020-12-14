@@ -1,3 +1,10 @@
+/*
+ * file Name: QrServiceImpl.java
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Implementation of the QR service interface
+ */
+
 package com.resturant.menu.services;
 
 import com.resturant.menu.models.QrCode;

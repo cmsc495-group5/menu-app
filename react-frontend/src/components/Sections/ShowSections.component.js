@@ -1,10 +1,17 @@
+/**
+ * file Name: ShowSections.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for viewing a list of section entities
+ */
+
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {APIPaths, interpolateWithId, Paths} from "../../paths";
 import {Container} from "react-bootstrap";
 
-class ShowSections extends Component {
+class ShowSectionsComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -14,6 +21,7 @@ class ShowSections extends Component {
     }
 
     componentDidMount() {
+        // get all the sections
         axios.get(APIPaths.sections)
             .then(res => {
                 this.setState({sections: res.data});
@@ -58,4 +66,4 @@ class ShowSections extends Component {
     }
 }
 
-export default ShowSections;
+export default ShowSectionsComponent;

@@ -1,3 +1,10 @@
+/**
+ * file Name: Menu.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for displaying the menu and managing state for the order
+ */
+
 import React, {Component} from 'react';
 import './Menu.css'
 import Menu from "semantic-ui-react/dist/commonjs/collections/Menu";
@@ -8,6 +15,7 @@ import LandingMenu from "./LandingMenu/LandingMenu.component";
 import CheckoutComponent from "./Checkout/Checkout.component";
 
 class MenuComponent extends Component {
+    // not programmatically generated sections
     HOME = 'home';
     CHECKOUT = 'checkout';
 
@@ -20,7 +28,7 @@ class MenuComponent extends Component {
             loadedSection: this.HOME,
             currentTotal: 0
         }
-        if (props.menuService) {
+        if (props.menuService) { // this is for overriding the service for demo and admin functions
             this.menuService = props.menuService;
         } else {
             this.menuService = new MenuService();
@@ -28,6 +36,7 @@ class MenuComponent extends Component {
     }
 
     componentDidMount() {
+        // call the service to get the active menu
         this.menuService.getMenu().then(menu => {
             const newState = {...this.state, menu};
             newState.sections = menu.sections || [];
@@ -35,6 +44,11 @@ class MenuComponent extends Component {
         });
     }
 
+    /**
+     * Changes loaded sections of the menu
+     * @param id {string} - section id
+     * @returns {Promise<void>} - allows async loading
+     */
     onNavClick = (id) => {
         if (id === this.HOME) {
             const newState = {...this.state, loadedSection: this.HOME};
@@ -57,12 +71,22 @@ class MenuComponent extends Component {
             })
     }
 
+    /**
+     * Updates the item in the menu service
+     * @param item {Object} - order item to update
+     */
     updateItem = (item) => {
         this.menuService.updateItem(item);
         const newState = {...this.state, total: this.menuService.getTotal()}
         this.setState(newState);
     }
 
+    /**
+     * Determines what section to load and returns the element for display
+     * @param loadedSection
+     * @param sortedSections
+     * @returns {JSX.Element}
+     */
     sectionToLoad = (loadedSection, sortedSections) => {
         switch (loadedSection) {
             case this.HOME :
@@ -84,6 +108,11 @@ class MenuComponent extends Component {
                 </MenuSection></div>);
         }
     }
+    /**
+     * Updates the menu title
+     * @param loadedSection {string| {title: string}} - section to load
+     * @returns {string} - section title
+     */
     getTitleContents = (loadedSection) => {
         switch (loadedSection) {
             case this.HOME :
@@ -94,6 +123,11 @@ class MenuComponent extends Component {
                 return loadedSection.title;
         }
     }
+    /**
+     * generate dropdown option for hamburger menu
+     * @param section {Object} - section object
+     * @returns {JSX.Element} - dropdown option
+     */
     getSectionDropdownItem = (section) => {
         return (
             <Dropdown.Item

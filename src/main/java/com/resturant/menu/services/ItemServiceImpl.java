@@ -1,3 +1,10 @@
+/*
+ * file Name: ItemServiceImpl.java
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Implementation of the Item service interface
+ */
+
 package com.resturant.menu.services;
 
 import com.resturant.menu.models.Item;
@@ -14,22 +21,18 @@ public class ItemServiceImpl implements ItemService {
     private final ItemsRepository itemsRepository;
 
     @Autowired
-    public ItemServiceImpl(ItemsRepository itemsRepository){
+    public ItemServiceImpl(ItemsRepository itemsRepository) {
         this.itemsRepository = itemsRepository;
     }
 
-    public Iterable<Item> getItems(){
+    public Iterable<Item> getItems() {
         return itemsRepository.findAll();
     }
-    
-    public Optional<Item> getItemsBySectionId(String sectionId) {
-        return itemsRepository.findAllBySectionId(sectionId);
-    }
 
-    public Item saveItem(Item sec){
-        sec.setUpdated(new Date().toString());
-        itemsRepository.save(sec);
-        return sec;
+    public Item saveItem(Item item) {
+        item.setUpdated(new Date().toString());
+        itemsRepository.save(item);
+        return item;
     }
 
     public Optional<Item> getItemById(String id) {
@@ -37,44 +40,40 @@ public class ItemServiceImpl implements ItemService {
     }
 
     public Item updateItem(String id, Item item) {
-        Optional<Item> optSec = itemsRepository.findById(id);
-        Item s = optSec.get();
-        
-        if(item.getName() != null){
-            s.setName(item.getName());
+        Optional<Item> optItem = itemsRepository.findById(id);
+        Item itemToUpdate = optItem.get();
+
+        if (item.getName() != null) {
+            itemToUpdate.setName(item.getName());
         }
-        
-        if(item.getDescription() != null){
-            s.setDescription(item.getDescription());
+
+        if (item.getDescription() != null) {
+            itemToUpdate.setDescription(item.getDescription());
         }
 
         if (item.getInternalDescription() != null) {
-            s.setInternalDescription(item.getInternalDescription());
+            itemToUpdate.setInternalDescription(item.getInternalDescription());
         }
 
         if (item.getPrice() != null) {
-            s.setPrice(item.getPrice());
+            itemToUpdate.setPrice(item.getPrice());
         }
         // we want to be able to remove images so no null check
-        s.setImage(item.getImage());
+        itemToUpdate.setImage(item.getImage());
 
         if (item.getOptions() != null) {
-            s.setOptions(item.getOptions());
+            itemToUpdate.setOptions(item.getOptions());
         }
 
-        if (item.getSectionId() != null) {
-            s.setSectionId(item.getSectionId());
-        }
-
-        s.setUpdated(new Date().toString());
-        itemsRepository.save(s);
-        return s;
+        itemToUpdate.setUpdated(new Date().toString());
+        itemsRepository.save(itemToUpdate);
+        return itemToUpdate;
     }
 
     public String deleteItem(String id) {
         Optional<Item> optItem = itemsRepository.findById(id);
-        Item sec = optItem.get();
-        itemsRepository.delete(sec);
+        Item item = optItem.get();
+        itemsRepository.delete(item);
         return "";
     }
 }

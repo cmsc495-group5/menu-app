@@ -1,3 +1,10 @@
+/*
+ * file Name: ImageServiceImpl.java
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Implementation of the Image service interface
+ */
+
 package com.resturant.menu.services;
 
 import com.resturant.menu.models.Image;
@@ -35,23 +42,23 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public Image updateImage(String id, Image image) {
         Optional<Image> optImage = imagesRepository.findById(id);
-        Image i = optImage.get();
+        Image imageToUpdate = optImage.get();
 
         if (image.getName() != null) {
-            i.setName(image.getName());
+            imageToUpdate.setName(image.getName());
         }
         if (image.getImage() != null) {
-            i.setImage(image.getImage());
+            imageToUpdate.setImage(image.getImage());
         }
-        imagesRepository.save(i);
-        return i;
+        imagesRepository.save(imageToUpdate);
+        return imageToUpdate;
     }
 
     @Override
     public String deleteImage(String id) {
         Optional<Image> optImage = imagesRepository.findById(id);
-        Image i = optImage.get();
-        imagesRepository.delete(i);
+        Image image = optImage.get();
+        imagesRepository.delete(image);
         return "";
     }
 }

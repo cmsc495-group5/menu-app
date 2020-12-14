@@ -1,3 +1,10 @@
+/**
+ * file Name: CreateMenu.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for creating a new menu entity
+ */
+
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
@@ -10,7 +17,7 @@ import MenuService from "../../Services/Menu.service";
 import {Checkbox} from "semantic-ui-react";
 import {APIPaths, Paths} from "../../paths";
 
-class CreateMenu extends Component {
+class CreateMenuComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -28,28 +35,46 @@ class CreateMenu extends Component {
     }
 
     componentDidMount() {
+        // get section options
         axios.get(APIPaths.sections)
             .then(res => {
                 this.setState({...this.state, optionSections: res.data});
             });
     }
 
+    /**
+     * Updates state with form changes
+     * @param e (Event} - triggering element change event
+     */
     onChange = (e) => {
         const state = this.state
         state[e.target.name] = e.target.value;
-        state.loaded = state.loaded+1;
+        state.loaded = state.loaded + 1;
         this.setState(state);
     }
-
+    /**
+     * Updates state with selected Sections
+     * @param selected {Object[]} - selected sections
+     */
     updateSelected = (selected) => {
         const newState = {...this.state, sections: selected, loaded: this.state.loaded + 1};
         this.setState(newState);
     }
-    updateOrder = (option, change) => {
+
+    /**
+     * Updates state with selected Sections order
+     * @param option {Object} Option
+     * @param change {int} index
+     */
+    updateSectionOrder = (option, change) => {
         let reordered = reorder(option, change, this.state.sections)
-        this.setState({...this.state, sections: reordered, loaded: this.state.loaded +1});
+        this.setState({...this.state, sections: reordered, loaded: this.state.loaded + 1});
     }
 
+    /**
+     * Submits menu to the API, triggers a redirect to the menu list
+     * @param e  (Event} - triggering element change event, summit pressed
+     */
     onSubmit = (e) => {
         e.preventDefault();
 
@@ -80,7 +105,6 @@ class CreateMenu extends Component {
             title,
             description,
             internalDescription,
-            imageId,
             sections,
             active,
             optionSections
@@ -117,38 +141,38 @@ class CreateMenu extends Component {
                                                value={internalDescription} onChange={this.onChange}
                                                placeholder="internalDescription"/>
                                     </div>
-                            <div className="form-group ">
-                                <label htmlFor="active">Active:</label>
-                                <div>
-                                    <Checkbox
-                                        id='active'
-                                        toggle
-                                        name='active'
-                                        onChange={(e, d) => this.onChange({ target: {...d, value:d.checked}})}
-                                        checked={active}
-                                        key={active}
-                                    >
-                                    </Checkbox>
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="options">options:</label>
-                                <Multiselect
-                                    options={formattedSections}
-                                    displayValue={'display'}
-                                    emptyRecordMessage={'select options'}
-                                    selectedValues={selectedSections}
-                                    onSelect={this.updateSelected}
-                                    onRemove={this.updateSelected}
-                                    showCheckbox={true}
-                                    closeOnSelect={false}
-                                />
-                            </div>
+                                    <div className="form-group ">
+                                        <label htmlFor="active">Active:</label>
+                                        <div>
+                                            <Checkbox
+                                                id='active'
+                                                toggle
+                                                name='active'
+                                                onChange={(e, d) => this.onChange({target: {...d, value: d.checked}})}
+                                                checked={active}
+                                                key={active}
+                                            >
+                                            </Checkbox>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="options">Sections:</label>
+                                        <Multiselect
+                                            options={formattedSections}
+                                            displayValue={'display'}
+                                            emptyRecordMessage={'select options'}
+                                            selectedValues={selectedSections}
+                                            onSelect={this.updateSelected}
+                                            onRemove={this.updateSelected}
+                                            showCheckbox={true}
+                                            closeOnSelect={false}
+                                        />
+                                    </div>
                                     <div className="form-group">
                                         <label htmlFor="swap">Position:</label>
                                         <SwapOrderComponent
                                             options={this.state.sections}
-                                            swapOptions={this.updateOrder}
+                                            swapOptions={this.updateSectionOrder}
                                             key={this.state.loaded}>
                                         </SwapOrderComponent>
                                     </div>
@@ -171,4 +195,4 @@ class CreateMenu extends Component {
     }
 }
 
-export default CreateMenu;
+export default CreateMenuComponent;

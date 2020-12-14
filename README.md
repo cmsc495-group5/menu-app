@@ -29,7 +29,7 @@ Accept all defaults
 4. Before starting the react app switch to the frontend directory and run `npm install`
 5. To start the dev react app switch to the `react-frontend` directory and run, `npm start` 
 This will start the react app on http://localhost:3000/
-6. To add the react files to the Java application as static resources run `npm build`.
+6. To add the react files to the Java application as static resources run `npm run-script build`.
 Once added to the application the backend can serve the react files (localhost:8080 will load the react application you may need to restart the backend unless you have a watcher to rebuild the app). This will be able to be loaded from localhost:8080/
 
 Development of the react app is easiest when started with `npm start’ it will use the proxy setting from the package json file to use the java backend apis.

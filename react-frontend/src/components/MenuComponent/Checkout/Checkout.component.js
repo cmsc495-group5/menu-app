@@ -1,3 +1,10 @@
+/**
+ * file Name: Checkout.component.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Component for handling the checkout functions of the menu
+ */
+
 import React, {Component} from "react";
 import {Button, Col, Container, Row} from "react-bootstrap";
 import {formatPrice, getQueryVariable} from "../../utils";
@@ -11,7 +18,7 @@ class CheckoutComponent extends Component {
         this.state = {
             orderItems: orderItems || [],
             total: total || 0,
-            table: getQueryVariable('table'),
+            table: getQueryVariable('table'), // get table from url
             isDemo: isDemo,
             placeOrder
         }
@@ -20,6 +27,12 @@ class CheckoutComponent extends Component {
     componentDidMount() {
     }
 
+    /**
+     * Generate option display elements for order item options
+     * @param selectedOption {Object} - option of order item
+     * @param count {int} - number of items
+     * @returns {JSX.Element}
+     */
     formatOptionForCheckout = (selectedOption, count) => {
         return (
             <Row key={selectedOption.id}>
@@ -29,6 +42,10 @@ class CheckoutComponent extends Component {
         )
     }
 
+    /**
+     * Submits order to the API, triggers a redirect to the complete order component
+     * @param e  (Event} - triggering element change event, summit pressed
+     */
     onSubmit = (e) => {
         e.preventDefault();
         if (!this.state.isDemo) {
@@ -42,10 +59,11 @@ class CheckoutComponent extends Component {
     }
 
     render() {
-
+        // generate display elements for each order items
         const orderItems = (this.state.orderItems || []).map(item => {
             const {name, count, total, prepNotes, selectedOptions, price} = item;
             const selectedOptionsFormatted = (selectedOptions || []).map(option => this.formatOptionForCheckout(option, count));
+
             return (
                 <Container key={item.id}>
                     <Row>

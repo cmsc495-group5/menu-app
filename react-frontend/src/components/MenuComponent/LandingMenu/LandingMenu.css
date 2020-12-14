@@ -1,3 +1,11 @@
+/**
+ * file Name: landingMenu.css
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Landing menu component styling
+ */
+
+
 .main-menu-container {
     display: flex;
     flex-direction: column;
@@ -8,7 +16,8 @@
     padding: 20px;
 
 }
-.main-menu-options  {
+
+.main-menu-options {
     width: 100%;
     min-height: 30px;
     margin: 5px 0;

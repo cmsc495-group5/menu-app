@@ -1,3 +1,10 @@
+/**
+ * file Name: Menu.service.js
+ * date: 12/13/2020
+ * author: Group 5
+ * purpose: Service for maintaining Menu state
+ */
+
 import axios from "axios";
 import {APIPaths} from "../paths";
 
@@ -22,6 +29,10 @@ class MenuService {
         this.demo = demo
     }
 
+    /**
+     * gets the currently active menu from the API or local value
+     * @returns {Promise<*>|Promise<unknown>}
+     */
     getMenu = () => {
         if (this.menu) {
             return Promise.resolve(this.menu);
@@ -40,12 +51,21 @@ class MenuService {
             });
     }
 
+    /**
+     * Gets the section from local a value.
+     * @param id {string} - id of the section
+     * @returns {Promise<unknown>}
+     */
     getSection = (id) => {
         if (this.sections[id]) {
             return Promise.resolve(this.sections[id]);
         }
     }
 
+    /**
+     * Updates an item with changes from the menu
+     * @param item {Object} - item to update
+     */
     updateItem = (item) => {
         if (item) {
             this.orderItems[item.id] = item;
@@ -53,14 +73,27 @@ class MenuService {
         this.setTotal();
     }
 
+    /**
+     * Gets the current order items
+     * @returns {Object}
+     */
     getOrderItems = () => {
         return this.orderItems || {};
     }
 
+    /**
+     * Gets order items as an array
+     * @returns {Object[]}
+     */
     getOrderItemsAsArray = () => {
         return Object.values(this.getOrderItems()) || [];
     }
 
+    /**
+     * Places the order setting the status to pending
+     * @param tableNumber {string} - table
+     * @returns {Promise<boolean | void>}
+     */
     placeOrder = (tableNumber) => {
         const orderItems = this.getOrderItemsAsArray().map(item => {
             return {
@@ -85,6 +118,9 @@ class MenuService {
             }).catch(e => console.log(e));
     }
 
+    /**
+     * Sets the total for the current order
+     */
     setTotal = () => {
         const keys = Object.keys(this.orderItems);
         let total = 0;
@@ -95,14 +131,21 @@ class MenuService {
         });
         this.total = total;
     }
+    /**
+     * returns the current total
+     * @returns {string}
+     */
     getTotal = () => {
         const total = this.total || 0;
         return total.toFixed(2);
     }
+    /**
+     * Returns if the service is in demo mode
+     * @returns {boolean} - is Demo
+     */
     getIsDemo = () => {
         return this.demo
     }
-
 }
 
 export default MenuService;
