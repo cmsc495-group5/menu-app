@@ -40,9 +40,16 @@ body {
     height: fit-content;
 }
 
+@-moz-document url-prefix() {
+    .menu-top-navbar {
+        height: 20px
+    }
+}
+
 .menu-nav-button {
     margin-right: auto;
 }
+
 @media only screen and (max-width: 400px) {
     .nav-menu-dropdown-option {
         font-size: medium;
