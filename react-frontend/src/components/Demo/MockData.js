@@ -53,9 +53,6 @@ export function getMockSection(index, itemCount) {
         items,
         ordinal: index,
     }
-    if (random % 2 === 1) {
-        section.image = image;
-    }
     return section;
 }
 
